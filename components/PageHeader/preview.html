@@ -1,0 +1,22 @@
+<!-- @dsCard group="Navigation" height=300 subtitle="페이지 제목 xl · 2xl · 3xl, 경로 · 설명 · 버튼 · 도움말" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+function App() {
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-8)" } },
+    h(D.PageHeader, { breadcrumb: ["매출분석", "대시보드"], title: "대시보드", titleSize: "2xl", tooltip: "매일 오전 6시에 갱신됩니다.", description: "선택한 점포의 매출 흐름을 확인합니다.",
+      actions: [h(D.Button, { key: 1, color: "neutral", variant: "base", size: "md", iconLeft: "add-box" }, "CSV 업로드"), h(D.Button, { key: 2, color: "primary", variant: "solid", size: "md" }, "리포트 만들기")] }),
+    h(D.PageHeader, { smallTitle: "고객특성별 단가 비교", title: "우리 매장을 찾은 고객들은 평균 얼마를 결제했을까요?", titleSize: "xl", divider: true }));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

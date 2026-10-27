@@ -1,0 +1,24 @@
+<!-- @dsCard group="Badges" height=144 subtitle="neutral · positive · accent(진행중, 항상 파랑) · warning · negative" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>StatusBadge — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+var C = [['neutral', '대기'], ['accent', '진행중'], ['positive', '완료'], ['warning', '확인 필요'], ['negative', '취소']];
+function App() {
+  return h(React.Fragment, null,
+    sect('soft · xs', row.apply(null, C.map(function (c) { return h(D.StatusBadge, { key: c[0], color: c[0] }, c[1]); }))),
+    sect('soft · sm · pill · dot / solid', row.apply(null, C.map(function (c) { return h(D.StatusBadge, { key: c[0], color: c[0], size: 'sm', shape: 'pill', dot: true }, c[1]); })
+      .concat(C.map(function (c) { return h(D.StatusBadge, { key: 's' + c[0], color: c[0], variant: 'solid' }, c[1]); })))));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

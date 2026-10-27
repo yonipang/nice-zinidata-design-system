@@ -1,0 +1,18 @@
+<!-- @dsCard group="Navigation" height=72 subtitle="현재 페이지 검정, 나머지 회색" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>Pagination — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function App() { var p = React.useState(3); return h(D.Pagination, { page: p[0], total: 12, onChange: p[1] }); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

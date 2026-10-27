@@ -1,0 +1,20 @@
+<!-- @dsCard group="Charts" height=314 subtitle="도넛 기본형 — 가운데 합계" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>DonutChart — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function App() {
+  return h(D.Card, { title: '업종 구성' }, h(D.DonutChart, { size: 180, centerLabel: '전체 점포', items: [{ name: '한식', value: 1204 }, { name: '카페', value: 864 }, { name: '치킨', value: 412 }, { name: '중식', value: 318 }, { name: '기타', value: 270 }] }));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!-- @dsCard group="Inputs" height=260 subtitle="line · soft · ghost, 목록 열림" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>Select — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+var OPTS = [{ value: 'd', label: '최근 7일' }, { value: 'm', label: '최근 30일' }, { value: 'q', label: '최근 3개월' }, { value: 'x', label: '직접 입력', disabled: true }];
+function App() {
+  var s = React.useState('m'), v = s[0], set = s[1];
+  var o = React.useState(true), open = o[0], setOpen = o[1];
+  return h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-3)', alignItems: 'start' } },
+    sect('line · 열림 (목록 elevation-3)', h(D.Select, { options: OPTS, value: v, open: open, onToggle: function () { setOpen(!open); }, onChange: function (x) { set(x); setOpen(false); } })),
+    sect('soft · md', h(D.Select, { variant: 'soft', size: 'md', options: OPTS, placeholder: '기간 선택' })),
+    sect('ghost — 표 · 툴바 안', h(D.Select, { variant: 'ghost', size: 'md', options: OPTS, value: 'd' }), h('div', { style: { height: 'var(--spacing-3)' } }),
+      cap('오류 · disabled'), h(D.Select, { negative: true, options: OPTS, placeholder: '선택하세요' }), h('div', { style: { height: 'var(--spacing-2)' } }), h(D.Select, { state: 'disabled', options: OPTS, placeholder: '선택 불가' })));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

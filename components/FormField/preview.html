@@ -1,0 +1,26 @@
+<!-- @dsCard group="Inputs" height=244 subtitle="레이블 → 입력창 → 도움말 · 오류" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>FormField — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function App() {
+  return h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-6)' } },
+    h('div', { className: 'ds-col' },
+      h(D.FormField, { label: '상호명', required: true, helper: '사업자등록증의 상호와 같게 입력하세요.' }, h(D.Input, { placeholder: '상호명' })),
+      h(D.FormField, { label: '이메일', error: '이메일 형식이 아닙니다.' }, h(D.Input, { negative: true, value: 'store@' }))),
+    h('div', { className: 'ds-col' },
+      h(D.FormField, { label: '업종', optional: true }, h(D.Select, { options: ['한식', '중식', '카페'], placeholder: '업종 선택' })),
+      h(D.FormField, { label: '회원 아이디', helper: '수정할 수 없는 값은 read-only' }, h(D.Input, { state: 'read-only', value: 'zini_store01' }))));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

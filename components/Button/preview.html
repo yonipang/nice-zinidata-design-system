@@ -1,0 +1,34 @@
+<!-- @dsCard group="Actions" height=492 subtitle="Primary · Neutral · Negative · Inverse × solid · soft · outline · base · ghost" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>Button — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+var V = ['solid','soft','outline','base','ghost'];
+function line(color) { return row.apply(null, V.map(function (v) { return h(D.Button, { key: v, color: color, variant: v }, v); })); }
+function App() {
+  return h(React.Fragment, null,
+    sect('Primary — 화면의 주요 행동 (solid는 한 영역에 1개)', line('primary')),
+    sect('Neutral — 보조 · 취소', line('neutral')),
+    sect('Negative — 삭제 · 위험한 행동', line('negative')),
+    h('div', { style: { background: 'var(--surface-inverse-main)', padding: 'var(--spacing-4)', borderRadius: 'var(--rounded-surface-sm)' } },
+      h('p', { className: 'pv-cap', style: { color: 'var(--text-inverse-body-subtle)' } }, 'Inverse — 어두운 바탕 위 (base 없음)'),
+      row.apply(null, ['solid','soft','outline','ghost'].map(function (v) { return h(D.Button, { key: v, color: 'inverse', variant: v }, v); }))),
+    sect('Size — sm 28 · md 32 · lg 36 · xl 40 · 2xl 48', row.apply(null, ['sm','md','lg','xl','2xl'].map(function (s) { return h(D.Button, { key: s, color: 'primary', size: s, iconLeft: 'add' }, s); }))),
+    sect('State — default · hover · pressed · focus · loading · disabled', row(
+      h(D.Button, { color: 'primary' }, '저장'), h(D.Button, { color: 'primary', state: 'hover' }, 'hover'), h(D.Button, { color: 'primary', state: 'pressed' }, 'pressed'),
+      h(D.Button, { color: 'primary', state: 'focus' }, 'focus'), h(D.Button, { color: 'primary', loading: true }, '저장'), h(D.Button, { color: 'primary', state: 'disabled' }, 'disabled'),
+      h(D.Button, { color: 'neutral', variant: 'outline', state: 'disabled' }, 'disabled'), h(D.Button, { color: 'neutral', variant: 'soft', icon: 'settings-4', label: '설정' })))
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!-- @dsCard group="Inputs" height=250 subtitle="line · soft · inverse, md 32 · lg 36 · xl 40, 검색 버튼 같은 높이" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+function App() {
+  var s = React.useState("강남"), q = s[0], set = s[1];
+  return h("div", { style: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "var(--spacing-4)", alignItems: "start" } },
+    sect("line · lg 36 + 검색 버튼(Neutral base md 36)", h(D.SearchField, { size: "lg", button: true, width: 240 })),
+    sect("soft · 흰 바탕 검색창 · 값 있음(지우기)", h(D.SearchField, { variant: "soft", size: "lg", value: q, onChange: function (e) { set(e.target.value); }, onClear: function () { set(""); } })),
+    sect("md 32 · 필터 줄", h(D.SearchField, { size: "md", width: 220 })),
+    h("div", { style: { background: "var(--surface-inverse-main)", padding: "var(--spacing-3)", borderRadius: "var(--rounded-surface-xs)" } },
+      h("p", { className: "pv-cap", style: { color: "var(--text-inverse-body-subtle)" } }, "inverse · 어두운 바탕"), h(D.SearchField, { variant: "inverse", size: "xl" })));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

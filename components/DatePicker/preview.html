@@ -1,0 +1,30 @@
+<!-- @dsCard group="Inputs" height=420 subtitle="날짜 버튼 sm~2xl · 기간(부터 ~ 까지) · 달력 판 elevation-3" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+function App() {
+  var t = new Date(2026, 1, 12);
+  var a = React.useState(new Date(2026, 1, 3)), from = a[0], setFrom = a[1];
+  var b = React.useState(new Date(2026, 1, 17)), to = b[0], setTo = b[1];
+  var o = React.useState(true), open = o[0], setOpen = o[1];
+  var m = React.useState(new Date(2026, 1, 1)), month = m[0], setMonth = m[1];
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-4)" } },
+    sect("기간 선택 · xl 40 (부터 ~ 까지)", h("div", { className: "ds-row", style: { alignItems: "flex-start" } },
+      h(D.DatePicker, { value: from, suffix: "부터", open: open, onToggle: function () { setOpen(!open); }, month: month, onMonth: setMonth, today: t, range: [from, to], onChange: function (d) { setFrom(d); setOpen(false); } }),
+      h("span", { style: { lineHeight: "40px", color: "var(--text-body-subtle)" } }, "~"),
+      h(D.DatePicker, { value: to, suffix: "까지", onChange: setTo }))),
+    h("div", { style: { height: 300 } }),
+    sect("크기 · disabled", h("div", { className: "ds-row" }, h(D.DatePicker, { size: "md", value: from }), h(D.DatePicker, { size: "lg", value: from }), h(D.DatePicker, { size: "md", state: "disabled", placeholder: "날짜 선택" }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!-- @dsCard group="Inputs" height=432 subtitle="line · soft · inverse × md · xl · 2xl, 상태" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>Input — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function App() {
+  var g = { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-3)' };
+  return h(React.Fragment, null,
+    sect('line — 입력 폼 · 회색 바탕 위', h('div', { style: g },
+      h(D.Input, { placeholder: '이름을 입력하세요' }), h(D.Input, { state: 'hover', placeholder: 'hover' }), h(D.Input, { state: 'focus', value: '김지니', iconLeft: 'user' }))),
+    sect('soft — 흰 바탕 위 검색 · 필터', h('div', { style: g },
+      h(D.Input, { variant: 'soft', placeholder: '검색어 입력' }), h(D.Input, { variant: 'soft', state: 'hover', placeholder: 'hover' }), h(D.Input, { variant: 'soft', state: 'focus', value: '강남구' }))),
+    sect('오류 · read-only · disabled', h('div', { style: g },
+      h(D.Input, { negative: true, value: 'abc@' }), h(D.Input, { state: 'read-only', value: 'ORD-2026-00125' }), h(D.Input, { state: 'disabled', placeholder: '입력할 수 없음' }))),
+    sect('Size md 32 · xl 40(기본) · 2xl 48', h('div', { style: g },
+      h(D.Input, { size: 'md', placeholder: 'md', suffix: '원' }), h(D.Input, { size: 'xl', placeholder: 'xl', suffix: '원' }), h(D.Input, { size: '2xl', placeholder: '2xl', suffix: '원' }))),
+    h('div', { style: { background: 'var(--surface-inverse-main)', padding: 'var(--spacing-4)', borderRadius: 'var(--rounded-surface-sm)' } },
+      h(D.Input, { variant: 'inverse', placeholder: '어두운 바탕 위 inverse' })));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

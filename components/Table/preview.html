@@ -1,0 +1,36 @@
+<!-- @dsCard group="Table" height=572 subtitle="PC 표 — 행 36 · 헤더 줄 배경 · 숫자 오른쪽 정렬 · 차트 아래 표" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>Table — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+var S = D.chartSeries;
+function App() {
+  var cols = [
+    { key: 'name', label: '업종' },
+    { key: 'cnt', label: '점포 수', numeric: true },
+    { key: 'sales', label: '월 평균 매출(만원)', numeric: true },
+    { key: 'st', label: '상태', render: function (v) { return h(D.StatusBadge, { color: v === '진행중' ? 'accent' : v === '완료' ? 'positive' : 'neutral' }, v); } },
+    { key: 'act', label: '', align: 'right', render: function () { return h(D.Button, { color: 'neutral', variant: 'base', size: 'sm' }, '보기'); } }];
+  var rows = [{ name: '한식', cnt: '1,204', sales: '4,820', st: '완료' }, { name: '카페', cnt: '864', sales: '2,310', st: '진행중' }, { name: '치킨', cnt: '412', sales: '3,075', st: '대기', _selected: 'primary' }];
+  var chartCols = [{ key: 'm', label: '월' }, { key: 'a', label: '강남구', numeric: true, legendColor: S[0] }, { key: 'b', label: '서초구', numeric: true, legendColor: S[1] }, { key: 'n', label: '점포 표본수', numeric: true }];
+  var chartRows = [{ m: '7월', a: '4,210', b: '3,880', n: '312' }, { m: '8월', a: '4,560', b: '3,920', n: '318' }, { m: '9월', a: '4,820', b: '4,105', n: '321' }];
+  return h(React.Fragment, null,
+    sect('흰 헤더 table-header-main · 줄마다 반복 버튼은 Neutral base sm · 선택 줄 table-row-selected-primary', h(D.Table, { columns: cols, rows: rows })),
+    sect('회색 헤더 table-header-subtle · 차트 아래 표(시리즈 칸에 차트와 같은 색 네모)', h(D.Table, { header: 'subtle', columns: chartCols, rows: chartRows })),
+    sect('교차표 — 상위 헤더 가운데 · 하위 헤더 2줄', h(D.Table, { header: 'subtle',
+      groups: [{ label: '지역', rowSpan: 2 }, { label: '20대', span: 2 }, { label: '30대', span: 2 }],
+      columns: [{ key: 'r', label: '지역', hideHeader: true }, { key: 'a', label: '여성', numeric: true }, { key: 'b', label: '남성', numeric: true }, { key: 'c', label: '여성', numeric: true }, { key: 'd', label: '남성', numeric: true }],
+      rows: [{ r: '강남구', a: '18.2%', b: '15.4%', c: '21.0%', d: '19.6%' }, { r: '서초구', a: '14.8%', b: '13.1%', c: '19.9%', d: '18.3%' }] })));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!-- @dsCard group="Cards" height=222 subtitle="숫자 하나 + 증감 — lg · sm" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>StatisticCard — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function App() {
+  return h('div', { style: { background: 'var(--bg-subtler)', padding: 'var(--spacing-6)', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--spacing-4)' } },
+    h(D.StatisticCard, { title: '월 평균 매출', value: '4,820', unit: '만원', change: '+3.2%', changeType: 'increase', description: '직전 3개월 평균 대비' }),
+    h(D.StatisticCard, { title: '점포 수', value: '1,284', unit: '개', change: '−12', changeType: 'decrease', description: '전월 대비' }),
+    h(D.StatisticCard, { size: 'sm', title: '개업률', value: '2.4', unit: '%', change: '+0.3%p', changeType: 'increase' }),
+    h(D.StatisticCard, { size: 'sm', title: '폐업률', value: '1.9', unit: '%', change: '0.0%p', changeType: 'neutral' }));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

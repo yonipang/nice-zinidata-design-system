@@ -1,0 +1,27 @@
+<!-- @dsCard group="Selection" height=214 subtitle="Checkbox · Radio — 꺼짐 · 켜짐 · 오류 · disabled" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>Checkbox — preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h('p', { className: 'pv-cap' }, t); }
+function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function App() {
+  var a = React.useState(true), b = React.useState('m');
+  return h(React.Fragment, null,
+    sect('Checkbox — 여러 개 선택', row(
+      h(D.Checkbox, { label: '전체 동의', checked: a[0], onChange: a[1] }), h(D.Checkbox, { label: '꺼짐' }), h(D.Checkbox, { label: 'hover', state: 'hover' }),
+      h(D.Checkbox, { label: '오류', negative: true, checked: true }), h(D.Checkbox, { label: 'disabled', disabled: true }), h(D.Checkbox, { label: 'disabled', disabled: true, checked: true }), h(D.Checkbox, { label: 'xs', size: 'xs', checked: true }))),
+    sect('Radio — 하나만 선택', row.apply(null, [['d', '일간'], ['w', '주간'], ['m', '월간']].map(function (x) { return h(D.Radio, { key: x[0], label: x[1], checked: b[0] === x[0], onChange: function () { b[1](x[0]); } }); })
+      .concat([h(D.Radio, { key: 'n', label: '오류', negative: true, checked: true }), h(D.Radio, { key: 'x', label: 'disabled', disabled: true, checked: true })]))),
+    sect('설명 포함', h(D.Checkbox, { checked: true, label: '마케팅 정보 수신', description: '이벤트 · 혜택 소식을 이메일로 받습니다.' })));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>
