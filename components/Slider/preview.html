@@ -1,0 +1,31 @@
+<!-- @dsCard group="Select" height=720 subtitle="슬라이더 — 하나 · 범위 · 눈금 · 값 표시(잡을 때 · 늘) · 비활성 · 이름 + 값 묶음(Slider/Circle · Range)" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+function App() {
+  return h("div", { className: "ds-row", style: { gap: "var(--spacing-8)", alignItems: "flex-start", flexWrap: "wrap" } },
+    h("div", { className: "ds-col", style: { gap: "var(--spacing-5)", width: 340 } },
+      sect("SliderBar — 하나(손잡이를 잡거나 초점이면 값 표시)", h(D.Slider, { label: "반경", defaultValue: 40 })),
+      sect("값 늘 표시", h(D.Slider, { label: "반경", defaultValue: 70, showValue: "always" })),
+      sect("SliderRange — 범위", h(D.Slider, { label: "가격", range: true, defaultValue: [20, 60], showValue: "always" })),
+      sect("SliderPoints — 눈금 5 · 단계 25", h(D.Slider, { label: "단계", step: 25, points: 5, defaultValue: 50 })),
+      sect("비활성", h(D.Slider, { label: "반경", defaultValue: 30, disabled: true }))),
+    h("div", { className: "ds-col", style: { gap: "var(--spacing-8)", width: 340 } },
+      sect("Slider/Circle — 상권 반경", h(D.SliderField, { label: "분석 반경", description: "수원시 영통구 영통동 1012", min: 0, max: 1000, step: 250, points: ["0", "250m", "500m", "750m", "1km"], defaultValue: 250, format: function (v) { return v >= 1000 ? (v / 1000) + "km" : v + "m"; } })),
+      sect("Slider/Range — 월 매출 범위", h(D.SliderField, { label: "월 매출", description: "단위: 만원", range: true, min: 0, max: 5000, step: 250, points: ["0", "2,500", "5,000"], defaultValue: [0, 2500], format: function (v) { return v.toLocaleString("ko-KR"); } }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

@@ -1,23 +1,25 @@
-<!-- @dsCard group="Feedback" height=218 subtitle="잠깐 뜨는 작업 결과 알림 — elevation-5" -->
+<!-- @dsCard group="Feedback" height=440 subtitle="잠깐 떴다 사라지는 알림 — dark · basic · information · warning · negative · positive · 버튼 · 닫기" -->
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><title>Toast — preview</title>
+<head><meta charset="utf-8"><title>preview</title>
 <style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
 </head>
 <body>
 <div id="root" class="ds-root pv"></div>
 <script>
 var D = window.DS, h = React.createElement;
-function cap(t) { return h('p', { className: 'pv-cap' }, t); }
-function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
-function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var T = [["dark", "저장했어요", "리포트가 내 리포트에 추가됐어요."], ["basic", "복사했어요", "링크를 붙여넣어 공유하세요."], ["information", "업데이트", "10월 데이터가 반영됐어요."], ["warning", "확인 필요", "필터 조건이 너무 많아요."], ["negative", "실패", "네트워크를 확인해 주세요."], ["positive", "완료", "엑셀 다운로드가 끝났어요."]];
 function App() {
-  return h('div', { className: 'ds-col', style: { alignItems: 'flex-start' } },
-    h(D.Toast, { type: 'dark', action: h(D.Button, { color: 'inverse', variant: 'ghost', size: 'sm' }, '실행 취소') }, '보고서를 삭제했습니다.'),
-    h(D.Toast, { type: 'positive', onClose: function () {} }, '저장했습니다.'),
-    h(D.Toast, { type: 'negative', onClose: function () {} }, '네트워크 연결을 확인하세요.'));
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-2)", alignItems: "flex-start" } }, T.map(function (t, i) {
+    return h(D.Toast, { key: t[0], type: t[0], title: t[1], action: i === 0 ? h(D.Button, { color: "inverse", variant: "soft", size: "md" }, "보기") : null, onClose: function () {} }, t[2]);
+  }));
 }
-ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
 </script>
 </body>
 </html>

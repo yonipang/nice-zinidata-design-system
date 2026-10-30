@@ -1,0 +1,30 @@
+<!-- @dsCard group="Tables" height=640 subtitle="조작 셀 — Table Checkbox · Radio(1~5개) · Switch · Segment · Button(CTA · Icon × fit · fill) · Actions(0~3 + 더보기)" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var C = D.TableCell; function grid(cols, items) { return h("div", { style: { display: "grid", gridTemplateColumns: "repeat(" + cols + ", minmax(0, 1fr))", gap: "var(--spacing-3)", alignItems: "start" } }, items); }
+function cap2(t, el) { return h("div", { className: "ds-col", style: { gap: 4 } }, h("span", { style: { fontSize: 12, lineHeight: "14px", color: "var(--text-body-subtle)" } }, t), el); }
+function RG(p) { var s = React.useState(0), v = s[0], set = s[1]; return h("span", { className: "ds-row", style: { gap: 24 } }, ["일", "주", "월", "분기", "연"].slice(0, p.n).map(function (l, i) { return h(D.Radio, { key: i, size: "xs", variant: "secondary", label: l, checked: v === i, onChange: function () { set(i); } }); })); }
+function App() {
+  var acts = [{ icon: "eye", label: "보기" }, { icon: "edit", label: "수정" }, { icon: "delete-bin", label: "삭제" }];
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-5)" } },
+    sect("Checkbox · Switch · Segment", grid(3, [cap2("Checkbox", h(C, { size: "xl" }, h(D.Checkbox, { size: "xs", checked: true }))), cap2("Switch(2xs)", h(C, { size: "xl" }, h(D.Switch, { size: "2xs", checked: true }))), cap2("Segment(Primary sm)", h(C, { size: "xl", style: { padding: "6px 12px" } }, h(D.SegmentPrimary, { size: "sm", items: [{ value: "a", label: "매출" }, { value: "b", label: "건수" }], defaultValue: "a" })))])),
+    sect("Radio — 1~5개(사이 24, secondary xs)", h("div", { className: "ds-col", style: { gap: 8 } }, [1, 2, 3, 4, 5].map(function (n) { return h(C, { key: n, size: "xl" }, h(RG, { n: n })); }))),
+    sect("Button — CTA · Icon × fit · fill", grid(2, [cap2("CTA · fit", h(C, { size: "xl", style: { padding: "6px 12px" } }, h(D.Button, { color: "primary", variant: "solid", size: "sm" }, "리포트 보기"))), cap2("Icon · fit", h(C, { size: "xl", style: { padding: "6px 12px" } }, h(D.IconButton, { icon: "file-excel-2", label: "엑셀", size: "sm" }))), cap2("CTA · fill", h(C, { size: "xl", style: { padding: "6px 12px" } }, h(D.Button, { color: "primary", variant: "solid", size: "sm", fullWidth: true }, "리포트 보기"))), cap2("CTA + 보조 버튼", h(C, { size: "xl", style: { padding: "6px 12px", gap: 4 } }, h(D.Button, { color: "primary", variant: "solid", size: "sm" }, "승인"), h(D.Button, { color: "neutral", variant: "base", size: "sm" }, "반려")))])),
+    sect("Actions — 0~3개 + 더보기(아이콘 16, 사이 6)", grid(4, [0, 1, 2, 3].map(function (n) { return cap2(n + "개", h(C, { size: "xl" }, h(D.TableActions, { actions: acts.slice(0, n) }))); }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

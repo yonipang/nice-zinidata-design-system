@@ -1,24 +1,26 @@
-<!-- @dsCard group="Badges" height=144 subtitle="neutral · positive · accent(진행중, 항상 파랑) · warning · negative" -->
+<!-- @dsCard group="Badges" height=300 subtitle="상태 배지 — soft · solid · 5가지 의미 · xs · sm · 테두리 · pill · 아이콘" -->
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><title>StatusBadge — preview</title>
+<head><meta charset="utf-8"><title>preview</title>
 <style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
 </head>
 <body>
 <div id="root" class="ds-root pv"></div>
 <script>
 var D = window.DS, h = React.createElement;
-function cap(t) { return h('p', { className: 'pv-cap' }, t); }
-function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
-function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
-var C = [['neutral', '대기'], ['accent', '진행중'], ['positive', '완료'], ['warning', '확인 필요'], ['negative', '취소']];
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var C = [["neutral", "대기"], ["accent", "진행 중"], ["positive", "완료"], ["warning", "확인 필요"], ["negative", "실패"]];
+function line(p) { return h("div", { className: "ds-row", style: { gap: "var(--spacing-2)", alignItems: "center" } }, C.map(function (c) { return h(D.StatusBadge, Object.assign({ key: c[0], color: c[0] }, p), c[1]); })); }
 function App() {
-  return h(React.Fragment, null,
-    sect('soft · xs', row.apply(null, C.map(function (c) { return h(D.StatusBadge, { key: c[0], color: c[0] }, c[1]); }))),
-    sect('soft · sm · pill · dot / solid', row.apply(null, C.map(function (c) { return h(D.StatusBadge, { key: c[0], color: c[0], size: 'sm', shape: 'pill', dot: true }, c[1]); })
-      .concat(C.map(function (c) { return h(D.StatusBadge, { key: 's' + c[0], color: c[0], variant: 'solid' }, c[1]); })))));
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-4)" } },
+    sect("soft · sm(24)", line({ size: "sm" })), sect("soft · xs(20)", line({})), sect("solid · sm", line({ size: "sm", variant: "solid" })),
+    sect("테두리 · pill · 아이콘 · 점", h("div", { className: "ds-row", style: { gap: "var(--spacing-2)", alignItems: "center" } }, h(D.StatusBadge, { size: "sm", color: "accent", border: true }, "진행 중"), h(D.StatusBadge, { size: "sm", color: "positive", shape: "pill" }, "완료"), h(D.StatusBadge, { size: "sm", color: "negative", iconLeft: "close" }, "실패"), h(D.StatusBadge, { color: "warning", dot: true }, "확인 필요"))));
 }
-ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
 </script>
 </body>
 </html>

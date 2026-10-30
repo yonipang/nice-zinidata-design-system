@@ -1,36 +1,38 @@
-<!-- @dsCard group="Table" height=572 subtitle="PC 표 — 행 36 · 헤더 줄 배경 · 숫자 오른쪽 정렬 · 차트 아래 표" -->
+<!-- @dsCard group="Tables" height=760 subtitle="데이터 표 — 순위 · 제목 셀 · 숫자 + 증감 · 상태 · 배지 · 막대 · 동작 · 선택 · 첫 열 고정" -->
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><title>Table — preview</title>
+<head><meta charset="utf-8"><title>preview</title>
 <style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
 </head>
 <body>
 <div id="root" class="ds-root pv"></div>
 <script>
 var D = window.DS, h = React.createElement;
-function cap(t) { return h('p', { className: 'pv-cap' }, t); }
-function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
-function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
-var S = D.chartSeries;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var ROWS = [
+  { id: 1, rank: 1, name: "카페", sub: "음식점 > 비알코올", sales: "4,820", ch: { type: "increase", value: "4.8%" }, status: ["positive", "성장", "done"], tags: ["테이크아웃", "직장인"], share: [{ value: 14, color: "var(--fill-primary-main)", text: "var(--text-primary-main)" }, { value: 86, color: "var(--chart-series-2)", text: "var(--chart-series-2)" }], visit: 62 },
+  { id: 2, rank: 2, name: "한식", sub: "음식점 > 한식", sales: "3,910", ch: { type: "decrease", value: "1.2%" }, status: ["neutral", "유지", "not-started"], tags: ["가족"], share: [{ value: 41, color: "var(--fill-primary-main)", text: "var(--text-primary-main)" }, { value: 59, color: "var(--chart-series-2)", text: "var(--chart-series-2)" }], visit: 48 },
+  { id: 3, rank: 3, name: "편의점", sub: "소매 > 종합", sales: "2,770", ch: { type: "increase", value: "0.6%" }, status: ["accent", "신규 3곳", "in-progress"], tags: ["24시간", "1인"], share: [{ value: 30, color: "var(--fill-primary-main)", text: "var(--text-primary-main)" }, { value: 70, color: "var(--chart-series-2)", text: "var(--chart-series-2)" }], visit: 35 },
+  { id: 4, rank: 4, name: "베이커리", sub: "음식점 > 제과", sales: "1,240", ch: { type: "decrease", value: "3.4%" }, status: ["negative", "감소", "cancel"], tags: ["주말"], share: [{ value: 22, color: "var(--fill-primary-main)", text: "var(--text-primary-main)" }, { value: 78, color: "var(--chart-series-2)", text: "var(--chart-series-2)" }], visit: 21 }];
+var COLS = [
+  { key: "rank", label: "순위", width: 56, align: "center", fixed: true, render: function (v) { return h(D.TableRank, { rank: v }); } },
+  { key: "name", label: "업종", width: 150, fixed: true, render: function (v, r) { return h(D.TableTitle, { label: r.sub }, v); } },
+  { key: "sales", label: "월 평균 매출(만원)", numeric: true, width: 150, tooltip: "카드 결제 기준", render: function (v, r) { return h(D.TableNumber, { change: r.ch }, v); } },
+  { key: "status", label: "상태", width: 96, render: function (v) { return h(D.TableStatus, { status: v[2] }, v[1]); } },
+  { key: "tags", label: "특징", render: function (v) { return h(D.TableBadges, { items: v.slice(0, 2) }); } },
+  { key: "share", label: "온라인 · 오프라인", width: 170, render: function (v) { return h(D.TableBar, { quiet: true, segments: v }); } },
+  { key: "visit", label: "재방문율", width: 150, render: function (v) { return h(D.TableBar, { quiet: true, value: v, max: 100, label: "재방문 고객" }); } },
+  { key: "act", label: "", width: 72, render: function () { return h(D.TableActions, { actions: [{ icon: "edit", label: "수정" }] }); } }];
 function App() {
-  var cols = [
-    { key: 'name', label: '업종' },
-    { key: 'cnt', label: '점포 수', numeric: true },
-    { key: 'sales', label: '월 평균 매출(만원)', numeric: true },
-    { key: 'st', label: '상태', render: function (v) { return h(D.StatusBadge, { color: v === '진행중' ? 'accent' : v === '완료' ? 'positive' : 'neutral' }, v); } },
-    { key: 'act', label: '', align: 'right', render: function () { return h(D.Button, { color: 'neutral', variant: 'base', size: 'sm' }, '보기'); } }];
-  var rows = [{ name: '한식', cnt: '1,204', sales: '4,820', st: '완료' }, { name: '카페', cnt: '864', sales: '2,310', st: '진행중' }, { name: '치킨', cnt: '412', sales: '3,075', st: '대기', _selected: 'primary' }];
-  var chartCols = [{ key: 'm', label: '월' }, { key: 'a', label: '강남구', numeric: true, legendColor: S[0] }, { key: 'b', label: '서초구', numeric: true, legendColor: S[1] }, { key: 'n', label: '점포 표본수', numeric: true }];
-  var chartRows = [{ m: '7월', a: '4,210', b: '3,880', n: '312' }, { m: '8월', a: '4,560', b: '3,920', n: '318' }, { m: '9월', a: '4,820', b: '4,105', n: '321' }];
-  return h(React.Fragment, null,
-    sect('흰 헤더 table-header-main · 줄마다 반복 버튼은 Neutral base sm · 선택 줄 table-row-selected-primary', h(D.Table, { columns: cols, rows: rows })),
-    sect('회색 헤더 table-header-subtle · 차트 아래 표(시리즈 칸에 차트와 같은 색 네모)', h(D.Table, { header: 'subtle', columns: chartCols, rows: chartRows })),
-    sect('교차표 — 상위 헤더 가운데 · 하위 헤더 2줄', h(D.Table, { header: 'subtle',
-      groups: [{ label: '지역', rowSpan: 2 }, { label: '20대', span: 2 }, { label: '30대', span: 2 }],
-      columns: [{ key: 'r', label: '지역', hideHeader: true }, { key: 'a', label: '여성', numeric: true }, { key: 'b', label: '남성', numeric: true }, { key: 'c', label: '여성', numeric: true }, { key: 'd', label: '남성', numeric: true }],
-      rows: [{ r: '강남구', a: '18.2%', b: '15.4%', c: '21.0%', d: '19.6%' }, { r: '서초구', a: '14.8%', b: '13.1%', c: '19.9%', d: '18.3%' }] })));
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-6)" } },
+    sect("업종별 상권 현황 — 순위 · 제목 셀 · 숫자 + 증감 · 상태 배지 · 배지 · 막대 · 동작, 체크박스로 선택, 순위 · 업종 열 고정", h("div", { style: { maxWidth: 1000 } }, h(D.Table, { columns: COLS, rows: ROWS, selectable: true }))),
+    sect("흰 머리(header=main) — 머리 글자 옅게 · 줄무늬", h(D.Table, { header: "main", striped: true, columns: [{ key: "a", label: "점포명" }, { key: "b", label: "개업일" }, { key: "c", label: "매출(만원)", numeric: true }], rows: [{ a: "영통점", b: "2021.03.02", c: "1,284" }, { a: "광교점", b: "2022.07.15", c: "980" }, { a: "망포점", b: "2024.01.20", c: "642" }] })));
 }
-ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
 </script>
 </body>
 </html>

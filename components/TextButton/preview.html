@@ -1,0 +1,24 @@
+<!-- @dsCard group="Actions" height=200 subtitle="판 없는 글자형 · 3xs 16 · 2xs 20 · xs 24 · 아이콘 좌우" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row" }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function App() {
+  return h("div", { className: "ds-col" },
+    sect("크기 3xs · 2xs · xs (neutral)", row(h(D.TextButton, { size: "3xs" }, "전체 보기"), h(D.TextButton, { size: "2xs" }, "전체 보기"), h(D.TextButton, { size: "xs" }, "전체 보기"))),
+    sect("색 · 아이콘 · 상태", row(h(D.TextButton, { color: "neutral-subtle", iconLeft: "question" }, "도움말"), h(D.TextButton, { color: "primary", iconRight: "chevron-right" }, "더보기"), h(D.TextButton, { state: "hover" }, "hover 밑줄"), h(D.TextButton, { state: "disabled" }, "disabled"))),
+    h("div", { style: { background: "var(--surface-inverse-main)", padding: "var(--spacing-3)", borderRadius: "var(--rounded-surface-xs)" } }, h(D.TextButton, { color: "inverse", iconRight: "chevron-right" }, "inverse")));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

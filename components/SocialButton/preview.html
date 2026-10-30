@@ -1,0 +1,24 @@
+<!-- @dsCard group="Actions" height=230 subtitle="카카오 로그인 · brand(브랜드 노랑, 예외) · secondary · 아이콘형 · 꽉 채움" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row" }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function App() {
+  return h("div", { className: "ds-col" },
+    sect("brand · secondary (xl)", row(h(D.SocialButton, null), h(D.SocialButton, { variant: "secondary" }), h(D.SocialButton, { type: "icon" }), h(D.SocialButton, { type: "icon", variant: "secondary" }))),
+    sect("justify — 폼 폭 꽉 채움(2xl)", h("div", { style: { width: 320 } }, h(D.SocialButton, { size: "2xl", align: "justify" }))),
+    sect("크기 sm · md · lg · xl · 2xl", row.apply(null, SIZES.map(function (z) { return h(D.SocialButton, { key: z, size: z }); }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

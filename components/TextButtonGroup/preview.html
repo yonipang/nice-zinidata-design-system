@@ -1,0 +1,26 @@
+<!-- @dsCard group="Actions" height=220 subtitle="구분선 글자 전환 · default · primary · xs~base" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var O = ["최신순", "인기순", "가격순"];
+function App() {
+  return h("div", { className: "ds-col" },
+    sect("default · md (선택 = 진한 글자 medium)", S(D.TextButtonGroup, { items: O, value: "최신순" })),
+    sect("primary · md (선택 = 파란 글자)", S(D.TextButtonGroup, { style: "primary", items: O, value: "인기순" })),
+    sect("글자 크기 xs · sm · md · base", h("div", { className: "ds-col" }, ["xs", "sm", "md", "base"].map(function (z) { return h(D.TextButtonGroup, { key: z, fontSize: z, items: O, value: "최신순" }); }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

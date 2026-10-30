@@ -1,0 +1,33 @@
+<!-- @dsCard group="Tables" height=900 subtitle="글자 셀 — Table Text: text · number · trend · rank × data · title × 왼쪽 · 가운데 · 오른쪽 + 배지 · 아이콘 · 설명 · Table Contents" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var C = D.TableCell; function grid(cols, items) { return h("div", { style: { display: "grid", gridTemplateColumns: "repeat(" + cols + ", minmax(0, 1fr))", gap: "var(--spacing-3)", alignItems: "start" } }, items); }
+function cap2(t, el) { return h("div", { className: "ds-col", style: { gap: 4 } }, h("span", { style: { fontSize: 12, lineHeight: "14px", color: "var(--text-body-subtle)" } }, t), el); }
+function App() {
+  var al = ["left", "center", "right"];
+  function txt(a, title) { return title ? h(D.TableTitle, { label: "음식점 > 비알코올", icon: a === "left" ? "function" : undefined }, "카페") : h("span", null, "카페"); }
+  function num(a, title) { return h(D.TableNumber, { strong: title, change: { type: "increase", value: "4.8%" } }, "4,820"); }
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-5)" } },
+    sect("text · data / title", grid(3, al.map(function (a) { return cap2("data · " + a, h(C, { align: a }, txt(a))); }).concat(al.map(function (a) { return cap2("title · " + a, h(C, { align: a }, txt(a, true))); })))),
+    sect("number · data / title (숫자 + 증감)", grid(3, al.map(function (a) { return cap2("data · " + a, h(C, { align: a }, num(a))); }).concat(al.map(function (a) { return cap2("title · " + a, h(C, { align: a }, num(a, true))); })))),
+    sect("trend · 증감만", grid(3, al.map(function (a, i) { return cap2(a, h(C, { align: a }, h(D.ChangeBadge, { type: ["increase", "decrease", "neutral"][i], label: "전월대비" }, ["4.8%", "1.2%", "0%"][i]))); }))),
+    sect("rank · 1~3위 메달 · 4위부터 숫자", grid(3, al.map(function (a) { return cap2(a, h(C, { align: a }, h("span", { className: "ds-row", style: { gap: 12 } }, [1, 2, 3, 4, 12].map(function (n) { return h(D.TableRank, { key: n, rank: n }); })))); }))),
+    sect("+ 배지 · 아이콘 · 설명 / Table Contents(긴 글)", grid(2, [cap2("배지 · 아이콘 · 설명", h(C, null, h(D.Icon, { name: "store-2" in {} ? "function" : "function", size: 18 }), h("span", { className: "ds-col", style: { gap: 2 } }, h("span", { className: "ds-row", style: { gap: 6 } }, "영통점", h(D.CategoryBadge, { color: "white", border: true }, "NEW")), h("span", { style: { fontSize: 13, color: "var(--text-body-subtle)" } }, "수원시 영통구")))),
+      cap2("Table Contents — 여러 줄 글(여백 4/12)", h(C, { style: { padding: "4px 12px", alignItems: "flex-start" } }, h("span", { style: { whiteSpace: "normal" } }, "평일 점심 시간대 매출이 가장 높고, 주말에는 가족 단위 고객 비중이 늘어나요. 테이크아웃 비중이 62%로 상권 평균보다 높아요.")))])));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

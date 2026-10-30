@@ -1,0 +1,26 @@
+<!-- @dsCard group="Actions" height=250 subtitle="outline · base × neutral · primary, 켜짐 · 꺼짐, sm~2xl" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row" }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function T(p) { var s = React.useState(!!p.active), on = s[0], set = s[1]; var q = Object.assign({}, p, { active: on, onClick: function () { set(!on); } }); return h(D.ToggleButton, q, p.children); }
+function App() {
+  return h("div", { className: "ds-col" },
+    sect("outline — 켜지면 solid 판 (눌러서 켜고 끄기)", row(h(T, { active: true }, "전체"), h(T, null, "매출"), h(T, { color: "primary", active: true }, "primary"), h(T, { color: "primary" }, "primary"))),
+    sect("base — 켜지면 진한 테두리", row(h(T, { variant: "base" }, "점포 수"), h(T, { variant: "base", active: true }, "neutral"), h(T, { variant: "base", color: "primary", active: true }, "primary"))),
+    sect("크기 sm · md · lg · xl · 2xl", row.apply(null, SIZES.map(function (z) { return h(T, { key: z, size: z, iconLeft: "check" }, z); }))),
+    sect("disabled — 누를 수 없음", row(h(D.ToggleButton, { state: "disabled" }, "꺼짐"), h(D.ToggleButton, { state: "disabled", active: true }, "켜짐"))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!-- @dsCard group="Selection" height=300 subtitle="레이블 + Select 1~3개 + 버튼 + 도움말 · 세로 · 가로" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+function App() {
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-5)", maxWidth: 560 } },
+    sect("Select 1개 · 도움말", h(D.SelectWithLabel, { label: "업종", selects: [{ options: ["음식점", "카페", "편의점"], placeholder: "업종 선택" }], helper: "대분류 기준이에요." })),
+    sect("Select 3개 + 버튼", h(D.SelectWithLabel, { label: "지역", selects: [{ options: ["서울특별시", "경기도"], placeholder: "시 · 도" }, { options: ["강남구", "수원시"], placeholder: "시 · 군 · 구" }, { options: ["역삼동", "영통동"], placeholder: "읍 · 면 · 동" }], action: h(D.Button, { color: "neutral", variant: "base", size: "xl" }, "적용") })),
+    sect("가로", h(D.SelectWithLabel, { align: "horizontal", label: "기간", selects: [{ options: ["최근 7일", "최근 30일"], defaultValue: "최근 7일" }] })));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

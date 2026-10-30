@@ -1,4 +1,4 @@
-<!-- @dsCard group="Feedback" height=230 subtitle="물음표 아이콘 + 흰 말풍선 · elevation-3 · 위 · 아래 · 오른쪽" -->
+<!-- @dsCard group="Feedback" height=520 subtitle="도움말 말풍선 — Border(흰) · Solid(어두운) · 제목 · 닫기 · 꼬리 위치 · 늘 떠 있는 안내" -->
 <!doctype html>
 <html lang="ko">
 <head><meta charset="utf-8"><title>preview</title>
@@ -9,12 +9,20 @@
 <script>
 var D = window.DS, h = React.createElement;
 function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
 function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
 function App() {
-  return h("div", { style: { display: "flex", gap: "var(--spacing-16)", padding: "var(--spacing-16) var(--spacing-8) var(--spacing-4)", alignItems: "flex-start" } },
-    h("span", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontSize: 14 } }, "객단가", h(D.Tooltip, { open: true, position: "top", title: "객단가", content: "결제 금액을 결제 건수로 나눈 값입니다." })),
-    h("span", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontSize: 14 } }, "표본수", h(D.Tooltip, { open: true, position: "right", content: "분석에 쓴 점포 수입니다." })),
-    h("span", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontSize: 14 } }, "마우스를 올려 보세요", h(D.Tooltip, { position: "bottom", content: "hover · focus에서 열립니다." })));
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-6)" } },
+    sect("물음표에 마우스를 올리면 — Border(기본) · Solid · 제목", h("div", { className: "ds-row", style: { gap: "var(--spacing-6)", alignItems: "center" } },
+      h("span", { className: "ds-row", style: { gap: 4 } }, "객단가", h(D.Tooltip, { content: "결제 금액을 결제 건수로 나눈 값이에요.", position: "bottom" })),
+      h("span", { className: "ds-row", style: { gap: 4 } }, "표본수", h(D.Tooltip, { variant: "solid", content: "분석에 쓴 점포 수예요.", position: "bottom" })),
+      h("span", { className: "ds-row", style: { gap: 4 } }, "유동인구", h(D.Tooltip, { title: "유동인구", content: "통신사 기지국 데이터로 추정한 시간대별 인원이에요.", position: "right" })))),
+    sect("늘 떠 있는 안내(코치마크) — TooltipBubble: 대상 위(top) · 대상 아래(bottom) · 꼬리 없음(none) · 닫기", h("div", { className: "ds-row", style: { gap: "var(--spacing-6)", alignItems: "flex-start", flexWrap: "wrap", paddingTop: 8 } },
+      h(D.TooltipBubble, { position: "top", title: "새 기능", onClose: function () {} }, "지역을 2곳 고르면 비교 리포트를 볼 수 있어요."),
+      h(D.TooltipBubble, { variant: "solid", position: "bottom", title: "여기를 눌러요", onClose: function () {} }, "필터를 바꾸면 차트가 바로 바뀌어요."),
+      h(D.TooltipBubble, { position: "none" }, "꼬리 없는 말풍선 — 화면 가운데 안내"))));
 }
 ReactDOM.createRoot(document.getElementById("root")).render(h(App));
 </script>

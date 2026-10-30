@@ -12,12 +12,15 @@ function cap(t) { return h('p', { className: 'pv-cap' }, t); }
 function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
 function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
 var OPTS = [{ value: 'd', label: '최근 7일' }, { value: 'm', label: '최근 30일' }, { value: 'q', label: '최근 3개월' }, { value: 'x', label: '직접 입력', disabled: true }];
+function S2(p) { var s = React.useState(p.value), v = s[0], set = s[1], o = React.useState(false), op = o[0], setOp = o[1]; return h(D.Select, Object.assign({}, p, { value: v, open: op, onToggle: function () { setOp(!op); }, onChange: function (x) { set(x); setOp(false); } })); }
+var GROUPED = [{ heading: "최근" }, "최근 7일", "최근 30일", { heading: "분기" }, "1분기", "2분기"];
 function App() {
   var s = React.useState('m'), v = s[0], set = s[1];
   var o = React.useState(true), open = o[0], setOpen = o[1];
   return h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-3)', alignItems: 'start' } },
-    sect('line · 열림 (목록 elevation-3)', h(D.Select, { options: OPTS, value: v, open: open, onToggle: function () { setOpen(!open); }, onChange: function (x) { set(x); setOpen(false); } })),
-    sect('soft · md', h(D.Select, { variant: 'soft', size: 'md', options: OPTS, placeholder: '기간 선택' })),
+    sect('line · 열림 (목록 elevation-3, 떠 있는 판)', h('div', { style: { minHeight: 240 } }, h(D.Select, { options: OPTS, value: v, open: open, onToggle: function () { setOpen(!open); }, onChange: function (x) { set(x); setOpen(false); } }))),
+    sect('sm 28 · 왼쪽 아이콘 · 목록 제목(heading) · pill(line · soft)', h('div', { className: 'ds-col', style: { minHeight: 300 } }, h('div', { className: 'ds-row', style: { alignItems: 'flex-start' } }, h('div', { style: { width: 140 } }, h(D.Select, { size: 'sm', options: OPTS, defaultValue: 'd' })), h('div', { style: { width: 220 } }, h(D.Select, { icon: 'calendar', options: GROUPED, defaultValue: '최근 7일' })), h('div', { style: { width: 160 } }, h(D.Select, { shape: 'pill', size: 'md', options: OPTS, defaultValue: 'd' })), h('div', { style: { width: 160 } }, h(D.Select, { shape: 'pill', variant: 'soft', size: 'md', options: OPTS, defaultValue: 'd' }))))),
+    sect('soft · md — 기본값을 골라 둔 상태(빈 값 안내 없이)', h(S2, { variant: 'soft', size: 'md', options: OPTS, value: 'd' })),
     sect('ghost — 표 · 툴바 안', h(D.Select, { variant: 'ghost', size: 'md', options: OPTS, value: 'd' }), h('div', { style: { height: 'var(--spacing-3)' } }),
       cap('오류 · disabled'), h(D.Select, { negative: true, options: OPTS, placeholder: '선택하세요' }), h('div', { style: { height: 'var(--spacing-2)' } }), h(D.Select, { state: 'disabled', options: OPTS, placeholder: '선택 불가' })));
 }

@@ -1,0 +1,26 @@
+<!-- @dsCard group="Tables" height=300 subtitle="데이터 셀 — BarChart basic(막대 + % + 항목) · composition(두 칸 비율)" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var C = D.TableCell; function grid(cols, items) { return h("div", { style: { display: "grid", gridTemplateColumns: "repeat(" + cols + ", minmax(0, 1fr))", gap: "var(--spacing-3)", alignItems: "start" } }, items); }
+function cap2(t, el) { return h("div", { className: "ds-col", style: { gap: 4 } }, h("span", { style: { fontSize: 12, lineHeight: "14px", color: "var(--text-body-subtle)" } }, t), el); }
+var CY = [{ value: 14, color: "var(--fill-primary-main)", text: "var(--text-primary-main)" }, { value: 86 }];
+function App() {
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-5)" } },
+    sect("basic · composition", grid(3, [cap2("basic 20%", h(C, { style: { padding: "8px 12px" } }, h(D.TableBar, { value: 20, max: 100, label: "항목 1" }))), cap2("basic 62%", h(C, { style: { padding: "8px 12px" } }, h(D.TableBar, { value: 62, max: 100, label: "재방문 고객" }))), cap2("composition 14 : 86", h(C, { style: { padding: "8px 12px" } }, h(D.TableBar, { segments: CY })))])));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

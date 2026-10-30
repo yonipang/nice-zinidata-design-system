@@ -1,0 +1,24 @@
+<!-- @dsCard group="Inputs" height=520 subtitle="본인인증 — Type 1(아래 꽉 찬 버튼) · Type 2(옆 버튼), 인증 요청 → 재요청 + 인증번호 · 타이머" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+function App() {
+  return h("div", { className: "ds-row", style: { alignItems: "flex-start", gap: "var(--spacing-12)" } },
+    h("div", { style: { width: 360 } }, sect("Type 1 — 폼 폭 360(모바일 · 좁은 폼) · 번호를 입력하고 '인증 요청'을 눌러 보세요", h(D.PhoneVerification, { type: 1, title: "본인인증" }))),
+    h("div", { style: { width: 480 } }, sect("Type 2 — 폼 폭 480(넓은 폼) · 요청한 뒤 상태", h(D.PhoneVerification, { type: 2, title: "본인인증", phone: "01012345678", requested: true }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

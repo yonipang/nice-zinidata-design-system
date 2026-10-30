@@ -1,0 +1,26 @@
+<!-- @dsCard group="Inputs" height=330 subtitle="비밀번호 보기 전환 · focus 때 조건 카드 · line · soft" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+function App() {
+  var s = React.useState("abc12"), v = s[0], set = s[1];
+  var rules = [{ label: "8~20자 길이", ok: v.length >= 8 && v.length <= 20 }, { label: "영문자 포함", ok: /[a-zA-Z]/.test(v) }, { label: "숫자 포함", ok: /[0-9]/.test(v) }, { label: "특수문자(@$!%*#?&) 포함", ok: /[@$!%*#?&]/.test(v) }];
+  return h("div", { className: "ds-row", style: { alignItems: "flex-start", gap: "var(--spacing-6)" } },
+    h("div", { style: { width: 300, minHeight: 240 } }, sect("line · 입력해 보세요(조건 카드 고정 표시, 떠 있는 판)", h(D.Password, { value: v, onChange: function (e) { set(e.target.value); }, rules: rules, showRules: true, placeholder: "비밀번호" }))),
+    h("div", { style: { width: 300 } }, sect("soft · focus 때만 조건 카드", h(D.Password, { variant: "soft", placeholder: "비밀번호", rules: rules })), h("div", { style: { height: 12 } }), sect("disabled", h(D.Password, { state: "disabled", value: "password" }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>
