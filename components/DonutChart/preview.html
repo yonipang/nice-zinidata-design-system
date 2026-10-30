@@ -1,20 +1,28 @@
-<!-- @dsCard group="Charts" height=314 subtitle="도넛 기본형 — 가운데 합계" -->
+<!-- @dsCard group="Charts" height=380 subtitle="도넛(ECharts) — 가운데 합계 · 오른쪽 범례(%) · 항목 툴팁" -->
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><title>DonutChart — preview</title>
+<head><meta charset="utf-8"><title>preview</title>
 <style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
 </head>
 <body>
 <div id="root" class="ds-root pv"></div>
 <script>
 var D = window.DS, h = React.createElement;
-function cap(t) { return h('p', { className: 'pv-cap' }, t); }
-function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
-function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
 function App() {
-  return h(D.Card, { title: '업종 구성' }, h(D.DonutChart, { size: 180, centerLabel: '전체 점포', items: [{ name: '한식', value: 1204 }, { name: '카페', value: 864 }, { name: '치킨', value: 412 }, { name: '중식', value: 318 }, { name: '기타', value: 270 }] }));
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-4)" } }, h("div", { className: "ds-row", style: { gap: "var(--spacing-4)", alignItems: "stretch" } },
+    h("div", { style: { flex: 1 } }, h(D.Card, { title: "업종 구성", description: "반경 500m" }, h(D.DonutChart, { unit: "개", centerLabel: "전체 점포", items: [{ name: "한식", value: 1204 }, { name: "카페", value: 864 }, { name: "편의점", value: 410 }, { name: "치킨", value: 332 }, { name: "기타", value: 520 }] }))),
+    h("div", { style: { flex: 1 } }, h(D.Card, { title: "연령대 비중" }, h(D.DonutChart, { unit: "%", centerValue: "30대", centerLabel: "가장 많음", items: [{ name: "20대", value: 22 }, { name: "30대", value: 31 }, { name: "40대", value: 24 }, { name: "50대+", value: 23 }] }))),
+    h("div", { style: { flex: 1 } }, h(D.Card, { title: "결제 수단", description: "설명 글 없음 — 값만 가운데" }, h(D.DonutChart, { unit: "%", centerValue: "68%", items: [{ name: "카드", value: 68 }, { name: "간편결제", value: 23 }, { name: "현금", value: 9 }] })))),
+    sect("좁은 판(폭 300 · 모바일) — 도넛 위 · 범례 아래로 자동 전환", h("div", { className: "ds-row", style: { gap: "var(--spacing-4)", alignItems: "flex-start" } },
+      h("div", { style: { width: 300 } }, h(D.Card, { size: "sm", title: "업종 구성" }, h(D.DonutChart, { unit: "개", centerLabel: "전체 점포", items: [{ name: "한식", value: 1204 }, { name: "카페", value: 864 }, { name: "편의점", value: 410 }, { name: "치킨", value: 332 }, { name: "기타", value: 520 }] }))),
+      h("div", { style: { width: 300 } }, h(D.Card, { size: "sm", title: "월별 매출" }, h(D.BarChart, { unit: "만원", height: 200, categories: ["4월", "5월", "6월", "7월", "8월", "9월"], series: [{ name: "영통구", data: [4210, 4380, 4620, 4510, 4820, 4950] }, { name: "팔달구", data: [3890, 3920, 4010, 4180, 4230, 4300] }, { name: "장안구", data: [3100, 3150, 3300, 3280, 3420, 3500] }, { name: "권선구", data: [2900, 3000, 3050, 3120, 3200, 3260] }] }))))));
 }
-ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
 </script>
 </body>
 </html>

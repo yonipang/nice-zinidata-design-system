@@ -1,0 +1,26 @@
+<!-- @dsCard group="Lists" height=640 subtitle="펼침 목록 — Box(판) · Text(글만) × md · sm, 닫힘 · hover · 펼침" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var Q = [["리포트는 언제 갱신되나요?", "매일 오전 6시에 전날까지의 카드 결제 데이터로 갱신돼요."], ["상권 범위는 어떻게 정하나요?", "지도에서 고른 지점을 중심으로 반경 500m · 1km · 3km 중에서 고를 수 있어요."], ["엑셀로 내려받을 수 있나요?", "리포트 화면 오른쪽 위 '엑셀' 버튼으로 표와 차트 데이터를 내려받을 수 있어요."]];
+function App() {
+  return h("div", { className: "ds-row", style: { gap: "var(--spacing-6)", alignItems: "flex-start", flexWrap: "wrap" } },
+    h("div", { style: { width: 360, background: "var(--bg-subtler)", padding: 12, borderRadius: 16 } }, sect("Box · md (첫 줄 펼침)", h("div", { className: "ds-col", style: { gap: 8 } }, Q.map(function (q, i) { return h(D.Accordion, { key: i, title: q[0], defaultOpen: i === 0 }, q[1]); })))),
+    h("div", { style: { width: 300 } }, sect("Box · sm", h("div", { className: "ds-col", style: { gap: 8 } }, Q.slice(0, 2).map(function (q, i) { return h(D.Accordion, { key: i, size: "sm", title: q[0] }, q[1]); })))),
+    h("div", { style: { width: 300 } }, sect("Text · md / sm (판 없음, hover 파랑)", h("div", { className: "ds-col", style: { gap: 16 } }, h(D.Accordion, { variant: "text", title: Q[0][0], defaultOpen: true }, Q[0][1]), h(D.Accordion, { variant: "text", title: Q[1][0] }, Q[1][1]), h(D.Accordion, { variant: "text", size: "sm", title: Q[2][0] }, Q[2][1])))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

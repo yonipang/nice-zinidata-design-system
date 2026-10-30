@@ -1,6 +1,4 @@
 # LineChart
 
-선 기본형 — 2px 선 + 점.
-
-**Props** — BarChart와 같다(`categories` · `series` · `height`).
-- 시리즈 색 순서는 BarChart와 같은 임시 순서. PC와 모바일은 같은 데이터를 쓰고, 모바일 축 라벨은 듬성듬성 표시할 수 있다(표는 모든 행).
+선 차트(ECharts) — `categories` · `series` · `area`(아래 면적 그라데이션) · `smooth`(기본 곡선, false면 직선) · `unit` · `height` · `legend` · `label`.
+- 선 2 · 점 6(마우스를 올렸을 때만, 흰 테두리 2), 마우스 위치 세로 점선(`border-neutral-strong`). 색 · 축 · 툴팁 규칙은 BarChart와 같다.

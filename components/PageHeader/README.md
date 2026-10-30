@@ -1,9 +1,10 @@
 # PageHeader
 
-페이지 맨 위의 제목 영역. 경로(breadcrumb) · 작은 제목 · 제목 · 설명 · 오른쪽 버튼을 한 줄 구성으로 놓는다.
+페이지 맨 위 제목 영역(피그마 Page Header Wide · Narrow · Centered).
 
-**Props** — `title` · `titleSize` xl|2xl(기본)|3xl · `breadcrumb` 문자열 배열 · `smallTitle` · `description` · `tooltip` · `actions` · `divider` · `background` light|dark · `children`(제목 아래 콘텐츠 슬롯: 기간 탭 · 필터).
-- 페이지 제목은 `text-2xl-bold`(모바일 `text-xl-bold`), 3xl은 보고서 표지처럼 큰 제목에만. 설명은 `text-md-normal` + `text-body-subtle`.
-- 작은 제목은 `text-primary-main` medium — 보고서 섹션의 질문형 제목 위 분류 이름.
-- 오른쪽 버튼은 페이지의 주요 행동 1개만 solid(primary), 나머지는 Neutral base. 크기 md.
-- 제목 ~ 첫 섹션 간격은 `spacing-8` 32(모바일 24). divider를 켜면 아래 `divider-neutral-subtle`.
+**Props** — `layout` wide(기본)|narrow|centered · `type` simple|background · `background` light|dark · `titleSize` lg · xl · 2xl(기본) · 3xl · `breadcrumb`[] · `smallTitle`(centered 부제목) · `title` · `tooltip` · `description` · `actions`(오른쪽 버튼) · `children`(콘텐츠 슬롯: 탭 · 필터 등) · `divider`.
+- 경로(Breadcrumb) → 제목 16, 제목 · 설명 사이 8, 제목 줄 ↔ 콘텐츠 슬롯 · 구분선 32.
+- 제목 **bold** `text-heading-main`(xl 20 · 2xl 24 · 3xl 30, narrow는 lg 18부터), 설명 `text-sm` `text-body-main`, 부제목 `text-sm` semibold `text-body-subtle`(dark `text-inverse-body-subtle`), 도움말 question 16.
+- **wide**: 버튼이 제목 줄 오른쪽 아래 정렬. **narrow**(모바일 · 좁은 칸): 버튼이 제목 아래로(사이 16). **centered**: 모두 가운데, 경로 → 제목 32.
+- **background**: `surface-primary-subtlest` 판 · 여백 48/40 · `rounded-surface-xl`(32), 구분선 없음.
+- 구분선 `divider-neutral-subtle`.

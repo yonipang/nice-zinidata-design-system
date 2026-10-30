@@ -1,0 +1,36 @@
+<!-- @dsCard group="Map" height=620 subtitle="지도 검색 — floating · basic · soft · 결과 목록(찾은 글자 파랑) · 좁은 폭에서 모바일 막대" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var RESULTS = [{ title: "영통역 2번 출구", address: "경기 수원시 영통구 봉영로 1576", badge: "역" }, { title: "영통구청", address: "경기 수원시 영통구 청명북로 1", badge: "관공서" }, { title: "영통동 카페거리", address: "경기 수원시 영통구 영통동 1012-3" }, { title: "망포역", address: "경기 수원시 영통구 덕영대로 1702", badge: "역" }];
+var LOC = { "경기도": { "수원시 영통구": ["영통동", "매탄동", "원천동", "광교동", "망포동", "신동"], "수원시 팔달구": ["인계동", "우만동", "매교동"], "성남시 분당구": ["정자동", "서현동", "수내동"] }, "서울특별시": { "강남구": ["역삼동", "삼성동", "논현동"], "영등포구": ["여의도동", "당산동"], "마포구": ["합정동", "연남동"] }, "부산광역시": { "해운대구": ["우동", "중동"] }, "인천광역시": { "연수구": ["송도동"] }, "대구광역시": { "수성구": ["범어동"] }, "광주광역시": { "서구": ["치평동"] } };
+var LIST = [{ title: "영통 카페 A", addresses: ["경기 수원시 영통구 봉영로 1570", "영통동 1012-3"], labels: ["카페", "월 4,820만원", "리뷰 128"], badges: ["테이크아웃", "주차"] }, { title: "매탄 베이커리", addresses: ["경기 수원시 영통구 매탄로 22"], labels: ["베이커리", "월 2,140만원"], badges: ["NEW"] }, { title: "광교 한식당", addresses: ["경기 수원시 영통구 광교중앙로 140"], labels: ["한식", "월 3,910만원"] }];
+function Phone() {
+  var s = React.useState(null), pick = s[0], set = s[1];
+  return h("div", { style: { position: "relative", isolation: "isolate", width: 375, height: 640, borderRadius: 28, border: "8px solid var(--surface-inverse-main)", overflow: "hidden", background: "#eef0eb" } },
+    h("div", { className: "ds-mapbg", style: { zIndex: -1 } }),
+    h("div", { style: { background: "var(--surface-main)", borderBottom: "1px solid var(--divider-neutral-subtle)" } }, h(D.MapSearch, { mobile: true, placeholder: "분석하실 지역을 입력해주세요", results: RESULTS, recent: ["영통역", "광교 카페", "매탄동"], onSelect: function (r) { set(r); } })),
+    pick ? h("div", { style: { position: "absolute", left: "50%", top: "45%", transform: "translate(-50%, -100%)", zIndex: 1 } }, h(D.MapMarker, { name: pick.title, active: true })) : null);
+}
+function App() {
+  return h("div", { className: "ds-row", style: { gap: 24, alignItems: "flex-start", flexWrap: "wrap" } },
+    h("div", { className: "ds-col", style: { gap: 20, width: 360 } },
+      sect("floating(지도 위 · elevation-2) — '영통' 입력 상태", h("div", { style: { height: 300, background: "#eef0eb", padding: 12, borderRadius: 12 } }, h(D.MapSearch, { mobile: false, defaultValue: "영통", results: RESULTS, open: true }))),
+      sect("basic · soft", h("div", { className: "ds-col", style: { gap: 8 } }, h(D.MapSearch, { mobile: false, variant: "basic" }), h(D.MapSearch, { mobile: false, variant: "soft" })))),
+    h("div", { style: { width: 375 } }, sect("모바일 흐름 — 지도 화면 검색 막대를 누르면 검색 화면 → 최근 검색 · 입력하면 결과 → 고르거나 ← 누르면 지도 화면", h(Phone, null))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

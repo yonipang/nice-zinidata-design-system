@@ -1,26 +1,27 @@
-<!-- @dsCard group="Inputs" height=244 subtitle="레이블 → 입력창 → 도움말 · 오류" -->
+<!-- @dsCard group="Inputs" height=390 subtitle="레이블 · 입력 · 도움말 · md/xl 레이블 14, 2xl 15 · 세로 · 가로" -->
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><title>FormField — preview</title>
+<head><meta charset="utf-8"><title>preview</title>
 <style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
 </head>
 <body>
 <div id="root" class="ds-root pv"></div>
 <script>
 var D = window.DS, h = React.createElement;
-function cap(t) { return h('p', { className: 'pv-cap' }, t); }
-function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
-function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
 function App() {
-  return h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-6)' } },
-    h('div', { className: 'ds-col' },
-      h(D.FormField, { label: '상호명', required: true, helper: '사업자등록증의 상호와 같게 입력하세요.' }, h(D.Input, { placeholder: '상호명' })),
-      h(D.FormField, { label: '이메일', error: '이메일 형식이 아닙니다.' }, h(D.Input, { negative: true, value: 'store@' }))),
-    h('div', { className: 'ds-col' },
-      h(D.FormField, { label: '업종', optional: true }, h(D.Select, { options: ['한식', '중식', '카페'], placeholder: '업종 선택' })),
-      h(D.FormField, { label: '회원 아이디', helper: '수정할 수 없는 값은 read-only' }, h(D.Input, { state: 'read-only', value: 'zini_store01' }))));
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-5)", maxWidth: 520 } },
+    sect("세로 · xl (레이블 14 medium)", h(D.FormField, { label: "이메일", required: true, helper: "로그인 아이디로 쓰여요." }, h(D.Input, { placeholder: "name@company.com" }))),
+    sect("오류", h(D.FormField, { label: "점포명", tooltip: "등록된 사업자명과 같게 입력하세요.", error: "점포명을 입력해 주세요." }, h(D.Input, { negative: true, placeholder: "점포명" }))),
+    sect("가로 · 레이블 폭 120", h(D.FormField, { align: "horizontal", label: "연락처", optional: true }, h(D.Input, { placeholder: "010-0000-0000" }))),
+    sect("입력 2개 + 옆 버튼(action) — Select · Select · Neutral base", h(D.FormField, { label: "지역", action: h(D.Button, { color: "neutral", variant: "base", size: "xl" }, "적용") }, h(D.Select, { options: ["서울특별시", "부산광역시"], placeholder: "시 · 도" }), h(D.Select, { options: ["강남구", "서초구"], placeholder: "시 · 군 · 구" }))),
+    sect("2xl (레이블 15)", h(D.FormField, { size: "2xl", label: "이름" }, h(D.Input, { size: "2xl", placeholder: "이름" }))));
 }
-ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
 </script>
 </body>
 </html>

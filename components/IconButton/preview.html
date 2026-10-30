@@ -13,8 +13,8 @@ function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([]
 function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
 function App() {
   return h(React.Fragment, null,
-    sect('Icon Button — Color neutral · neutral-subtle · primary · negative, Size xs~2xl', row(
-      ['xs','sm','md','lg','xl','2xl'].map(function (s) { return h(D.IconButton, { key: s, icon: 'more-2', size: s, label: '더보기' }); }),
+    sect('Icon Button — Color neutral · neutral-subtle · primary · negative, Size 3xs~3xl', row(
+      ['3xs','2xs','xs','sm','md','lg','xl','2xl','3xl'].map(function (s) { return h(D.IconButton, { key: s, icon: 'more-2', size: s, label: '더보기' }); }),
       h(D.IconButton, { icon: 'close', color: 'neutral-subtle', label: '지우기' }), h(D.IconButton, { icon: 'edit', color: 'primary', label: '수정' }),
       h(D.IconButton, { icon: 'delete-bin', color: 'negative', label: '삭제' }), h(D.IconButton, { icon: 'settings-4', state: 'hover', label: 'hover' }), h(D.IconButton, { icon: 'eye', state: 'disabled', label: 'disabled' }))),
     sect('Text Button — 판 없음 · hover 밑줄', row(h(D.TextButton, null, '전체 보기'), h(D.TextButton, { color: 'neutral-subtle' }, '도움말'), h(D.TextButton, { color: 'primary', iconRight: 'chevron-right' }, '더보기'), h(D.TextButton, { color: 'primary', state: 'hover' }, 'hover'))));

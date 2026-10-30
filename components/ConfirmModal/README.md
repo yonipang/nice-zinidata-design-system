@@ -1,8 +1,8 @@
-# ConfirmModal
+# ConfirmModal · PopConfirm
 
-확인 · 삭제 확인 모달.
+**ConfirmModal**(피그마 Dialog/Confirm Modal) — 한 번 더 확인받는 대화상자.
+**Props** — `type` basic|negative · `title` · `children`(본문) · `align` left|center · `buttonWidth` fit|fill · `cancelLabel` · `confirmLabel` · `onCancel` · `onConfirm` · `onClose`(닫기 Icon Button lg) · `inline`(문서 안에 그대로) · `bare`(scrim 없이 판만).
+- 판: 폭 320 · `surface-main` · `border-neutral-strong` · `rounded-surface-lg` 24 · **여백 24(= 모서리)** · `elevation-4`, 뒤는 `surface-scrim`(바깥 누르면 닫힘).
+- 제목 `text-base` **bold** `text-heading-main`, 본문 `text-base` medium `text-body-main`(사이 8). 버튼 xl(위 20): 취소 Neutral soft + 확인 Primary solid / negative는 Negative solid.
 
-**Props** — `type` basic|negative · `title` · `children`(설명) · `confirmLabel` · `cancelLabel` · `onConfirm` · `onCancel` · `onClose` · `buttonWidth` fit|fill · `secondaryVariant`(프로젝트의 2순위 Style, 기본 soft) · `inline`(문서용, 고정 위치 없이).
-- 판 `surface-main` · 모서리 `rounded-surface-lg` 24 · 여백 24 · `elevation-4`, 뒤 덮개 `surface-scrim`. 폭 400(모바일은 화면 − 32, 최대 400).
-- 하단 버튼 lg, 주요 행동이 가장 오른쪽. 삭제 확인은 `type="negative"` + Negative solid.
-- 모바일 · 내용이 많으면 Bottom Sheet(모서리 `rounded-surface-md` 20 · 여백 20).
+**PopConfirm**(피그마 Dialog/Pop Confirm) — 버튼 옆에 뜨는 작은 확인. 폭 248 · **여백 14 = 모서리 `rounded-2xl` 14** · `elevation-4`, 제목 `text-sm` bold → 본문 `text-sm`(사이 4) → 버튼(위 12), 버튼 md(basic: 취소 Primary ghost + 확인 Primary solid / negative: Neutral soft + Negative solid).

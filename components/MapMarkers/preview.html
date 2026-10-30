@@ -1,0 +1,28 @@
+<!-- @dsCard group="Map" height=760 subtitle="지도 위 표시 — 원형 묶음(76~180 · 고른 것) · 네모 묶음 · 지도 배지(basic · 증가 · 감소 × outline · solid) · 핀 · 값 말풍선" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+function App() {
+  var bg = { background: "#eef0eb", padding: 20, borderRadius: 12, display: "flex", gap: 20, alignItems: "flex-end", flexWrap: "wrap" };
+  return h("div", { className: "ds-col", style: { gap: 20 } },
+    sect("원형 묶음(Circle Cluster) — 76 · 96 · 120 · 150 · 180, 고른 것, 테두리 링(Color Scale)", h("div", { style: bg }, [76, 96, 120, 150, 180].map(function (z, i) { return h(D.MapCluster, { key: z, size: z, label: ["망포동", "매탄동", "영통동", "영통구", "수원시"][i], count: ["412", "1,284", "8,920", "37,438", "137,438"][i], scale: i === 1 }); }), h(D.MapCluster, { size: 96, label: "영통동", count: "1,284", active: true }))),
+    sect("네모 묶음(Rectangle Cluster) · 지도 배지(_Base/Badge)", h("div", { style: bg }, h(D.MapRectCluster, { label: "카페", count: "123" }), h(D.MapRectCluster, { variant: "solid", label: "카페", count: "123", tip: "영통동" }), h(D.MapRectCluster, { label: "매출", count: "4,820", badge: { type: "up", children: "+7.27%" } }),
+      h("div", { className: "ds-col", style: { gap: 8 } }, h("div", { className: "ds-row", style: { gap: 6 } }, h(D.MapBadge, null, "레이블"), h(D.MapBadge, { type: "up" }, "+7.27%"), h(D.MapBadge, { type: "down" }, "-7.27%")), h("div", { className: "ds-row", style: { gap: 6 } }, h(D.MapBadge, { solid: true }, "레이블"), h(D.MapBadge, { type: "up", solid: true }, "+7.27%"), h(D.MapBadge, { type: "down", solid: true }, "-7.27%"))))),
+    sect("핀(Minimal Marker) · 값 말풍선(Callout Marker)", h("div", { style: bg }, h(D.MapMarker, { name: "영통 카페 A" }), h(D.MapMarker, { name: "영통 카페 A", active: true, tip: "월 4,820만원" }), h(D.MapMarker, { icon: "home-2", name: "우리 매장" }),
+      h(D.MapCallout, { label: "유동인구", value: "3.2만명" }), h(D.MapCallout, { title: "영통동", label: "월 평균 매출", value: "4,820만원", badges: [{ type: "up", solid: true, children: "+7%" }] }), h(D.MapCallout, { variant: "solid", label: "점포 수", value: "86개" }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

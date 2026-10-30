@@ -1,0 +1,26 @@
+<!-- @dsCard group="Feedback" height=600 subtitle="내용 대화상자 — Contents Modal(제목 base · xl · 설명 · 콘텐츠 · 버튼) · Icon Modal(결과 알림)" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+function App() {
+  return h("div", { style: { background: "var(--surface-scrim)", padding: "var(--spacing-6)", borderRadius: "var(--rounded-surface-sm)", display: "flex", gap: "var(--spacing-6)", alignItems: "flex-start", flexWrap: "wrap" } },
+    h(D.Modal, { bare: true, titleSize: "xl", title: "리포트 공유", description: "링크를 받은 사람은 로그인 없이 볼 수 있어요.", tooltip: "링크는 30일 동안 유지돼요.", onClose: function () {}, confirmLabel: "링크 복사" },
+      h(D.Input, { value: "https://nice.zini/r/8f2k", readOnly: true })),
+    h(D.IconModal, { bare: true, icon: "success", title: "신청이 완료됐어요", onClose: function () {} }, "담당자가 확인 후 영업일 기준 2일 안에 연락드려요."),
+    h(D.IconModal, { bare: true, icon: "negative", title: "결제에 실패했어요", confirmLabel: "다시 시도" }, "카드 정보를 확인한 뒤 다시 시도해 주세요."));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!-- @dsCard group="Map" height=1700 subtitle="지도 화면 배치(Templates v2.1) — 사이드 패널형 · 보고서 펼침 · 접힘 · floating형, 폭 1280 · 900 · 375 반응형" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var FILTERS = [{ label: "업종", title: "업종", options: ["외식업 전체", "한식", "카페", "치킨", "베이커리"], defaultValue: "외식업 전체" }, { label: "시장규모", title: "시장 규모", options: [{ label: "총 매출액", children: ["월별", "분기별", "연도별"] }, { label: "점포 수", children: ["전체", "개업", "폐업"] }, "결제건수", "점당 매출액"], defaultValue: "총 매출액 · 월별" }, { label: "고객구성", title: "고객 구성", options: ["성별", "연령대", "거주 · 직장"] }, { label: "요일/시간대", title: "요일 · 시간대", options: ["요일별", "시간대별", "주중 · 주말"] }, { label: "매장 형태", title: "매장 형태", options: ["전체", "프랜차이즈", "개인 매장"] }];
+var ITEMS = Array.from({ length: 8 }, function (_, i) { return { title: ["영통 카페 A", "매탄 베이커리", "광교 한식당", "망포 편의점", "원천 치킨", "영통 분식", "신동 카페 B", "광교 브런치"][i], addresses: ["경기 수원시 영통구 봉영로 15" + i + "0"], labels: ["전용면적 " + (60 + i * 5) + "㎡", "1순위 경쟁률 0.0" + (i + 2)] }; });
+function Tools(p) { return h(React.Fragment, null, h(D.MapTool, { icon: "user", label: "내 정보" }), h(D.MapMenu, { groups: [[{ icon: "ruler", label: "거리" }, { icon: "square", label: "면적" }, { icon: "circle", label: "반경" }]] }), h(D.MapTool, { icon: "add-circle", label: "커스텀", text: "커스텀" })); }
+function Bottom() { return h(React.Fragment, null, h(D.MapTool, { icon: "focus-3", label: "내 위치" }), h(D.MapMenu, { zoom: true })); }
+function Demo(p) {
+  var fs = React.useState({}), act = fs[0], setAct = fs[1];
+  return h(D.MapLayout, { type: p.type || "panel", height: p.h || 600, defaultReportOpen: p.report, defaultPanelOpen: p.open !== false,
+    search: h(D.MapSearch, { placeholder: "분석하실 지역을 입력해주세요" }),
+    filters: FILTERS,
+    list: function (api) { return ITEMS.map(function (it, i) { return h(D.MapListItem, Object.assign({ key: i, avatar: true, onClick: api.openReport }, it)); }); },
+    report: { title: "보고서 제목을 작성해주세요", content: h("div", { style: { height: "100%", minHeight: 400, borderRadius: 16, background: "var(--surface-subtler)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", color: "var(--text-body-subtle)", fontSize: 14 } }, "이 박스를 삭제하고", h("br"), "여기에 원하는 보고서 양식을 넣어주세요") },
+    topTools: h(Tools), bottomTools: h(Bottom), onSearchHere: function () {},
+    mobileTools: [{ icon: "ruler", label: "거리 재기" }, { icon: "square", label: "면적 재기" }, { icon: "circle", label: "반경 그리기" }, { icon: "add-circle", label: "커스텀" }], onLocate: function () {}, profile: h(D.MapTool, { icon: "user", label: "내 정보" }) },
+    h("div", { style: { position: "absolute", left: "62%", top: "38%" } }, h(D.MapMarker, { name: "영통 카페 A", active: true })),
+    h("div", { style: { position: "absolute", left: "74%", top: "58%" } }, h(D.MapMarker, { name: "매탄 베이커리" })),
+    h("div", { style: { position: "absolute", left: "52%", top: "64%" } }, h(D.MapMarker, { name: "광교 한식당" })));
+}
+function App() {
+  var s = React.useState("1280"), w = s[0], set = s[1];
+  return h("div", { className: "ds-col", style: { gap: 20 } },
+    sect("폭 바꿔 보기 — 목록 줄을 누르면 보고서가 열려요(보고서가 필터 위를 덮음), 왼쪽 손잡이로 접기", h("div", { className: "ds-col", style: { gap: 12 } },
+      h(D.SegmentNeutral, { size: "sm", items: [{ value: "1280", label: "PC 1280" }, { value: "900", label: "태블릿 900" }, { value: "375", label: "모바일 375" }], value: w, onChange: set }),
+      h("div", { style: { width: +w, maxWidth: "100%", overflow: "hidden" } }, h(Demo, { key: w, h: w === "375" ? 720 : 600 })))),
+    sect("사이드 패널 → 보고서 펼친 상태", h("div", { style: { width: 1280, maxWidth: "100%" } }, h(Demo, { report: true, h: 560 }))),
+    sect("사이드 패널 → 접힌 상태(현 지도에서 검색 · 필터가 검색과 함께 이동)", h("div", { style: { width: 1280, maxWidth: "100%" } }, h(Demo, { open: false, h: 480 }))),
+    sect("Floating type — 패널 없이 검색 + 필터만", h("div", { style: { width: 1280, maxWidth: "100%" } }, h(Demo, { type: "floating", h: 480 }))),
+    sect("모바일 도구 — 오른쪽 위 더보기(눌러서 거리 · 면적 · 반경 · 커스텀), 내 정보는 검색 막대 오른쪽, 오른쪽 아래 내 위치만(확대 · 축소는 두 손가락)", h("div", { className: "ds-row", style: { gap: 16, alignItems: "flex-start" } }, h("div", { style: { width: 375, flex: "none" } }, h(Demo, { type: "floating", h: 480 })), h("div", { style: { width: 375, flex: "none" } }, h(Demo, { h: 640 })))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

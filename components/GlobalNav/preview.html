@@ -10,13 +10,13 @@
 var D = window.DS, h = React.createElement;
 function cap(t) { return h("p", { className: "pv-cap" }, t); }
 function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
-var ITEMS = [{ value: "home", label: "홈" }, { value: "sales", label: "매출분석", hasMenu: true }, { value: "cust", label: "고객분석" }, { value: "area", label: "상권분석" }];
+var ITEMS = [{ value: "home", label: "홈" }, { value: "sales", label: "매출분석", menu: [{ heading: "매출", items: [{ value: "s-day", label: "일별 매출", description: "오늘 · 어제 · 지난주 비교" }, { value: "s-month", label: "월별 매출", description: "12개월 추이" }] }, { heading: "결제", items: [{ value: "s-card", label: "카드 결제", description: "카드사 · 할부" }, { value: "s-time", label: "시간대별", description: "요일 × 시간", disabled: true }] }] }, { value: "cust", label: "고객분석", menu: [{ items: [{ value: "c-new", label: "신규 고객" }, { value: "c-re", label: "재방문 고객" }] }] }, { value: "area", label: "상권분석" }];
 var LOGO = h("span", { style: { fontWeight: 700, fontSize: 18, letterSpacing: "-0.02em", color: "var(--text-heading-main)" } }, "NICE ZINIDATA");
 function App() {
-  var s = React.useState("sales"), v = s[0], set = s[1];
-  var right = h("div", { className: "ds-row" }, h(D.Button, { color: "primary", variant: "soft", size: "sm" }, "관리자"), h(D.IconButton, { icon: "user", label: "내 정보", size: "md" }));
-  return h("div", { style: { display: "flex", flexDirection: "column", gap: "var(--spacing-4)", background: "var(--bg-subtler)", padding: "var(--spacing-3)" } },
-    sect("ghost (기본) · hover는 state layer", h(D.GlobalNav, { items: ITEMS, value: v, onChange: set, logo: LOGO, right: right })),
+  var s = React.useState("s-month"), v = s[0], set = s[1];
+  var right = h("div", { className: "ds-row" }, h(D.Button, { color: "primary", variant: "soft", size: "sm" }, "관리자"), h(D.UserMenu, { user: { name: "김지니", sub: "jini@nice.co.kr" } }));
+  return h("div", { style: { display: "flex", flexDirection: "column", gap: "var(--spacing-4)", background: "var(--bg-subtler)", padding: "var(--spacing-3)", minHeight: 520 } },
+    sect("ghost (기본) — 메뉴에 마우스를 올리면 2depth 메뉴, 누르면 고정, 바깥 클릭 · Esc로 닫힘", h(D.GlobalNav, { items: ITEMS, value: v, onChange: set, logo: LOGO, right: right })),
     sect("underline · 가운데 정렬", h(D.GlobalNav, { tabStyle: "underline", align: "center", items: ITEMS, value: v, onChange: set, logo: LOGO, right: right })));
 }
 ReactDOM.createRoot(document.getElementById("root")).render(h(App));

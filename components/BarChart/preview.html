@@ -1,20 +1,27 @@
-<!-- @dsCard group="Charts" height=374 subtitle="막대 기본형 — 시리즈 색 임시 순서" -->
+<!-- @dsCard group="Charts" height=900 subtitle="막대(ECharts) — 세로 · 여러 계열 · 누적 · 가로 + 값 표시, 토큰 테마 · 툴팁" -->
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><title>BarChart — preview</title>
+<head><meta charset="utf-8"><title>preview</title>
 <style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
 </head>
 <body>
 <div id="root" class="ds-root pv"></div>
 <script>
 var D = window.DS, h = React.createElement;
-function cap(t) { return h('p', { className: 'pv-cap' }, t); }
-function row() { return h.apply(null, ['div', { className: 'ds-row' }].concat([].slice.call(arguments))); }
-function sect(t) { return h.apply(null, ['div', null, cap(t)].concat([].slice.call(arguments, 1))); }
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var M = ["4월", "5월", "6월", "7월", "8월", "9월"];
 function App() {
-  return h(D.Card, { title: '월별 매출', description: '단위: 만원' }, h(D.BarChart, { categories: ['7월', '8월', '9월'], series: [{ name: '강남구', data: [4210, 4560, 4820] }, { name: '서초구', data: [3880, 3920, 4105] }], height: 200 }));
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-5)" } },
+    h("div", { className: "ds-row", style: { gap: "var(--spacing-4)", alignItems: "stretch" } },
+      h("div", { style: { flex: 1 } }, h(D.Card, { title: "월별 매출", description: "단위: 만원 · 막대에 마우스를 올리면 툴팁" }, h(D.BarChart, { unit: "만원", categories: M, series: [{ name: "영통구", data: [4210, 4380, 4620, 4510, 4820, 4950] }, { name: "팔달구", data: [3890, 3920, 4010, 4180, 4230, 4300] }] }))),
+      h("div", { style: { flex: 1 } }, h(D.Card, { title: "결제 수단 구성", description: "누적 막대" }, h(D.BarChart, { stacked: true, unit: "%", categories: M, series: [{ name: "카드", data: [62, 64, 63, 66, 68, 70] }, { name: "간편결제", data: [24, 23, 25, 24, 23, 22] }, { name: "현금", data: [14, 13, 12, 10, 9, 8] }] })))),
+    h(D.Card, { title: "업종별 점포 수", description: "가로 막대 · 값 표시 · 한 계열" }, h(D.BarChart, { horizontal: true, showValues: true, unit: "개", height: 260, categories: ["카페", "한식", "편의점", "치킨", "베이커리", "분식"], series: [{ name: "점포 수", data: [86, 72, 41, 33, 21, 18] }] })));
 }
-ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
 </script>
 </body>
 </html>

@@ -1,0 +1,31 @@
+<!-- @dsCard group="Navigation" height=520 subtitle="모바일 · 팝업 제목 줄(Title bar) · 모바일 상단 바(NavLogo) · 전체 메뉴(NavDrawer)" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var LOGO = h("span", { style: { fontWeight: 700, fontSize: 16, color: "var(--text-heading-main)" } }, "NICE ZINIDATA");
+var G = [{ heading: "분석", items: [{ value: "a", label: "상권 분석", description: "지역 · 업종별 현황" }, { value: "b", label: "매출 분석", description: "일 · 월 매출 추이" }] }, { heading: "내 정보", items: [{ value: "c", label: "설정" }] }];
+function App() {
+  var s = React.useState("a"), v = s[0], set = s[1];
+  var box = { width: 360, border: "1px solid var(--border-neutral-subtle)", borderRadius: "var(--rounded-surface-xs)", overflow: "hidden" };
+  return h("div", { className: "ds-row", style: { alignItems: "flex-start", gap: "var(--spacing-6)" } },
+    h("div", { className: "ds-col", style: { gap: "var(--spacing-4)" } },
+      sect("TitleBar — 뒤로 · 제목 · 배지 · 닫기(왼쪽 정렬)", h("div", { style: box }, h(D.TitleBar, { title: "리포트 상세", badge: "NEW", onBack: function () {}, onClose: function () {} }))),
+      sect("TitleBar — 가운데 정렬 · 스크롤됨(아래 선)", h("div", { style: box }, h(D.TitleBar, { align: "center", title: "필터", onBack: function () {}, scrolled: true }))),
+      sect("MobileNav — 로고 + 메뉴", h("div", { style: box }, h(D.MobileNav, { logo: LOGO, onMenu: function () {} })))),
+    sect("NavDrawer — 프로필 · 묶음 · 구분선", h("div", { style: box }, h(D.NavDrawer, { profile: { name: "김지니", sub: "기획팀", action: h(D.Button, { color: "neutral", variant: "base", size: "md" }, "로그아웃") }, groups: G, value: v, onChange: set }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

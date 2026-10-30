@@ -1,0 +1,31 @@
+<!-- @dsCard group="Select" height=560 subtitle="칩 — neutral · soft · ghost · primary × gray · brand × md · sm · xs · 2xs, pill · 테두리 · 아이콘 · 값 · 지우기" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+var V = ["neutral", "soft", "ghost", "primary"];
+function App() {
+  var s = React.useState(["카페", "한식"]), sel = s[0], set = s[1];
+  function tog(n) { set(sel.indexOf(n) >= 0 ? sel.filter(function (x) { return x !== n; }) : sel.concat([n])); }
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-5)", background: "var(--bg-subtler)", padding: 16, borderRadius: 16 } },
+    sect("style × color (md)", h("div", { className: "ds-col", style: { gap: 8 } }, ["gray", "brand"].map(function (c) { return h("div", { key: c, className: "ds-row", style: { gap: 8 } }, V.map(function (v) { return h(D.Chip, { key: v, variant: v, color: c }, v + " · " + c); }), V.map(function (v) { return h(D.Chip, { key: v + "b", variant: v, color: c, border: true }, "테두리"); })); }))),
+    sect("크기 md 32 · sm 26 · xs 24 · 2xs 18 / pill", h("div", { className: "ds-row", style: { gap: 8, alignItems: "center" } }, ["md", "sm", "xs", "2xs"].map(function (z) { return h(D.Chip, { key: z, size: z, border: true, onRemove: function () {} }, z); }), h(D.Chip, { shape: "pill", variant: "soft", color: "brand" }, "pill"))),
+    sect("쓰임새 — 고른 필터 조건(지우기) · 선택 옵션(selectable: 누르면 primary · brand + ✓)", h("div", { className: "ds-col", style: { gap: 10 } },
+      h("div", { className: "ds-row", style: { gap: 8 } }, h(D.Chip, { border: true, size: "sm", value: "영통구", onRemove: function () {} }, "지역"), h(D.Chip, { border: true, size: "sm", value: "카페 외 2", onRemove: function () {} }, "업종"), h(D.Chip, { border: true, size: "sm", value: "최근 3개월", onRemove: function () {} }, "기간"), h(D.TextButton, { size: "2xs", color: "neutral-subtle" }, "전체 지우기")),
+      h("div", { className: "ds-row", style: { gap: 8 } }, ["카페", "한식", "편의점", "치킨", "베이커리"].map(function (n, i) { return h(D.Chip, { key: n, selectable: true, defaultSelected: i < 2, size: "sm", shape: "pill", border: true }, n); })),
+      h("div", { className: "ds-row", style: { gap: 8 } }, ["전체", "20대", "30대", "40대", "50대+"].map(function (n, i) { return h(D.Chip, { key: n, selectable: true, defaultSelected: i === 2, size: "xs", variant: "soft" }, n); })))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

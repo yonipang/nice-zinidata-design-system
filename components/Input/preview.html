@@ -1,4 +1,4 @@
-<!-- @dsCard group="Inputs" height=432 subtitle="line · soft · inverse × md · xl · 2xl, 상태" -->
+<!-- @dsCard group="Inputs" height=572 subtitle="line · soft · inverse × md · xl · 2xl, 상태" -->
 <!doctype html>
 <html lang="ko">
 <head><meta charset="utf-8"><title>Input — preview</title>
@@ -20,6 +20,8 @@ function App() {
       h(D.Input, { variant: 'soft', placeholder: '검색어 입력' }), h(D.Input, { variant: 'soft', state: 'hover', placeholder: 'hover' }), h(D.Input, { variant: 'soft', state: 'focus', value: '강남구' }))),
     sect('오류 · read-only · disabled', h('div', { style: g },
       h(D.Input, { negative: true, value: 'abc@' }), h(D.Input, { state: 'read-only', value: 'ORD-2026-00125' }), h(D.Input, { state: 'disabled', placeholder: '입력할 수 없음' }))),
+    sect('입력창 안 글자 버튼(textButton) — 중복 확인 · 주소 찾기 (본인인증은 PhoneVerification)', h('div', { style: g }, h(D.Input, { value: 'nicezini', textButton: { label: '중복 확인' } }), h(D.Input, { placeholder: '우편번호', textButton: { label: '주소 찾기' } }), h(D.Input, { variant: 'soft', placeholder: '추천인 코드', textButton: { label: '적용' } }))),
+    sect('Shape=pill 예시 — 검색 · 필터 줄처럼 늘어선 조건에만(폼 안 입력창은 rounded)', h('div', { style: { width: 280 } }, h(D.Input, { shape: 'pill', iconLeft: 'search', placeholder: '키워드 입력' }))),
     sect('Size md 32 · xl 40(기본) · 2xl 48', h('div', { style: g },
       h(D.Input, { size: 'md', placeholder: 'md', suffix: '원' }), h(D.Input, { size: 'xl', placeholder: 'xl', suffix: '원' }), h(D.Input, { size: '2xl', placeholder: '2xl', suffix: '원' }))),
     h('div', { style: { background: 'var(--surface-inverse-main)', padding: 'var(--spacing-4)', borderRadius: 'var(--rounded-surface-sm)' } },

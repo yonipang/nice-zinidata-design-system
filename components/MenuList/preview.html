@@ -1,0 +1,34 @@
+<!-- @dsCard group="Menus" height=760 subtitle="메뉴 목록 — basic · checkbox · radio · switch · profile · quantity, 기본 lg(36), sm~2xl" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function S(C, props) { if (C && C.C) { props = C; C = C.C; } var s = React.useState(props.value), v = s[0], set = s[1]; return h(C, Object.assign({}, props, { value: v, onChange: set })); }
+function Box(p) { return h("div", { style: { width: p.w || 260, padding: "var(--spacing-1)", background: "var(--surface-main)", border: "1px solid var(--border-neutral-subtle)", borderRadius: "var(--rounded-surface-xs)", boxShadow: "var(--elevation-3)" } }, p.children); }
+var BASIC = [{ heading: "보기" }, { value: "map", label: "지도로 보기", icon: "map-2" }, { value: "list", label: "목록으로 보기", icon: "list", badge: "NEW" }, { value: "chart", label: "차트로 보기", icon: "bar-chart-2", suffix: 12, divider: true }, { value: "off", label: "사용할 수 없음", disabled: true }];
+var OPT = [{ value: "a", label: "카드 매출", description: "가맹점 카드 결제 기준" }, { value: "b", label: "유동인구", description: "통신사 기지국 기준" }, { value: "c", label: "점포 수" }];
+function App() {
+  return h("div", { className: "ds-col", style: { gap: "var(--spacing-6)" } },
+    h("div", { className: "ds-row", style: { alignItems: "flex-start", gap: "var(--spacing-5)", flexWrap: "wrap" } },
+      sect("basic — 아이콘 · 배지 · 숫자 · 구분선 · 제목", h(Box, null, h(D.MenuList, { items: BASIC, defaultValue: "list" }))),
+      sect("checkbox — 여러 개 · 설명 · disabled", h(Box, null, h(D.MenuList, { type: "checkbox", items: OPT.concat([{ value: "d", label: "선택할 수 없음", description: "권한이 없어요.", disabled: true }, { value: "e", label: "고정 항목", description: "항상 포함돼요.", disabled: true }]), defaultValue: ["a", "e"] }))),
+      sect("radio — 하나(다시 눌러도 꺼지지 않음)", h(Box, null, h(D.MenuList, { type: "radio", items: OPT, defaultValue: "b" })))),
+    h("div", { className: "ds-row", style: { alignItems: "flex-start", gap: "var(--spacing-5)", flexWrap: "wrap" } },
+      sect("switch — 설정 켜기", h(Box, null, h(D.MenuList, { type: "switch", items: [{ value: "n", label: "알림", icon: "notification-3" }, { value: "a", label: "자동 갱신", icon: "refresh", description: "매일 오전 6시" }], defaultValue: ["n"] }))),
+      sect("profile — 사용자 고르기(48)", h(Box, null, h(D.MenuList, { type: "profile", items: [{ value: "k", label: "김지니" }, { value: "p", label: "박데이타", description: "기획팀" }], defaultValue: "k" }))),
+      sect("quantity — 수량 고르기(52)", h(Box, { w: 300 }, h(D.MenuList, { type: "quantity", items: [{ value: "adult", label: "성인" }, { value: "kid", label: "어린이" }], defaultValue: { adult: 2 } })))),
+    sect("크기 sm 28 · md 32 · lg 36 · xl 40 · 2xl 48", h("div", { className: "ds-row", style: { alignItems: "flex-start", gap: "var(--spacing-3)", flexWrap: "wrap" } }, ["sm", "md", "lg", "xl", "2xl"].map(function (z) { return h(Box, { key: z, w: 170 }, h(D.MenuList, { size: z, items: [{ value: 1, label: z + " 선택" }, { value: 2, label: z + " 항목" }], defaultValue: 1 })); }))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

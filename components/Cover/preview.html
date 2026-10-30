@@ -1,0 +1,45 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>Cover</title>
+<style>
+  html,body{margin:0;height:100%}
+  body{background:var(--bg-main);font-family:var(--font-sans);width:960px;height:288px;position:relative;overflow:hidden}
+  svg{position:absolute;left:0;top:0;display:block}
+  rect{rx:var(--rounded-xl)}
+  .b{fill:var(--fill-primary-main)} .d{fill:var(--surface-inverse-main)} .t{fill:var(--surface-primary-subtler)} .g{fill:var(--surface-subtle)} .c{fill:var(--color-cyan-500)}
+  .txt{position:absolute;left:var(--spacing-10);bottom:var(--spacing-10);max-width:880px}
+  h1{margin:0;font-size:56px;line-height:.95;font-weight:700;color:var(--text-heading-main);letter-spacing:0}
+  p{margin:var(--spacing-3) 0 0;font-size:14px;line-height:20px;color:var(--text-body-subtle)}
+</style></head>
+<body>
+<svg width="960" height="112" viewBox="0 0 960 112" aria-hidden="true">
+  <!-- blocks: fill-primary-main (주), surface-inverse-main, surface-primary-subtler, surface-subtle, color-cyan-500(차트 시리즈 2) — 52px 단위 타일
+       arrangement: 상단 띠(top-band skeleton) — 이름이 440px 영역보다 길어서. 오른쪽 끝으로 넘어가게 배치
+       pattern: geometric · modular · dense UI → 대시보드 4칸 카드 그리드처럼 타일을 자르고 일부는 두 칸으로 합침 (데이터 리포트 화면의 카드 배치)
+       scales: 간격 spacing-2(8) · 모서리 rounded-xl(12, 카드 안쪽 중첩 모서리) -->
+    <rect class="b" x="0" y="0" width="52" height="52"/>
+    <rect class="b" x="0" y="60" width="52" height="52"/>
+    <rect class="t" x="60" y="0" width="112" height="52"/>
+    <rect class="d" x="60" y="60" width="112" height="52"/>
+    <rect class="b" x="180" y="0" width="52" height="52"/>
+    <rect class="g" x="180" y="60" width="52" height="52"/>
+    <rect class="t" x="240" y="0" width="112" height="52"/>
+    <rect class="b" x="240" y="60" width="112" height="52"/>
+    <rect class="b" x="360" y="0" width="52" height="112"/>
+    <rect class="b" x="420" y="0" width="52" height="52"/>
+    <rect class="t" x="420" y="60" width="52" height="52"/>
+    <rect class="g" x="480" y="0" width="112" height="52"/>
+    <rect class="b" x="480" y="60" width="112" height="52"/>
+    <rect class="b" x="600" y="0" width="52" height="52"/>
+    <rect class="b" x="600" y="60" width="52" height="52"/>
+    <rect class="t" x="660" y="0" width="52" height="52"/>
+    <rect class="d" x="660" y="60" width="52" height="52"/>
+    <rect class="b" x="720" y="0" width="52" height="52"/>
+    <rect class="g" x="720" y="60" width="52" height="52"/>
+    <rect class="b" x="780" y="0" width="112" height="112"/>
+    <rect class="c" x="900" y="0" width="112" height="52"/>
+    <rect class="d" x="900" y="60" width="112" height="52"/>
+</svg>
+<div class="txt"><h1>NICE지니데이타 디자인시스템</h1><p>Component v2.3 — 토큰만 쓰는 대시보드 · 리포트 · 지도 화면</p></div>
+</body></html>
