@@ -4,16 +4,17 @@
 
 | 파일 | 내용 |
 |---|---|
-| `tokens/tokens.css` | 모든 토큰을 CSS 변수로. Primitive → project → semantic → component 참조 관계와 프로젝트 테마 전환이 들어 있다. **정확한 값은 이 파일** |
-| `tokens/tailwind.config.js` | Tailwind v3.4 설정(색 · spacing · borderRadius · fontSize · boxShadow · 화면 구간) |
-| `tokens/tokens.json` | 같은 토큰을 W3C 디자인 토큰 형식으로 |
+| `source/tokens.css` | 모든 토큰을 CSS 변수로. Primitive → project → semantic → component 참조 관계와 프로젝트 테마 전환이 들어 있다. **정확한 값은 이 파일** |
+| `source/tailwind.config.js` | Tailwind v3.4 설정(색 · spacing · borderRadius · fontSize · boxShadow · 화면 구간) |
+| `source/tokens.w3c.json` | 같은 토큰을 W3C 디자인 토큰 형식으로 |
+| `tokens.json` | 이 페이지가 보여주는 토큰 목록(용도 메모 포함) |
 | `components/bundle.js` · `bundle.css` · `index.d.ts` | React 컴포넌트(`window.DS`), 스타일, 타입 |
 | `components/<이름>/README.md` | 컴포넌트별 사용 규칙 |
 
 ## 코드에서 쓰기
 
 ```html
-<link rel="stylesheet" href="tokens/tokens.css">
+<link rel="stylesheet" href="source/tokens.css">
 <link rel="stylesheet" href="components/bundle.css">
 <script src="components/bundle.js"></script> <!-- React 18 뒤에 -->
 ```

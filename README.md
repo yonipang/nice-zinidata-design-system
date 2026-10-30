@@ -90,3 +90,92 @@
 - 아이콘은 `components/bundle.js`의 `ICONS`(회사 Icon Set 원본 벡터)에 들어 있다.
 - 글꼴 Pretendard Variable 파일은 이 저장소에 없다 — 사용처에서 웹폰트로 불러온다.
 - 원본: 피그마 🗃️ Component v2.3 · 🗃️ Table v1.0 · 📊 charts v1.0. 토큰이 바뀌면 `tokens/`를 다시 추출하고 `CHANGELOG.md`에 기록한다.
+
+## 컴포넌트 (84종, 2026-10-30)
+
+- `Accordion`
+- `BarChart`
+- `BottomSheet`
+- `Breadcrumb`
+- `Button`
+- `ButtonSet`
+- `Card`
+- `Cascader`
+- `CategoryBadge`
+- `ChangeBadge`
+- `Checkbox`
+- `Chip`
+- `ComboChart`
+- `ConfirmModal`
+- `ContentsHeader`
+- `ControlBox`
+- `Cover`
+- `DatePicker`
+- `DonutChart`
+- `ExpandedAlert`
+- `FilterButton`
+- `FormField`
+- `GlobalNav`
+- `HeatmapChart`
+- `IconButton`
+- `InlineAlert`
+- `Input`
+- `InputLabel`
+- `InputQuantity`
+- `LineChart`
+- `LocationSelector`
+- `MapLayout`
+- `MapListItem`
+- `MapMarkers`
+- `MapMenu`
+- `MapSearch`
+- `MenuCaption`
+- `MenuList`
+- `MinimalTable`
+- `MinimalTableCell`
+- `MobileNav`
+- `Modal`
+- `PageHeader`
+- `PageIndex`
+- `Pagination`
+- `Password`
+- `PhoneVerification`
+- `Profile`
+- `Quantity`
+- `ReportModal`
+- `ReportNav`
+- `SearchField`
+- `SectionHeader`
+- `Segment`
+- `SegmentNeutral`
+- `SegmentPadded`
+- `SegmentPrimary`
+- `Select`
+- `SelectWithLabel`
+- `SideNav`
+- `Slider`
+- `SocialBadge`
+- `SocialButton`
+- `SplitButtonGroup`
+- `SquareButton`
+- `SquareSplitButtonGroup`
+- `StatisticCard`
+- `StatusBadge`
+- `Switch`
+- `Table`
+- `TableControlCell`
+- `TableDataCell`
+- `TableHeaderCell`
+- `TableIndicatorCell`
+- `TableTextCell`
+- `Tabs`
+- `TextArea`
+- `TextButton`
+- `TextButtonGroup`
+- `TextCard`
+- `TitleBar`
+- `Toast`
+- `ToggleButton`
+- `Tooltip`
+
+- 차트는 **ECharts 5.5**(cdnjs, 처음 그릴 때 한 번 불러옴) + 토큰 테마.

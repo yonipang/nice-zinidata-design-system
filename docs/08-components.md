@@ -1,6 +1,6 @@
 # 8. 컴포넌트 고르기
 
-있는 UI는 반드시 컴포넌트로 쓴다. 이 페이지는 **무엇을 언제 쓰나**를, 각 컴포넌트 카드는 속성과 세부 규칙을 담는다. 피그마 라이브러리 전체 목록은 [부록 A](appendix-a-components.md).
+있는 UI는 반드시 컴포넌트로 쓴다. 이 페이지는 **무엇을 언제 쓰나**를, 각 컴포넌트 카드는 속성과 세부 규칙을 담는다. 피그마 라이브러리 전체 목록은 [부록 A](component-guide.md).
 
 ## 버튼
 
@@ -44,6 +44,7 @@
 - 레이블 · 도움말이 있으면 **FormField**로 감싼다(레이블 → 입력창 → 도움말 · 오류, 세로 간격 8). 필수 `*`(`text-primary-main`), 선택 `(optional)`(`text-body-subtle`). 오류 문구는 바로 아래 `text-xs-normal` + `text-negative-main`. 글자 수 표시는 Text Area에만.
 - read-only 제공: Input · Input Quantity · Text Area(값이 있을 때) / 미제공: Password · Select.
 - hover는 회색 테두리가 한 단계 진하게, focus는 테두리만 primary.
+- **입력의 focus 카드는 모두 떠 있는 판**: Select 목록 · 달력 · 필터 목록 · 비밀번호 조건 카드는 트리거 아래 4에 겹쳐 뜨고(`elevation-3`) 아래 내용을 밀지 않는다. 바깥을 누르거나 Esc를 누르면 닫힌다.
 - 아이콘: 빈 값 `icon-body-subtle`, focus · 값 있음은 입력 글자와 같은 색.
 
 **스타일 = 입력창 바로 뒤의 배경**
@@ -59,6 +60,11 @@
 - 같은 줄의 Select · DatePicker는 검색창과 같은 스타일. 한 폼 안은 같은 스타일 · 같은 Size.
 - **크기**: 기본 xl(40) — 페이지 · 모달 폼, md(32) — 필터 바 · 표 위 검색, 2xl(48) — 로그인 · 랜딩 · 모바일.
 
+## 본인인증
+
+- **인증번호 요청은 PhoneVerification으로** 만든다(입력창 안 글자 버튼으로 만들지 않는다). 처음엔 휴대폰번호 + 인증 요청(Primary soft) → 요청 후 버튼이 재요청(Neutral soft)으로 바뀌고 인증번호 입력 + 남은 시간(`text-primary-main`) + 인증 완료(Primary soft)가 나타난다.
+- Type 1: 버튼이 입력 아래 꽉 찬 폭(모바일 · 좁은 폼) / Type 2: 버튼이 입력 옆(넓은 폼).
+
 ## 검색 · 날짜
 
 - **SearchField**(Search Form): 일반 · 주소 검색. 레이블은 필요할 때만. 옆 검색 버튼은 같은 높이.
@@ -67,7 +73,7 @@
 
 ## 선택
 
-여러 개 → Checkbox, 하나 → Radio, 즉시 켜고 끄기 → Switch, 2~5개 전환 → Segment. 목록 안에서는 Checkbox · Radio · Switch Menu List.
+여러 개 → Checkbox, 하나 → Radio, 즉시 켜고 끄기 → Switch, 2~5개 전환 → Segment Neutral · Primary · Padded(세 컴포넌트). 목록 안에서는 Checkbox · Radio · Switch Menu List.
 
 ## 탭 · 내비게이션
 

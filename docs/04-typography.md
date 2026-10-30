@@ -15,12 +15,12 @@
 | 본문 | `text-sm-normal` | 14/20 | |
 | 본문 강조 · 표 숫자 | `text-sm-medium` | 14/20 | |
 | 긴 글 본문 | `text-md-normal` | 15/24 | 공지 · 설명 |
-| 입력 레이블 | `text-md-medium` | 15/24 | FormField |
+| 입력 레이블 | `text-sm-medium` (2xl 입력 옆은 `text-md-medium`) | 14/20 (15/24) | FormField · InputLabel |
 | 보조 · 캡션 · 도움말 | `text-xs-normal` | 13/16 | |
 
 ## 굵기 규칙
 
-- **semibold · bold는 제목과 핵심 숫자에만.** 메뉴 · 목록 · 탭 · 배지 · 칩 · 사이드바 등 컴포넌트 안 레이블은 normal · medium, **선택 상태는 한 단계 위(medium)**.
+- **semibold · bold는 제목과 핵심 숫자에만.** 메뉴 · 목록 · 탭 · 배지 · 칩 · 사이드바 등 컴포넌트 안 레이블은 normal · medium, **선택 상태는 한 단계 위(medium)**. 예외: **메뉴 · 목록 판의 선택 항목(Select 옵션 · Menu List · Cascader · 필터 목록 · 날짜 목록)은 semibold** — 판 안에서 고른 항목이 확실히 보이도록.
 - 예외: 핵심 숫자(Statistic Number · Quantity · 지도 Cluster · Chip 개수)는 bold, Text Card 본문은 semibold.
 - 제목: 페이지 제목 bold, 섹션 · 카드 제목 semibold.
 - `text-2xs`(12)는 배지 · 차트 레이블 등 **컴포넌트 안에서만**.
@@ -46,3 +46,8 @@
 | Map Menu | 36 | 5자 | 짧은 이름 → Map List · 툴팁 |
 
 - 묶음(아이콘 레일 · 지도 메뉴 묶음)은 하나라도 넘으면 **묶음 전체를** 대체 컴포넌트로 바꾼다. 한 묶음 안에서 섞지 않는다.
+
+## 줄바꿈
+
+- 한글은 **어절 단위로 줄을 바꾼다**(`word-break: keep-all`) — "연락드 / 려요"처럼 단어 중간에서 끊지 않는다. 긴 영문 · URL은 넘칠 때만 끊는다(`overflow-wrap: anywhere`).
+- 문단 끝에 한 글자만 남는 줄을 피한다(`text-wrap: pretty`).

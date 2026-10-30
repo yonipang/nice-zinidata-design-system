@@ -135,6 +135,8 @@
 
 - `[미정]` 탭 종류 선택 기준: 임시 — 페이지 상단 Underline, 카드 · 패널 안 Box, 필터성 전환 Segment
 
+> **코드(2026-10-30)**: Tabs · Pagination · PaginationDot · Breadcrumb · PageIndex · SideNav · GlobalNav(2depth 메뉴: hover 열림 · 클릭 고정) · UserMenu(내 정보 메뉴) · ReportNav · TitleBar · MobileNav · NavDrawer · Profile · ProfileButton · Avatar(2xs~4xl)
+
 ## 7. 헤더
 
 | 컴포넌트 | 용도 | 주요 속성 |
@@ -144,6 +146,8 @@
 | Contents Header · Contents Header Bullet | 카드 · 콘텐츠 블록 제목 | Type=contents/card · Right Item=simple/button/select/text button/segment · Title Size |
 
 - 계층: 페이지 제목 = Page Header, 페이지 안 큰 구역 = Section Header, 카드 · 블록 제목 = Contents Header
+
+> **코드**: PageHeader(Wide · Narrow · Centered, simple · background) · SectionHeader(simple · supporting-box, Narrow) · ContentsHeader(contents · card, 아이콘 · 불릿 · 배지 · 더보기). 부제목 `text-body-subtle`.
 
 ## 8. 카드 · 데이터 표시
 
@@ -171,6 +175,8 @@
   - accent는 프로젝트 primary와 상관없이 항상 파랑
 - 증감(increase · decrease) 색을 positive · negative와 섞지 않는다
 
+> **코드**: Card(Card Layout sm · lg · xl · ghost) · StatisticCard · StatisticNumber · TextCard · StatusBadge · CategoryBadge(selectable 없음) · ChangeBadge · SocialBadge · Chip(selectable) · Accordion(Box · Text, 애니메이션)
+
 ## 9. 피드백 · 오버레이
 
 | 컴포넌트 | 용도 | 주요 속성 |
@@ -189,6 +195,8 @@
 - 삭제 확인은 Confirm Modal `Type=negative` + Negative Button
 - `[미정]` Alert와 Toast 선택 기준: 임시 — 화면에 남아야 하면 Inline Alert, 작업 결과 알림은 Toast
 
+> **코드**: InlineAlert · ExpandedAlert · Toast · ConfirmModal · Modal · IconModal · PopConfirm · BottomSheet · ReportModal(반응형) · Tooltip(Border · Solid) · TooltipBubble(늘 떠 있는 안내)
+
 ## 10. 지도
 
 | 컴포넌트 | 용도 | 주요 속성 |
@@ -199,6 +207,8 @@
 | Zoom Level | 축척 표시 | level=10m~50km |
 | Report | 지도 위 리포트 패널 | Top=title/search · Expand · Slots |
 | Map Menu (지도 메뉴 묶음) | 지도 위 아이콘 + 짧은 레이블 메뉴 | 레이블 최대 5자 (넘으면 짧은 이름 → Map List · 툴팁) |
+
+> **코드**: MapLayout(Templates v2.1 지도 레이아웃, 반응형) · MapSearch(PC 결과 판 · 모바일 검색 화면 흐름) · LocationSelector · MapCluster · MapRectCluster · MapBadge · MapMarker · MapCallout · MapTip · MapMenu · MapTool · MapListItem. 아직: 반경 · 면적 선택, 폴리곤, 행정구역 색칠(MapCountry)
 
 ## 11. 표 (🗃️ Table v1.0)
 
@@ -227,10 +237,16 @@ PC는 **Table**(일반 표), 모바일은 **Minimal Table**을 쓴다. 헤더 �
 - 차트 아래 표: 본문 첫 칸 = 차트 카테고리(순서 같게), 헤더 시리즈 칸 = 차트 시리즈 이름 + **차트와 같은 색 네모**(ShowLeftIcon · ShowIcon). 본문 값 칸에는 색 네모를 넣지 않는다. 시리즈가 아닌 열(예: 점포 표본수)과 도넛 · 파이 표에는 네모 없음
 - 연령대가 열인 교차표처럼 차트 카테고리가 행이 아닌 표는 위 규칙을 그대로 적용하지 않는다(상위 헤더 + 하위 헤더 2줄 구성)
 
+> **코드**: Table(행 선택 · 고정 열 여러 개 · 머리 회색 기본) · MinimalTable · 셀 도우미 TableCell · TableTitle · TableNumber(inline) · TableRank(1~3위 메달) · TableBar(quiet · inline) · TableStatus · TableBadges · TableActions — 검토판 셀 카드 6개(머리 · 글자 · 표시 · 조작 · 데이터 · 요약 표)에 Table v1.0 모든 변형
+
 ## 12. 차트 (📊 charts v1.0)
 - 막대 · 선 · 도넛 · 파이 · 축(Category · Value) · 범례(legend) 컴포넌트를 쓴다. 차트 시리즈 색은 Primitive 팔레트(차트 · 배지 색은 Primitive 규칙)
 - 차트에 표를 붙일 때는 11장 "차트 아래 표" 규칙을 따른다
 - PC와 모바일 차트는 같은 데이터를 쓰고, 모바일 축 라벨은 듬성듬성 표시할 수 있다(표는 모든 행을 보여준다)
+
+- Tooltip 말풍선은 코드에서 화면 맨 위층에 띄워 메뉴 · 카드 · 모달 판 밖까지 보인다. 피그마 컴포넌트 안(Filter Menu 등)에서는 판이 잘라내므로 Tooltip을 숨김으로 둔다
+
+> **코드**: ECharts 5.5 + 토큰 테마 — Chart(공통) · BarChart(세로 · 가로 · 누적 · 값) · LineChart(면적 · 곡선) · DonutChart(반응형 배치) · ComboChart(두 축) · HeatmapChart. charts v1.0 피그마와의 세부 대조는 남은 일.
 
 ## 13. 기타
 
@@ -242,6 +258,8 @@ PC는 **Table**(일반 표), 모바일은 **Minimal Table**을 쓴다. 헤더 �
 | keypad_system | 시스템 키패드 목업 — 디자인시스템 대상 아님 |
 
 ---
+
+> **코드**: Slider · SliderField(하나 · 범위 · 눈금, 피그마 SliderBar · SliderRange · SliderPoints · Slider/Circle · Slider/Range)
 
 ## 정리가 필요한 컴포넌트 (참고)
 

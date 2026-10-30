@@ -30,8 +30,13 @@
 | 컴포넌트 | 선택 표시 |
 |---|---|
 | Ghost 탭 | 배경 `surface-neutral-subtlest` |
-| Segment | neutral `surface-subtlest`, primary `surface-primary-subtlest` |
+| Segment Neutral · Primary · Padded | Neutral `surface-subtlest` + 파란 글자, Primary `surface-primary-subtlest` + `border-primary-subtle`, Padded 흰 판 + `border-neutral-main` |
 | Split Button Group | 파란 글자 |
 | Control Box(카드형 선택지) | `surface-primary-subtlest` + 테두리 `border-primary-accent` |
 | Pagination | 현재 페이지 `text-heading-main`, 나머지 `text-body-subtle` |
 | 사이드바 메뉴 | 밝은 basic `surface-neutral-subtler` · brand `surface-primary-subtler`, 어두운 basic `surface-inverse-subtler` · brand `fill-primary-subtle` |
+
+## 모바일은 hover 없음
+
+- 모바일 화면 · 모바일 컴포넌트(MobileNav · TitleBar · NavDrawer · 바텀시트 등)는 **hover 상태를 쓰지 않는다**. 누르는 동안만 pressed state layer.
+- 터치 기기(`hover: none`)에서는 모든 컴포넌트의 hover state layer를 끈다.

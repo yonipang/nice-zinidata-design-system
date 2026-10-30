@@ -367,7 +367,7 @@
   --text-negative-subtler: var(--color-red-400);
   --text-positive-main: var(--color-green-700);
   --text-warning-main: var(--color-orange-600);
-  --text-informative-main: var(--color-blue-500);
+  --text-informative-main: var(--color-blue-600);
   --text-increase-main: var(--color-rose-500);
   --text-decrease-main: var(--color-blue-500);
   --fill-neutral-strong: var(--color-zinc-900);
@@ -383,6 +383,7 @@
   --fill-positive-main: var(--color-green-600);
   --fill-informative-main: var(--color-blue-500);
   --fill-warning-main: var(--color-orange-400);
+  --fill-warning-strong: var(--color-orange-500);
   --fill-negative-main: var(--color-red-500);
   --fill-disabled: color-mix(in srgb, var(--color-zinc-950) 8%, transparent);
   --fill-inverse-disabled: color-mix(in srgb, var(--color-static-white) 8%, transparent);
@@ -435,6 +436,13 @@
   --table-row-selected: var(--surface-subtler);
   --table-row-selected-primary: var(--surface-primary-subtler);
   --table-row-selected-negative: var(--surface-negative-main);
+  --table-fixed-overlay: var(--state-layers-on-neutral-hover);
+  --chart-series-1: var(--color-blue-600);
+  --chart-series-2: var(--color-cyan-500);
+  --chart-series-3: var(--color-violet-500);
+  --chart-series-4: var(--color-amber-400);
+  --chart-series-5: var(--color-emerald-500);
+  --chart-series-6: var(--color-rose-400);
   --surface-increase-main: var(--color-rose-100);
   --surface-decrease-main: var(--color-blue-100);
   --state-layers-inverse-default: color-mix(in srgb, var(--color-static-white) 0%, transparent);

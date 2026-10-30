@@ -118,6 +118,11 @@
 
 ---
 
+### 3-4. 모바일 · 지도 위 버튼 (2026-10-28 ~ 30)
+- **모바일은 hover 없음** — 모바일 화면 · 모바일 컴포넌트(MobileNav · TitleBar · NavDrawer · BottomSheet · 지도 모바일)는 누르는 동안만 pressed. 터치 기기(`hover: none`)에서는 모든 hover를 끈다.
+- **지도 위에 떠 있는 버튼**의 hover · pressed는 판 색을 바꾸지 말고 **흰 판 위에 state layer를 겹친다** — 판이 반투명해지면 지도가 비친다.
+- 모바일 메뉴 항목(NavDrawer)은 모서리 없이 꽉 찬 줄 — pressed 판도 각지게.
+
 ## 4. 글자 (Typography)
 
 - 글꼴: Pretendard (`font-sans`)
@@ -132,10 +137,10 @@
   | 본문 | text-sm/normal | 14/20 | |
   | 본문 강조 · 표 숫자 | text-sm/medium | 14/20 | |
   | 긴 글 본문 | text-md/normal | 15/24 | 공지 · 설명 페이지 |
-  | 입력 레이블 | text-md/medium | 15/24 | Form Field |
+  | 입력 레이블 | text-sm/medium (2xl 입력 옆은 text-md/medium) | 14/20 (15/24) | Form Field · Input Label |
   | 보조 · 캡션 · 도움말 | text-xs/normal | 13/16 | |
 - 굵기는 normal · medium · semibold · bold만 쓴다 (thin · light · extrabold · black 사용 안 함)
-- **semibold · bold는 제목과 핵심 숫자에만** 쓴다. 메뉴 · 목록 · 탭 · 배지 · 칩 · 사이드바 등 컴포넌트 안의 레이블은 normal · medium, 선택 상태는 한 단계 위(medium)로 표시
+- **semibold · bold는 제목과 핵심 숫자에만** 쓴다. 메뉴 · 목록 · 탭 · 배지 · 칩 · 사이드바 등 컴포넌트 안의 레이블은 normal · medium, 선택 상태는 한 단계 위(medium) — 단, 메뉴 · 목록 판의 선택 항목(Select 옵션 · Menu List · Cascader · 필터 · 날짜 목록)은 semibold로 표시
   - 예외: 핵심 숫자(Statistic Number · Quantity · 지도 Cluster · Chip 개수)는 bold, Text Card 본문은 semibold
 - 제목 굵기: 페이지 제목 bold, 섹션 · 카드 제목 semibold
 - text-2xs(12px)는 배지 · 차트 레이블 등 컴포넌트 안에서만
@@ -152,6 +157,10 @@
   - 세트로 묶여 쓰는 경우(아이콘 레일 · 지도 메뉴 묶음 등) 레이블 하나라도 넘으면 **세트 전체를** 대체 컴포넌트로 바꾼다. 한 묶음 안에서 섞지 않는다
 
 ---
+
+### 줄바꿈
+- 한글은 **어절 단위로만 줄을 바꾼다**(`word-break: keep-all`) — "연락드 / 려요"처럼 단어 중간에서 끊지 않는다. 긴 영문 · URL은 넘칠 때만 끊는다.
+- 문단 끝에 한 글자만 남는 줄을 피한다(`text-wrap: pretty`).
 
 ## 5. 간격 · 모서리
 
@@ -176,6 +185,7 @@
   | 모서리 | `rounded/control-sm` 8 | `rounded/control-sm` 8 | `rounded/control-md` 12 | `rounded/control-md` 12 | `rounded/control-lg` 16 |
 - 판(카드 · 알럿 · 모달)의 모서리는 `rounded/surface-xs`(12, 작은 팝오버) · `surface-sm`(16, 카드 sm · Alert · Toast) · `surface-md`(20, 모바일 모달 · Bottom Sheet) · `surface-lg`(24, 카드 lg · 모달) · `surface-xl`(32, Card Layout xl)을 쓴다. pill · 원형은 `rounded/full`, 중첩 모서리 계산값만 Primitive `rounded/*`를 직접 쓴다
   - 예외: Text Button처럼 배경 판이 없는 글자형 버튼은 모서리 0
+- **메뉴 · 목록 판 안의 제목과 항목은 같은 왼쪽 시작선**: Menu Caption은 메뉴와 같은 Size를 고른다(줄 내용 시작 sm · md · lg 8, xl 10, 2xl 12). 제목 글자 = 체크 · 라디오 · 아이콘 왼쪽 끝. 목록을 따로 감싸서 여백을 더하지 않는다
 - **모서리와 여백 규칙**: 모서리가 둥근 판(카드 · 패널 · 모달 등)의 안쪽 여백은 모서리 값과 같거나 spacing 한 단계 더 커야 한다. 상하 · 좌우 여백이 다르면 **큰 쪽** 기준 (예: 모서리 16 · 여백 상하 12 / 좌우 20 → 좌우 20 ≥ 16이므로 맞음). 판 자체에는 여백이 없고 안쪽 영역에 여백이 있는 구조(모달 등)는 안쪽 영역 여백으로 본다. 배경 · 모서리가 없는 영역(ghost)과 알약 · 원형(pill, full, 아이콘 원)은 해당 없음
   | 모서리 | 허용 여백 |
   |---|---|
@@ -255,6 +265,16 @@
 - 표는 가로 스크롤 또는 카드 목록으로 전환
 - hover 없음 — hover variant는 누르는 동안(pressed) 표시로 사용
 
+### 여백 = 모서리 (2026-10-28 ~ 30 확정)
+- **둥근 판 · 버튼의 좌우 여백은 모서리 값과 같게.** 글자 묶음에 따로 좌우 여백이 있으면 합친 값으로 본다(판 여백 + 글자 묶음 = 모서리).
+  - Tabs rounded(Ghost · Box · BorderBox): 판 10 + 글자 2 = `rounded-xl` 12, 탭 사이 4
+  - 배지(Status · Category): 판 4 + 글자 2 = 6 = `rounded-sm` 6 · pill은 좌우 10
+  - Chip: 판 4 + 글자 4 = `rounded-md` 8
+  - Section Header 설명 박스: 좌우 20 = `rounded-4xl` 20 · Inline Alert line: 좌우 20 = `rounded-4xl` 20
+  - 대화상자: 여백 24 = `rounded-surface-lg` 24 · Pop Confirm: 14 = `rounded-2xl` 14 · Box Accordion: 16 = `rounded-surface-sm` 16 · 카드: sm 16 · lg 24 · xl 32
+  - pill은 예외(모서리가 높이의 절반).
+- **마지막 줄 구분선 지우기** — 목록 · 격자 · 표 · 메뉴처럼 줄마다 아래 구분선이 있는 묶음은 마지막 줄의 아래 구분선을 항상 지운다(판 테두리 · 다음 영역 구분선과 겹치지 않게).
+
 ## 6. 컴포넌트 사용 규칙
 
 > 컴포넌트별 용도 · 속성 · 규칙은 `디자인시스템_컴포넌트가이드_ClaudeDesign.md`를 함께 읽는다. 아래는 핵심 요약이다.
@@ -333,6 +353,19 @@
 
 ---
 
+### 2026-10-28 ~ 30에 정한 사용 규칙
+- **헤더**: 한 페이지에 PageHeader(bold) 1개 + SectionHeader(semibold) 여러 개 + 카드 · 블록 제목은 ContentsHeader. 부제목 `text-body-subtle`.
+- **카드**: 숫자 하나는 StatisticCard(StatisticNumber — 증가 빨강 ▲ · 감소 파랑 ▼), 한 줄 결론은 TextCard, 그 밖의 내용은 Card(sm 16 · lg 24 · xl 32).
+- **배지**: Status Badge는 의미 토큰만. warning solid는 `fill/warning-strong`(흰 글자 대비 낮음 — 짧은 상태 이름에만). 메뉴 · 카드 · 헤더 안 배지는 Category white + 테두리.
+- **칩**: 고른 조건 표시 · 지우기용. 눌러서 고르는 칩은 `selectable`(켜짐 = primary · brand + ✓). 피그마에서는 선택된 칩을 Style=primary · Color=brand · check 아이콘으로 그린다.
+- **알림**: 한 줄은 InlineAlert(soft = 모서리 없는 띠 · line = 테두리), 여러 줄 · 버튼은 ExpandedAlert, 잠깐 떴다 사라지는 결과는 Toast.
+- **대화상자**: 확인은 ConfirmModal(가운데 정렬이면 제목도 가운데), 내용은 Modal, 결과 알림은 IconModal, 버튼 옆 작은 확인은 PopConfirm, 모바일 아래 판은 BottomSheet, 리포트 상세는 ReportModal(항상 메뉴와 함께 · 반응형: 600 미만 풀페이지 + 머리 · 탭 고정).
+- **표**: 목록 표는 한 줄에 색 있는 요소 2~3가지까지(순위 · 증감 · 막대), 상태는 StatusBadge, 막대가 여러 열이면 `quiet`. 머리 기본 회색(`table/header-subtle`), 흰 머리면 머리 글자 `text-body-subtle`. 가로 스크롤 시 고정 열 그림자 `table/fixed-overlay`.
+- **차트**: ECharts + 토큰 테마(계열 `chart/series-1~6`, 축 `text-xs` body-subtle, 툴팁은 Tooltip 판). 판 폭에 맞춰 다시 그림 — 도넛은 좁으면 도넛을 먼저 줄이고 그래도 좁으면 위아래 배치, 가운데 글은 값 + 설명 묶음의 가운데가 고리 중심.
+- **지도**: Templates v2.1 지도 레이아웃 그대로 — 지도 100%, 목록 패널 375, 필터는 검색과 함께 이동(누르면 선택 판 · 하위 항목은 › 로 펼침), 보고서 390이 필터 위를 덮음, 접으면 "현 지도에서 검색". 모바일: 검색 막대(누르면 검색 화면 → 최근 검색 · 결과 → 지도로), 필터 가로 스크롤, 목록 아래 시트, 보고서 전체 화면, 도구는 더보기(⋮) · 내 위치만(확대 · 축소 없음).
+- **아코디언**: 열고 닫을 때 0.24s 애니메이션, 열려 있으면 판 전체를 눌러도 닫힘.
+- **Text Area** 버튼 영역은 오른쪽 Primary 하나(Text Button 없음, "지우기" 같은 버튼 금지).
+
 ## 7. 금지 사항
 
 - hex · Primitive 색 직접 사용
@@ -349,6 +382,12 @@
 - hover · selected를 같은 모양으로 표시하기
 - 표: 헤더 셀을 본문 줄에 쓰기, 본문 값 칸에 색 네모 넣기, 표 배경에 surface 토큰을 직접 쓰기, 칸 높이를 늘려 행을 36px보다 크게 만들기
 ---
+
+- Status Badge · 지도 말풍선 · 차트 막대에 Primitive 색 직접 사용(예외: Category Badge 분류색, 소셜 로고 브랜드 색)
+- 판 여백과 모서리가 다른 둥근 판(위 "여백 = 모서리")
+- 마지막 줄 아래 구분선
+- 모바일 컴포넌트의 hover 상태
+- 단어 중간에서 끊기는 한글 줄바꿈
 
 ## 8. 미정 항목 (함께 정할 것)
 
