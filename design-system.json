@@ -1,0 +1,242 @@
+{
+  "v": 3,
+  "assetGroups": {
+    "Icons": {
+      "files": {
+        "add-box.svg": {
+          "blob": "8f53b717aafebd427009bfdead5717fd",
+          "name": "add-box.svg",
+          "size": 360,
+          "type": "image/svg+xml"
+        },
+        "add-circle.svg": {
+          "blob": "f42d57f8756c393bfe6cfe567c9216fd",
+          "name": "add-circle.svg",
+          "size": 319,
+          "type": "image/svg+xml"
+        },
+        "add.svg": {
+          "blob": "fc916ce9b17e8590c600c7ef60cf32ea",
+          "name": "add.svg",
+          "size": 210,
+          "type": "image/svg+xml"
+        },
+        "check.svg": {
+          "blob": "d832b6fbdfe95c8a9697cc7e41400c33",
+          "name": "check.svg",
+          "size": 243,
+          "type": "image/svg+xml"
+        },
+        "chevron-down.svg": {
+          "blob": "c319b76d6bd1144de362f3ef11357c55",
+          "name": "chevron-down.svg",
+          "size": 235,
+          "type": "image/svg+xml"
+        },
+        "chevron-right.svg": {
+          "blob": "fc6264a6aaa3d20758e95fda0bbf1c46",
+          "name": "chevron-right.svg",
+          "size": 236,
+          "type": "image/svg+xml"
+        },
+        "circle.svg": {
+          "blob": "5f2ddae198595bd3356c5e652399ad39",
+          "name": "circle.svg",
+          "size": 355,
+          "type": "image/svg+xml"
+        },
+        "close.svg": {
+          "blob": "635f7d75b5ff25bc92d44075bca155eb",
+          "name": "close.svg",
+          "size": 309,
+          "type": "image/svg+xml"
+        },
+        "delete-bin.svg": {
+          "blob": "6bf594ef3ecf25ad7845a5348d3baba8",
+          "name": "delete-bin.svg",
+          "size": 407,
+          "type": "image/svg+xml"
+        },
+        "edit.svg": {
+          "blob": "1e0ee4eb786401d3fd6bb95730aa671a",
+          "name": "edit.svg",
+          "size": 428,
+          "type": "image/svg+xml"
+        },
+        "expand-up-down.svg": {
+          "blob": "199dbe1fd42b999e17d00ab212b515d8",
+          "name": "expand-up-down.svg",
+          "size": 319,
+          "type": "image/svg+xml"
+        },
+        "eye.svg": {
+          "blob": "c48a41c020214953fce7a9bcf5186a13",
+          "name": "eye.svg",
+          "size": 717,
+          "type": "image/svg+xml"
+        },
+        "function.svg": {
+          "blob": "ffa6106a8f2ba774540e017159327da5",
+          "name": "function.svg",
+          "size": 625,
+          "type": "image/svg+xml"
+        },
+        "loader-2.svg": {
+          "blob": "bd2566ddcf135848ad031052b1580b95",
+          "name": "loader-2.svg",
+          "size": 1367,
+          "type": "image/svg+xml"
+        },
+        "loader-4.svg": {
+          "blob": "27234e685f8b5b8ce2d8786f8460c364",
+          "name": "loader-4.svg",
+          "size": 379,
+          "type": "image/svg+xml"
+        },
+        "loader.svg": {
+          "blob": "2a927d8f2d2f8eb30a68ee372988c8ec",
+          "name": "loader.svg",
+          "size": 1177,
+          "type": "image/svg+xml"
+        },
+        "more-2.svg": {
+          "blob": "bbeb66a6289fbb4d114771339bc1812a",
+          "name": "more-2.svg",
+          "size": 379,
+          "type": "image/svg+xml"
+        },
+        "pencil.svg": {
+          "blob": "6d675c1a9b932331792728ef0984d000",
+          "name": "pencil.svg",
+          "size": 446,
+          "type": "image/svg+xml"
+        },
+        "question.svg": {
+          "blob": "423414557916e2b25d9e8d357520b2ed",
+          "name": "question.svg",
+          "size": 634,
+          "type": "image/svg+xml"
+        },
+        "settings-3.svg": {
+          "blob": "13aabe88d00307f754a2a60dd094ba86",
+          "name": "settings-3.svg",
+          "size": 1117,
+          "type": "image/svg+xml"
+        },
+        "settings-4.svg": {
+          "blob": "6a4fc3cc400dad1625935ce31c90db05",
+          "name": "settings-4.svg",
+          "size": 1919,
+          "type": "image/svg+xml"
+        },
+        "square.svg": {
+          "blob": "b7abd86f98d876d4ca1199a7f982e6bc",
+          "name": "square.svg",
+          "size": 295,
+          "type": "image/svg+xml"
+        },
+        "subtract.svg": {
+          "blob": "2829a6fa46699c9e6e3c30a630c1d5c8",
+          "name": "subtract.svg",
+          "size": 177,
+          "type": "image/svg+xml"
+        },
+        "user.svg": {
+          "blob": "a8e274d665aa61f153c9f6452fe5852f",
+          "name": "user.svg",
+          "size": 447,
+          "type": "image/svg+xml"
+        }
+      },
+      "name": "Icons",
+      "order": [
+        "add-box.svg",
+        "add-circle.svg",
+        "add.svg",
+        "check.svg",
+        "chevron-down.svg",
+        "chevron-right.svg",
+        "circle.svg",
+        "close.svg",
+        "delete-bin.svg",
+        "edit.svg",
+        "expand-up-down.svg",
+        "eye.svg",
+        "function.svg",
+        "loader-2.svg",
+        "loader-4.svg",
+        "loader.svg",
+        "more-2.svg",
+        "pencil.svg",
+        "question.svg",
+        "settings-3.svg",
+        "settings-4.svg",
+        "square.svg",
+        "subtract.svg",
+        "user.svg"
+      ],
+      "tile": "xs"
+    },
+    "Logos": {
+      "files": {
+        "nice-zinidata-logo-black.svg": {
+          "blob": "d6b149bd0a4a23df8140a9b9bf0932a2",
+          "name": "nice-zinidata-logo-black.svg",
+          "size": 3937,
+          "type": "image/svg+xml"
+        },
+        "nice-zinidata-logo-transparent.svg": {
+          "blob": "7ac8b82501f11f8fbb533eef1d11de37",
+          "name": "nice-zinidata-logo-transparent.svg",
+          "size": 3847,
+          "type": "image/svg+xml"
+        },
+        "nice-zinidata-logo-white.svg": {
+          "blob": "8a922140b7bca0f1f7fd6b9351948146",
+          "name": "nice-zinidata-logo-white.svg",
+          "size": 3935,
+          "type": "image/svg+xml"
+        }
+      },
+      "name": "Logos",
+      "order": [
+        "nice-zinidata-logo-white.svg",
+        "nice-zinidata-logo-black.svg",
+        "nice-zinidata-logo-transparent.svg"
+      ],
+      "tile": "l"
+    }
+  },
+  "blobs": {},
+  "createdOnFiles": {
+    "at": "2026-10-27T04:34:21Z",
+    "v": 1
+  },
+  "docs": {
+    "sections": []
+  },
+  "groups": [
+    "Logos",
+    "Icons"
+  ],
+  "lastChange": {
+    "at": "2026-10-27T05:30:00Z",
+    "by": "인프라운영실",
+    "via": "Claude (chat)",
+    "note": "버튼 그룹을 Component v2.3과 대조: Icon · Text Button 수정, Toggle · Square · Social · Filter Button 추가"
+  },
+  "layout": "files",
+  "libraries": [
+    {
+      "name": "react",
+      "version": "18"
+    },
+    {
+      "name": "react-dom",
+      "version": "18"
+    }
+  ],
+  "namespace": "DS",
+  "sections": {},
+  "title": "NICE지니데이타 디자인시스템"
+}
