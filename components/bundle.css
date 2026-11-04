@@ -1518,7 +1518,7 @@ html:has(.ds-root)::-webkit-scrollbar-thumb, html:has(.ds-root) body::-webkit-sc
 .ds-mmenu.is-compact .ds-mmenu__btn { width: 40px; height: 40px; } .ds-mmenu.is-compact { gap: var(--spacing-2); }
 /* 지도 목록 한 줄: 여백 20 · 사이 8, 제목 text-base bold heading · 주소 text-sm body-subtle(사이 6) · 이름들(세로선 1×12) · 배지, 아래 divider-neutral-subtle, hover state layer */
 .ds-mlist-item { width: 100%; display: flex; gap: var(--spacing-3); padding: var(--spacing-5); border: 0; border-bottom: var(--border-width-1) solid var(--divider-neutral-subtle); background: var(--surface-main); text-align: left; cursor: pointer; font: inherit; }
-.ds-mlist-item:hover { background: var(--state-layers-on-neutral-hover); } .ds-mlist-item.is-active { background: var(--surface-primary-subtlest); }
+.ds-mlist-item:hover, .ds-mlist-item.is-hover { background: var(--state-layers-on-neutral-hover); }  /* 선택 상태 없음 — 피그마 Map List default · hover */
 .ds-mlist-item__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-2); } .ds-mlist-item__title { font-size: 16px; line-height: 24px; font-weight: 700; color: var(--text-heading-main); }
 .ds-mlist-item__addr { display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 20px; color: var(--text-body-subtle); }
 .ds-mlist-item__labels { display: flex; align-items: center; gap: 6px; font-size: 14px; line-height: 20px; color: var(--text-body-subtle); } .ds-mlist-item__labels i { width: 1px; height: 12px; background: var(--divider-neutral-strong); }
@@ -1569,7 +1569,7 @@ html:has(.ds-root)::-webkit-scrollbar-thumb, html:has(.ds-root) body::-webkit-sc
 .ds-mlayout__report { position: absolute; z-index: 7; top: 0; bottom: 0; left: var(--ml-panel); width: 390px; display: flex; flex-direction: column; background: var(--bg-main); border-right: var(--border-width-1) solid var(--border-neutral-main); box-shadow: var(--elevation-2); }
 .ds-mlayout.is-floating .ds-mlayout__report, .ds-mlayout:not(.is-panel-open) .ds-mlayout__report { left: 0; }
 .ds-mlayout__report-head { display: flex; align-items: center; gap: var(--spacing-2); padding: 20px 20px 0; min-height: 52px; box-sizing: border-box; } .ds-mlayout__report-head b { flex: 1; font-size: 16px; line-height: 24px; font-weight: 600; color: var(--text-heading-main); }
-.ds-mlayout__report-body { flex: 1; min-height: 0; overflow: auto; padding: 10px; }
+.ds-mlayout__report-body { flex: 1; min-height: 0; overflow: auto; padding: 16px 20px 20px; }  /* 좌우 20 = 보고서 머리(제목) 좌우 여백과 같게, 위 16 · 아래 20 */
 /* 태블릿(768~1023): 패널 320, 보고서는 패널 위에 겹쳐 열림(left 0) */
 .ds-mlayout.is-tab .ds-mlayout__report { left: 0; width: min(390px, 100%); }
 .ds-mlayout.is-tab .ds-mlayout__search { width: 300px; }
@@ -1651,3 +1651,13 @@ html:has(.ds-root)::-webkit-scrollbar-thumb, html:has(.ds-root) body::-webkit-sc
 .ds-mlayout__fopt .ds-icon { color: var(--icon-body-subtle); } .ds-mlayout__fopt.is-open { background: var(--state-layers-on-neutral-hover); }
 .ds-mlayout__fpanel--sub { padding: 8px; width: 180px; } .ds-mlayout__fopt.is-sub { padding-left: 24px; }  /* 하위 판: 상위 줄 높이에 맞춰 오른쪽(사이 4) · 모바일은 아래로 들여 펼침 */
 .ds-mlayout.is-mobile .ds-mlayout__fopt:hover { background: none; } .ds-mlayout.is-mobile .ds-mlayout__fopt:active { background: var(--state-layers-on-neutral-pressed); }
+
+/* 지도 연결 모드: 핀은 % 위치(핀 끝이 그 점), 고른 · 마우스 올린 핀은 앞으로 + 살짝 커짐(0.15s) */
+.ds-mlayout__mark { position: absolute; transform: translate(-50%, -100%); z-index: 1; } .ds-mlayout__mark.is-front { z-index: 3; }
+.ds-mmarker__pin { transition: transform .15s ease; transform-origin: 50% 100%; } .ds-mmarker.is-hover .ds-mmarker__pin, .ds-mmarker__pin:hover { transform: scale(1.12); }
+.ds-mlayout.is-mobile .ds-mmarker__pin:hover { transform: none; }
+@media (prefers-reduced-motion: reduce) { .ds-mmarker__pin { transition: none; } }
+/* 연결 모드의 핀 좌표는 '보이는 지도 영역'(패널 · 보고서 오른쪽) 기준 — 고른 핀이 보고서에 가려지지 않게(실제 지도에서는 고른 위치로 지도를 옮겨 같은 효과를 낸다) */
+.ds-mlayout__overlay.is-linked { left: var(--ml-left); right: 72px; top: 72px; transition: left .24s cubic-bezier(.2,0,0,1); }
+.ds-mlayout.is-mobile .ds-mlayout__overlay.is-linked { left: 0; right: 56px; top: 112px; bottom: 40%; }
+@media (prefers-reduced-motion: reduce) { .ds-mlayout__overlay.is-linked { transition: none; } }

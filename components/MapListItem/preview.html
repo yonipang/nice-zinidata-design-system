@@ -1,4 +1,4 @@
-<!-- @dsCard group="Map" height=520 subtitle="지도 목록 한 줄 — 이름 · 주소 · 정보(세로선) · 배지 · 사진, 고른 줄" -->
+<!-- @dsCard group="Map" height=520 subtitle="지도 목록 한 줄 — 이름 · 주소 · 정보(세로선) · 배지 · 사진, hover(지도 핀과 연결)" -->
 <!doctype html>
 <html lang="ko">
 <head><meta charset="utf-8"><title>preview</title>
@@ -17,7 +17,7 @@ var RESULTS = [{ title: "영통역 2번 출구", address: "경기 수원시 영�
 var LOC = { "경기도": { "수원시 영통구": ["영통동", "매탄동", "원천동", "광교동", "망포동", "신동"], "수원시 팔달구": ["인계동", "우만동", "매교동"], "성남시 분당구": ["정자동", "서현동", "수내동"] }, "서울특별시": { "강남구": ["역삼동", "삼성동", "논현동"], "영등포구": ["여의도동", "당산동"], "마포구": ["합정동", "연남동"] }, "부산광역시": { "해운대구": ["우동", "중동"] }, "인천광역시": { "연수구": ["송도동"] }, "대구광역시": { "수성구": ["범어동"] }, "광주광역시": { "서구": ["치평동"] } };
 var LIST = [{ title: "영통 카페 A", addresses: ["경기 수원시 영통구 봉영로 1570", "영통동 1012-3"], labels: ["카페", "월 4,820만원", "리뷰 128"], badges: ["테이크아웃", "주차"] }, { title: "매탄 베이커리", addresses: ["경기 수원시 영통구 매탄로 22"], labels: ["베이커리", "월 2,140만원"], badges: ["NEW"] }, { title: "광교 한식당", addresses: ["경기 수원시 영통구 광교중앙로 140"], labels: ["한식", "월 3,910만원"] }];
 function App() {
-  return h("div", { style: { width: 390, border: "1px solid var(--border-neutral-subtle)", borderRadius: 12, overflow: "hidden" } }, LIST.map(function (l, i) { return h(D.MapListItem, Object.assign({ key: i, active: i === 1 }, l)); }));
+  return h("div", { style: { width: 390, border: "1px solid var(--border-neutral-subtle)", borderRadius: 12, overflow: "hidden" } }, LIST.map(function (l, i) { return h(D.MapListItem, Object.assign({ key: i, hover: i === 1 }, l)); }));
 }
 ReactDOM.createRoot(document.getElementById("root")).render(h(App));
 </script>

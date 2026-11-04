@@ -1521,8 +1521,8 @@
   /* MapMarker — 핀(피그마 Indicator/Minimal Marker). active · name(아래 이름) · tip(위 말풍선) · icon(가운데 아이콘, 없으면 점) */
   function MapMarker(p) {
     var on = !!p.active, stroke = on ? 'var(--border-primary-accent)' : 'var(--border-neutral-strong)', fill = on ? 'var(--bg-main)' : 'var(--fill-primary-main)', dot = on ? 'var(--fill-primary-main)' : 'var(--icon-on-primary)';
-    return h('span', { className: cx('ds-mpin', 'ds-mmarker', on && 'is-active') }, p.tip ? h(MapTip, null, p.tip) : null,
-      h('button', { type: 'button', className: 'ds-mmarker__pin', 'aria-label': p.name || '위치', 'aria-pressed': on, onClick: p.onClick },
+    return h('span', { className: cx('ds-mpin', 'ds-mmarker', on && 'is-active', p.hover && 'is-hover') }, p.tip ? h(MapTip, null, p.tip) : null,
+      h('button', { type: 'button', className: 'ds-mmarker__pin', 'aria-label': p.name || '위치', 'aria-pressed': on, onClick: p.onClick, onMouseEnter: p.onMouseEnter, onMouseLeave: p.onMouseLeave },
         h('svg', { width: 34, height: 42, viewBox: '0 0 34 42', 'aria-hidden': true }, h('path', { d: 'M17 1C25.8 1 33 8.4 33 17.6C33 22.4 30.4 26.9 27 31C23.7 35.1 19.7 38.6 17 41C14.3 38.6 10.3 35.1 7 31C3.6 26.9 1 22.4 1 17.6C1 8.4 8.2 1 17 1Z', fill: fill, stroke: stroke, strokeWidth: 2 }), p.icon ? null : h('circle', { cx: 17, cy: 17, r: 5, fill: dot })),
         p.icon ? h(Icon, { name: p.icon, className: 'ds-mmarker__icon' }) : null, h('i', { className: 'ds-mmarker__shadow' })),
       p.name ? h('span', { className: 'ds-mmarker__name' }, p.name) : null);
@@ -1545,7 +1545,8 @@
   }
   /* MapListItem — 지도 목록 한 줄(피그마 Map List). title · addresses[] · labels[](세로선으로 구분) · badges[] · thumbnail · onClick. 여백 20 · 사이 8, 아래 구분선 */
   function MapListItem(p) {
-    return h('button', { type: 'button', className: cx('ds-mlist-item', p.active && 'is-active'), onClick: p.onClick },
+    /* 선택 상태 없음(피그마 Map List = default · hover). 지도 핀에 마우스를 올리면 같은 줄이 hover로 보이도록 hover를 밖에서 줄 수 있음 */
+    return h('button', { type: 'button', className: cx('ds-mlist-item', p.hover && 'is-hover'), 'data-map-id': p.id, onClick: p.onClick, onMouseEnter: p.onMouseEnter, onMouseLeave: p.onMouseLeave },
       h('span', { className: 'ds-mlist-item__text' },
         h('span', { className: 'ds-mlist-item__head' }, p.avatar ? h('span', { className: 'ds-mlist-item__avatar', style: typeof p.avatar === 'string' ? { background: 'center / cover url(' + p.avatar + ')' } : undefined, 'aria-hidden': true }) : null, h('b', { className: 'ds-mlist-item__title' }, p.title)),
         p.addresses ? h('span', { className: 'ds-mlist-item__addr' }, p.addresses.map(function (a, i) { return h('span', { key: i }, a); })) : null,
@@ -1623,13 +1624,26 @@
   function MapLayout(p) {
     var ref = React.useRef(null), w = useWidth(ref), mob = w > 0 && w < 768, tab = w >= 768 && w < 1024, panelType = p.type === 'panel';
     var os = React.useState(p.defaultPanelOpen !== false), open = os[0], setOpen = os[1], es = React.useState(false), exp = es[0], setExp = es[1];
-    var rs = React.useState(!!p.defaultReportOpen), repOpen = rs[0] && !!p.report, setRep = rs[1];
+    /* 연결 모드(items): 목록 · 지도 핀 · 보고서가 '지금 보는 매장' 하나(selId)와 '마우스가 올라간 매장'(hovId)을 함께 쓴다.
+       목록 줄 누르기 = 그 매장 보고서 열기 + 핀 고른 상태 / 핀 누르기 = 같은 동작 + 목록에서 그 줄이 보이게 스크롤 / 보고서 닫기 = 고른 핀 해제.
+       hover: 목록 줄 ↔ 핀이 서로 강조(목록은 피그마 hover 모양, 핀은 살짝 커짐). 목록에는 선택(파란 판) 상태를 두지 않는다. */
+    var items = p.items || null;
+    var sls = React.useState(p.defaultSelected != null ? p.defaultSelected : null), selId = sls[0], setSel = sls[1];
+    var hvs = React.useState(null), hovId = hvs[0], setHov = hvs[1];
+    var selItem = items ? items.filter(function (it) { return it.id === selId; })[0] : null;
+    var linkedReport = items && selItem && p.reportFor ? p.reportFor(selItem) : null;
+    var rs = React.useState(!!p.defaultReportOpen || (items && p.defaultSelected != null)), repOpen = rs[0] && !!(p.report || linkedReport), setRep = rs[1];
+    function selectItem(id, fromMap) {
+      setSel(id); setRep(true); p.onSelect && p.onSelect(id);
+      if (fromMap && ref.current) { var el = ref.current.querySelector('.ds-mlayout__panel [data-map-id="' + id + '"]'); if (el) el.scrollIntoView({ block: 'nearest', behavior: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+    }
+    function closeReport() { setRep(false); setSel(null); }
     var panelW = tab ? 320 : 375, panelShown = panelType && open && !mob;
     /* 모바일 도구: 확대 · 축소는 없앰(두 손가락), 내 정보는 검색 막대 오른쪽(profile), 측정 · 커스텀은 '더보기' 하나로 접고(mobileTools) 누르면 펼침, 내 위치(onLocate)만 오른쪽 아래 */
     var ms = React.useState(false), more = ms[0], setMore = ms[1], moreRef = React.useRef(null);
     React.useEffect(function () { if (!more) return; function d(ev) { if (moreRef.current && !moreRef.current.contains(ev.target)) setMore(false); } function k(ev) { if (ev.key === 'Escape') setMore(false); } document.addEventListener('mousedown', d); document.addEventListener('keydown', k); return function () { document.removeEventListener('mousedown', d); document.removeEventListener('keydown', k); }; }, [more]);
     var left = mob ? 0 : (panelShown ? panelW : 0) + (repOpen && !tab && open ? 390 : 0);
-    function collapseAll() { setOpen(false); setRep(false); }
+    function collapseAll() { setOpen(false); closeReport(); }
     var searchEl = p.search && React.isValidElement(p.search) ? React.cloneElement(p.search, { mobile: mob }) : p.search;
     /* 필터: 누르면 아래로 선택 판(제목 = 필터 이름 · 항목 목록, 고른 항목 primary semibold + chevron-right). 고르면 버튼에 고른 값이 보이고 primary 테두리 · 연한 판으로 바뀜. 바깥 누르기 · Esc로 닫힘 */
     var fvs = React.useState(function () { var o = {}; (p.filters || []).forEach(function (f, i) { if (f.defaultValue != null) o[i] = f.defaultValue; }); return o; }), fv = fvs[0], setFv = fvs[1];
@@ -1659,12 +1673,13 @@
         f.options[sub].children.map(function (c) { var v = lab(f.options[sub]) + ' · ' + c, con = cur === v; return h('button', { key: c, type: 'button', role: 'option', 'aria-selected': con, className: cx('ds-mlayout__fopt', con && 'is-selected'), onClick: function () { pick(v); } }, h('span', null, c)); })) : null;
       return [h('div', { key: 'p', className: 'ds-mlayout__fpanel', role: 'listbox', 'aria-label': f.title || f.label, style: { left: of.left, top: of.top } }, h('b', { className: 'ds-mlayout__fpanel-title' }, f.title || f.label), rows), subPanel];
     })() : null;
-    var report = repOpen ? h('section', { className: 'ds-mlayout__report', 'aria-label': p.report.title },
-      h('div', { className: 'ds-mlayout__report-head' }, mob ? h(IconButton, { icon: 'arrow-left', size: 'lg', label: '뒤로', onClick: function () { setRep(false); } }) : null, h('b', null, p.report.title), !mob ? h(IconButton, { icon: 'close', size: 'sm', label: '닫기', onClick: function () { setRep(false); p.report.onClose && p.report.onClose(); } }) : null),
-      h('div', { className: 'ds-mlayout__report-body' }, p.report.content),
+    var rep = linkedReport || p.report;
+    var report = repOpen && rep ? h('section', { className: 'ds-mlayout__report', 'aria-label': rep.title },
+      h('div', { className: 'ds-mlayout__report-head' }, mob ? h(IconButton, { icon: 'arrow-left', size: 'lg', label: '뒤로', onClick: closeReport }) : null, h('b', null, rep.title), !mob ? h(IconButton, { icon: 'close', size: 'sm', label: '닫기', onClick: function () { closeReport(); rep.onClose && rep.onClose(); } }) : null),
+      h('div', { className: 'ds-mlayout__report-body' }, rep.content),
       !mob && !tab ? h('button', { type: 'button', className: 'ds-mlayout__toggle', 'aria-label': '모두 접기', onClick: collapseAll }, h(Icon, { name: 'chevron-left' })) : null) : null;
     return h('div', { ref: ref, className: cx('ds-mlayout', mob ? 'is-mobile' : tab ? 'is-tab' : 'is-wide', panelType ? 'is-panel' : 'is-floating', open && 'is-panel-open', exp && 'is-expanded', repOpen && 'is-report-open'), style: { height: p.height || 560, '--ml-left': left + 'px', '--ml-panel': panelW + 'px' } },
-      h('div', { className: 'ds-mlayout__map' }, p.map || h('div', { className: 'ds-mapbg', 'aria-hidden': true }), h('div', { className: 'ds-mlayout__overlay' }, p.children)),
+      h('div', { className: 'ds-mlayout__map' }, p.map || h('div', { className: 'ds-mapbg', 'aria-hidden': true }), h('div', { className: cx('ds-mlayout__overlay', items && 'is-linked') }, items ? items.filter(function (it) { return it.x != null; }).map(function (it) { return h('div', { key: it.id, className: cx('ds-mlayout__mark', (selId === it.id || hovId === it.id) && 'is-front'), style: { left: it.x + '%', top: it.y + '%' } }, h(MapMarker, { name: it.title, active: selId === it.id, hover: hovId === it.id, tip: selId === it.id ? it.tip : null, onClick: function () { selectItem(it.id, true); }, onMouseEnter: function () { setHov(it.id); }, onMouseLeave: function () { setHov(null); } })); }) : null, p.children)),
       /* 위 줄: (패널을 접었거나 floating일 때) 검색 + 필터 — 필터는 검색 오른쪽에서 함께 움직임 */
       h('div', { className: 'ds-mlayout__top' },
         (!panelType || !open || mob) && searchEl ? h('div', { className: 'ds-mlayout__search' }, mob && p.profile && React.isValidElement(searchEl) ? React.cloneElement(searchEl, { trailing: p.profile }) : searchEl) : null,
@@ -1679,7 +1694,7 @@
       panelType ? h('aside', { className: 'ds-mlayout__panel', 'aria-label': p.listLabel || '목록' },
         mob ? h('button', { type: 'button', className: 'ds-mlayout__grab', 'aria-label': exp ? '목록 줄이기' : '목록 펼치기', onClick: function () { setExp(!exp); } }, h('i')) : null,
         !mob && searchEl ? h('div', { className: 'ds-mlayout__panel-search' }, searchEl) : null,
-        h('div', { className: 'ds-mlayout__panel-body' }, typeof p.list === 'function' ? p.list({ openReport: function () { setRep(true); } }) : p.list),
+        h('div', { className: 'ds-mlayout__panel-body' }, items ? items.map(function (it) { return h(MapListItem, Object.assign({}, it, { key: it.id, hover: hovId === it.id, onClick: function () { selectItem(it.id, false); }, onMouseEnter: function () { setHov(it.id); }, onMouseLeave: function () { setHov(null); } })); }) : typeof p.list === 'function' ? p.list({ openReport: function () { setRep(true); } }) : p.list),
         !mob && !(repOpen && !tab) ? h('button', { type: 'button', className: 'ds-mlayout__toggle', 'aria-label': open ? '목록 접기' : '목록 펼치기', 'aria-expanded': open, onClick: function () { setOpen(!open); } }, h(Icon, { name: open ? 'chevron-left' : 'chevron-right' })) : null) : null,
       report, fpanel);
   }
