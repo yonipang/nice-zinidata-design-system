@@ -22,7 +22,7 @@
 4. charts v1.0 ↔ ECharts 대조 + 라이브러리 원본 색을 계열 규칙으로(파일 링크 필요)
 5. 피그마 Block 25종 ↔ 코드 Block* 세부 대조
 6. 피그마 게시(사용자): 변경 후 Component v2.3 · Templates v2.1 · Table v1.0
-- 오래된 정리 항목 21개 → `docs/work-summary.md` 11장 "이전부터 남은 일"
+- 오래된 정리 항목 16개 → `docs/work-summary.md` 11장 "이전부터 남은 일"(11-09 정리)
 
 ## 최근 결정 (새것부터 10개)
 1. 11-09 · 문서 — 새 대화는 `docs/status.md`만 먼저 읽기, 변경 이력은 CHANGELOG로 일원화(작업요약은 본문만)
