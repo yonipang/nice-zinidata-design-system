@@ -25,7 +25,7 @@
 - 오래된 정리 항목 15개 → `docs/work-summary.md` 11장 "이전부터 남은 일"(11-09 정리)
 
 ## 최근 결정 (새것부터 10개)
-1. 11-09 · 토큰 — 콘텐츠 폭 Primitive `max-w/content` 1180 · `max-w/content-wide` 1440(피그마 Layout · tokens.w3c.json, 코드 클래스 `max-w-content` · `max-w-content-wide`)
+1. 11-09 · 토큰 — 콘텐츠 폭 Primitive `max-w/content` 1180 · `max-w/content-wide` 1440(피그마 Layout · tokens.w3c.json, 코드 클래스 `max-w-content` · `max-w-content-wide`), w3c에 Layout 23개 모두 옮김
 2. 11-09 · 문서 — 새 대화는 `docs/status.md`만 먼저 읽기, 변경 이력은 CHANGELOG로 일원화(작업요약은 본문만)
 3. 11-06 · 레이아웃 ↔ 블록 — Layout/…(틀) · Block/<분류>/<이름>(내용) 분리, 블록에 흰 판 · 바깥 여백 없음, Header · Chart · Stats 합침, 예전 이름은 별칭
 4. 11-06 · 블록은 어느 레이아웃에나 — 놓인 자리 폭 기준으로 모양이 바뀜(도넛 440 미만 위아래), 300 미만 자리는 비권장
