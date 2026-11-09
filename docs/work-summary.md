@@ -49,7 +49,7 @@ Component   전용        button/solid/primary/bg …
 | Color | static, zinc, red ~ rose (Tailwind 색상) |
 | Typography | text, font/family, font/weight, style, tracking, leading |
 | Spacing | spacing, size, rounded, border-width |
-| Layout | breakpoint, container |
+| Layout | breakpoint, max-w |
 | Effect | opacity, blur, skew |
 
 - 회색은 **zinc만 사용**하며 값은 Tailwind gray (`colors: { zinc: colors.gray }`)
@@ -58,7 +58,7 @@ Component   전용        button/solid/primary/bg …
 - `rounded`: none 0 · xs 4 · sm 6 · md 8 · lg 10 · xl 12 · 2xl 14 · 3xl 16 · 4xl 20 · 5xl 24 · 6xl 32 · 7xl 40 · full 9999
 - `spacing`: 0, px, 0-5, 0-75, 1, 1-5 … 96 (n × 4px)
 - `size`: px 표기 이름, 코드는 같은 값의 spacing 클래스(`size-4.5`), 없을 때만 `size-[Npx]`
-- `container`: 실제로는 `max-w-*` 값 (그룹 이름 `max-w`로 변경 검토)
+- `max-w`: Tailwind `max-w-*` 값(none · 3xs 256 ~ 7xl 1280) — 예전 이름 `container`에서 바뀜(2026-11-09 확인)
 
 ### Tailwind v3 설정 대응
 
@@ -70,7 +70,7 @@ Component   전용        button/solid/primary/bg …
 | spacing | spacing | p-4, gap-4 |
 | rounded | borderRadius | rounded-lg |
 | breakpoint | screens | max-1240:block |
-| container | maxWidth | max-w-md |
+| max-w | maxWidth | max-w-md |
 | opacity | opacity | opacity-50 |
 
 ---
@@ -431,7 +431,7 @@ scrollbar/
 5. Select Negative=true placeholder 색 결정
 6. 글자의 예전 font 변수 정리
 7. 코드 확인: borderRadius 최신 값, fontSize xs=13, `zinc: colors.gray`, maxWidth 3xs · 2xs
-8. 콘텐츠 폭 토큰 확인 — Primitive Layout `container`(Tailwind `maxWidth`)에 1180 · 1440 값이 있는지 확인, 없으면 추가
+8. 콘텐츠 폭 토큰 — Primitive Layout `max-w`에 1180 · 1440 **없음(11-09 확인)**. 코드는 `--content-default` 1180 · `--content-wide` 1440(tokens.css · tokens.json · tailwind `max-w-content` · `max-w-content-wide`)에 있고 tokens.w3c.json만 빠짐. 피그마에 추가할 이름 결정 필요
 9. 입력창 Shape 속성 — pill 프로젝트가 생기면 Input · Password · Input Quantity · DatePicker Input에 `Shape=rounded/pill` 추가 (Text Area는 rounded 고정). 그전까지 pill 프로젝트는 지원하지 않음
 10. Report Modal section 헤더(브랜드 색 배경)의 흰 글자 대비를 project mode별로 확인
 11. Templates 베리에이션 추가 (범위 확인 필요)

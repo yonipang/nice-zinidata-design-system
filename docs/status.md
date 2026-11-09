@@ -7,7 +7,7 @@
 기준일: 2026-11-09
 
 ## 작업 대상
-- 피그마: Component v2.3 `3C2TB2p12Nxep7smiGvPgN`("Blocks & Layouts" 페이지) · Table v1.0 `DC6WYqBo5ayo20KU8dxJJd` · Templates v2.1 `8b0P5vfaIyISTvU4xU8EvR`("보고서 템플릿" 페이지) · 📊 charts v1.0(라이브러리)
+- 피그마: Primitive(Color · Typography · Spacing · Layout · Effect 한 파일) `xYRDXu2Q0mD1G9vYcAxtew` · Component v2.3 `3C2TB2p12Nxep7smiGvPgN`("Blocks & Layouts" 페이지) · Table v1.0 `DC6WYqBo5ayo20KU8dxJJd` · Templates v2.1 `8b0P5vfaIyISTvU4xU8EvR`("보고서 템플릿" 페이지) · 📊 charts v1.0(라이브러리)
 - 디자인시스템: https://claude.ai/artifact/EG1hS5zhH81z9nPW54LzoZ · 검토판: https://claude.ai/artifact/Qs5DpwD9RWnesrtQvP5P2d
 - GitHub: https://github.com/yonipang/nice-zinidata-design-system (아티팩트 project/ 구조 + tools/ · .gitignore — .gitignore는 저장소 쪽이 기준)
 

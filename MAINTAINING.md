@@ -60,7 +60,7 @@ tools/                 (저장소에만)
 | 🏁 Table v1.0 | `DC6WYqBo5ayo20KU8dxJJd` | 표 셀(Header · Cell/Text · Indicator · Control · Data · Minimal) |
 | Templates v2.1 | `8b0P5vfaIyISTvU4xU8EvR` | 화면 템플릿 — 지도 레이아웃(Floating type · Side pannel type · 보고서 · 접힘)의 기준 |
 | 📊 charts v1.0 | (작업요약 참고) | 차트 — 아직 코드와 세부 대조 안 함(남은 일) |
-| Primitive 라이브러리 | — | Color · Typography · Spacing · Layout · Effect (Tailwind v3.4 클래스 이름과 같음) |
+| Primitive 라이브러리 | `xYRDXu2Q0mD1G9vYcAxtew` | 한 파일에 컬렉션 5개: Color 201 · Typography 55 · Spacing 92 · Layout 21(breakpoint 7 · max-w 14) · Effect 41 (Tailwind v3.4 클래스 이름과 같음) |
 | Icon Set | 라이브러리 | 회사 아이콘(line 기본, 24px) — 아이콘은 여기서만 가져온다 |
 
 ---
