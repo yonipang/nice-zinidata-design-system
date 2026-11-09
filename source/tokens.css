@@ -368,8 +368,8 @@
   --text-positive-main: var(--color-green-700);
   --text-warning-main: var(--color-orange-600);
   --text-informative-main: var(--color-blue-600);
-  --text-increase-main: var(--color-rose-500);
-  --text-decrease-main: var(--color-blue-500);
+  --text-increase-main: var(--color-rose-600);
+  --text-decrease-main: var(--color-blue-600);
   --fill-neutral-strong: var(--color-zinc-900);
   --fill-neutral-main: var(--color-zinc-700);
   --fill-neutral-subtle: var(--color-zinc-400);

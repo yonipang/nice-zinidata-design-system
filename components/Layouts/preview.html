@@ -1,0 +1,64 @@
+<!-- @dsCard group="Layouts" height=1500 subtitle="레이아웃(틀) — Layout/Report · Layout/Section · Layout/Panel · Layout/Stack: 어디에 · 어떻게 쌓을지만, 블록은 아무거나" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+
+var MONTHS = ["26년 05월", "26년 06월", "26년 07월", "26년 08월", "26년 09월"];
+var A = {
+  overview: { type: "section", title: "서교동 상권 개요", description: "상권이 어떤 물리적, 행정적, 기능적 특성을 갖는지 이해함으로써 업종 및 전략 판단의 기초가 될 수 있습니다.", blocks: [
+    { type: "summary", title: "서교동은 주거상업 상권이에요", highlight: "주거상업 상권" },
+    { type: "donut", centerValue: "63%", centerLabel: "주거상업", items: [{ name: "주거상업", value: 63 }, { name: "상업지역", value: 21 }, { name: "주거지역", value: 15 }, { name: "직장오피스가", value: 0 }] }] },
+  popular: { type: "section", title: "인기 업종과 관심 업종 현황", description: "현재 어떤 업종이 많고, 어떤 업종이 돈을 잘 벌고 있는지를 봐야 내가 들어갈 자리가 있는지 판단할 수 있습니다.", blocks: [
+    { type: "summary", title: "매출 증가율 TOP 5" },
+    { type: "ranking", items: [{ name: "재활용품", value: 113.1 }, { name: "남성의류", value: 81.3 }, { name: "서예/미술학원", value: 75.6 }, { name: "아이스크림/빙수", value: 73.7 }, { name: "화장품", value: 63.1 }] },
+    { type: "summary", title: "점포 수 증가율 TOP 5" },
+    { type: "ranking", color: "series-2", items: [{ name: "조개구이전문", value: 60.0 }, { name: "아이스크림/빙수", value: 38.1 }, { name: "농산물", value: 33.3 }, { name: "찜닭전문점", value: 28.6 }, { name: "피아노/음악학원", value: 26.7 }] }] },
+  industry: { type: "section", title: "서교동 커피전문점 업종 현황", description: "선택하신 업종이 상권 내에서 상대적으로 어떤 위치인지 파악하는 것도 하나의 전략입니다.", blocks: [
+    { type: "summary", title: "업종 비중", text: "서교동 내 **커피전문점** 점포 수는 [[348개]]이며, 서교동 내 전체 업종 점포 수는 [[3,965개]]입니다. **커피전문점** 업종은 서교동에서 전체의 [[8.8%]]를 차지하고 있으며, 전국 평균 업종 구성비보다 [[3.4%p]] 높은 것으로 나타납니다." },
+    { type: "compare", metric: "업종 비중", unit: "%", items: [{ name: "서교동", value: 8.8 }, { name: "전국 평균", value: 5.4 }], delta: { label: "전국 평균 대비 +3.4%p", type: "increase" } },
+    { type: "callout", title: "점포 밀집도는 경쟁 강도를 보여주는 지표입니다.", children: "매출과 수익률을 함께 봐야 진입 적정성을 판단할 수 있습니다. 5~9% 구간은 전략 설계 여지가 크며, 10% 이상은 차별화 요소 없이 진입을 재검토하는 것이 안전합니다." },
+    { type: "summary", title: "점포수 변화", text: "서교동에서 운영 중인 **커피전문점** 점포 수는 최근 분석 시점 26년 09월 기준 [[348개]]이며, 전월 대비 [-1개 감소↓-], 3개월 전 대비 [+2개 증가↑+] 한 것으로 나타납니다." },
+    { type: "chartTable", type2: "bar", unit: "개소", categories: MONTHS, series: [{ name: "점포 수", data: [352, 346, 348, 349, 348] }], suffix: "개소" },
+    { type: "chartTable", type2: "line", unit: "만원", categories: MONTHS, series: [{ name: "상위 20%", data: [4760, 4487, 4814, 4687, 3996] }, { name: "평균", data: [1722, 1633, 1711, 1694, 1440] }, { name: "하위 20%", data: [192, 176, 145, 194, 148] }], suffix: "만원" }] },
+  customer: { type: "section", title: "고객 특성", description: "어떤 고객이 언제 방문하는지 알면 운영 시간과 상품 구성을 정할 수 있습니다.", blocks: [
+    { type: "summary", title: "성별·연령별", text: "서교동 **커피전문점**은 [[30대 여성]]이 가장 많이 방문하며, 그 다음은 [[30대 남성, 40대 여성 순]]으로 고객 비중이 높게 나타납니다." },
+    { type: "tabbedChart", tabs: ["이번달", "지난달", "작년 대비"], data: { "이번달": { categories: ["20대", "30대", "40대", "50대", "60대이상"], series: [{ name: "남성", data: [7, 17.1, 9.7, 7.9, 3.2] }, { name: "여성", data: [8.7, 21, 11.9, 9.6, 3.8] }] }, "지난달": { categories: ["20대", "30대", "40대", "50대", "60대이상"], series: [{ name: "남성", data: [6.8, 16.4, 10.1, 8.2, 3.4] }, { name: "여성", data: [9.1, 20.2, 12.3, 9.8, 3.7] }] } } }] }
+};
+/* chartTable의 차트 종류는 type2로 받아 block type과 겹치지 않게 */
+function fixType(list) { return list.map(function (b) { if (b.blocks) return Object.assign({}, b, { blocks: fixType(b.blocks) }); if (b.type2) { var c = Object.assign({}, b); c.type = "chartTable"; c.kind = b.type2; delete c.type2; return c; } return b; }); }
+
+function Layouts() {
+  var blocks = [{ type: "header", name: "영통 카페 A", address: "경기 수원시 영통구 봉영로 1570", badges: ["카페"], onShare: function () {}, onClose: false }, { type: "stats", items: [{ title: "월 평균 매출", value: "4,820", unit: "만원" }, { title: "점포 수", value: "86", unit: "개" }] }, { type: "ranking", items: [{ name: "카페", value: 12.4 }, { name: "한식", value: 8.1 }, { name: "편의점", value: 5.0 }] }];
+  return h("div", { className: "ds-row", style: { gap: 24, alignItems: "flex-start", flexWrap: "wrap", marginBottom: 32 } },
+    h("div", { style: { width: 520 } }, cap("Layout/Report — 블록 사이 24 · 섹션 사이 구분선 + 40"), h("div", { style: { padding: 24, border: "1px solid var(--border-neutral-main)", borderRadius: 16 } }, h(D.LayoutStack, { blocks: [{ type: "section", title: "섹션 A", description: "Layout/Section — 제목 + 회색 설명 + 블록", blocks: blocks }, { type: "section", title: "섹션 B", blocks: blocks.slice(1) }] }))),
+    h("div", { style: { width: 350 } }, cap("Layout/Panel — 같은 블록을 패널에: 흰 판 + 회색 띠 8"), h(D.LayoutStack, { layout: "panel", blocks: blocks })));
+}
+function App2() {
+  var init = fixType([A.overview, A.popular, A.industry]);
+  var st = React.useState(init), list = st[0], setList = st[1], ws = React.useState(520), w = ws[0], setW = ws[1];
+  function move(i, d) { var n = list.slice(), j = i + d; if (j < 0 || j >= n.length) return; var t = n[i]; n[i] = n[j]; n[j] = t; setList(n); }
+  function drop(i) { setList(list.filter(function (_, k) { return k !== i; })); }
+  var pool = fixType([A.overview, A.popular, A.industry, A.customer]).filter(function (b) { return !list.some(function (x) { return x.title === b.title; }); });
+  return h("div", { className: "ds-row", style: { gap: 24, alignItems: "flex-start" } },
+    h("div", { className: "ds-col", style: { gap: 8, width: 260, flex: "none" } },
+      cap("섹션 순서 — 위 · 아래로 옮기기, 빼기, 다시 넣기"),
+      list.map(function (b, i) { return h("div", { key: b.title, className: "ds-row", style: { gap: 4, alignItems: "center", padding: "6px 8px", borderRadius: 8, background: "var(--surface-subtler)" } }, h("span", { style: { flex: 1, fontSize: 13 } }, b.title), h(D.IconButton, { icon: "chevron-down", label: "위로", style: { transform: "rotate(180deg)" }, size: "xs", onClick: function () { move(i, -1); } }), h(D.IconButton, { icon: "chevron-down", label: "아래로", size: "xs", onClick: function () { move(i, 1); } }), h(D.IconButton, { icon: "close", label: "빼기", size: "xs", onClick: function () { drop(i); } })); }),
+      pool.map(function (b) { return h(D.Button, { key: b.title, color: "neutral", variant: "outline", size: "sm", iconLeft: "add", onClick: function () { setList(list.concat([b])); } }, b.title); }),
+      cap("틀 폭"), h(D.SegmentNeutral, { items: [{ value: "520", label: "보고서 520" }, { value: "390", label: "패널 390" }], value: String(w), onChange: function (v) { setW(+v); }, size: "sm", fill: true })),
+    h("div", { style: { width: w, padding: 24, border: "1px solid var(--border-neutral-main)", borderRadius: 16, background: "var(--surface-main)", boxSizing: "border-box" } }, h(D.LayoutStack, { blocks: list, layout: w < 400 ? "report" : "report" })));
+}
+function App() { return h("div", null, h(Layouts), cap("조립해 보기 — 섹션 옮기기 · 빼기 · 넣기, 폭 520 ↔ 390"), h(App2)); }
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

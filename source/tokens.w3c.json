@@ -1652,11 +1652,11 @@
     },
     "text/increase-main": {
       "$type": "color",
-      "$value": "{rose/500}"
+      "$value": "{rose/600}"
     },
     "text/decrease-main": {
       "$type": "color",
-      "$value": "{blue/500}"
+      "$value": "{blue/600}"
     },
     "fill/neutral-strong": {
       "$type": "color",

@@ -1,4 +1,4 @@
-<!-- @dsCard group="Map" height=1700 subtitle="지도 화면 배치(Templates v2.1) — 사이드 패널형 · 보고서 펼침 · 접힘 · floating형, 폭 1280 · 900 · 375 반응형" -->
+<!-, draw- @dsCard group="Map" height=1700 subtitle="지도 화면 배치(Templates v2.1) — 사이드 패널형 · 보고서 펼침 · 접힘 · floating형, 폭 1280 · 900 · 375 반응형" -->
 <!doctype html>
 <html lang="ko">
 <head><meta charset="utf-8"><title>preview</title>
@@ -19,22 +19,30 @@ var ITEMS = Array.from({ length: 8 }, function (_, i) { var n = ["영통 카페 
 function reportFor(it) { return { title: it.title + " 상권 보고서", content: h("div", { className: "ds-col", style: { gap: 16 } },
   h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 } }, h(D.StatisticCard, { size: "sm", title: "월 평균 매출", value: it.tip.replace(/[^0-9,]/g, ""), unit: "만원" }), h(D.StatisticCard, { size: "sm", title: "전용면적", value: it.labels[0].replace(/[^0-9]/g, ""), unit: "㎡" })),
   h("div", { style: { minHeight: 260, borderRadius: 16, background: "var(--surface-subtler)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-body-subtle)", fontSize: 14 } }, "[보고서 영역] " + it.title)) }; }
-function Tools(p) { return h(React.Fragment, null, h(D.MapTool, { icon: "user", label: "내 정보" }), h(D.MapMenu, { groups: [[{ icon: "ruler", label: "거리" }, { icon: "square", label: "면적" }, { icon: "circle", label: "반경" }]] }), h(D.MapTool, { icon: "add-circle", label: "커스텀", text: "커스텀" })); }
+var TOOL_HINT = { ruler: "지도에서 두 점을 눌러 거리를 재요", square: "지도에서 점을 이어 면적을 그려요 · 마지막 점을 두 번 누르면 끝", circle: "지도에서 가운데를 누르고 끌어 반경을 정해요", custom: "지도에서 영역을 그려 나만의 상권을 만들어요" };
+function Tools(p) { var on = p.tool; function tog(k) { p.setTool(on === k ? null : k); }
+  return h(React.Fragment, null, h(D.UserMenu, { trigger: "map", user: { name: "김지니", sub: "jini@zinidata.co.kr" } }),
+    h(D.MapMenu, { groups: [[{ icon: "ruler", label: "거리", active: on === "ruler", onClick: function () { tog("ruler"); } }, { icon: "square", label: "면적", active: on === "square", onClick: function () { tog("square"); } }, { icon: "circle", label: "반경", active: on === "circle", onClick: function () { tog("circle"); } }]] }),
+    h("div", { className: on === "custom" ? "is-tool-on" : "" }, h(D.MapTool, { icon: "add-circle", label: "커스텀", text: "커스텀", onClick: function () { tog("custom"); } }))); }
 function Bottom() { return h(React.Fragment, null, h(D.MapTool, { icon: "focus-3", label: "내 위치" }), h(D.MapMenu, { zoom: true })); }
 function Demo(p) {
-  var fs = React.useState({}), act = fs[0], setAct = fs[1];
-  return h(D.MapLayout, { type: p.type || "panel", height: p.h || 600, defaultReportOpen: p.report, defaultPanelOpen: p.open !== false,
+  var fs = React.useState({}), act = fs[0], setAct = fs[1], ts = React.useState(null), tool = ts[0], setTool = ts[1];
+  var draw = tool === "square" ? h(D.MapAreaDraw, { key: "draw", metersPerPixel: 0.35, nameFor: function () { return "수원시 영통구 영통동 주변 상권"; }, onExit: function () { setTool(null); } }) : null;
+  var measuring = tool === "ruler" || tool === "square" || tool === "circle";
+  return h(D.MapLayout, { focus: measuring, type: p.type || "panel", height: p.h || 600, defaultReportOpen: p.report, defaultPanelOpen: p.open !== false,
     search: h(D.MapSearch, { placeholder: "분석하실 지역을 입력해주세요" }),
     filters: FILTERS,
-    items: ITEMS, reportFor: reportFor, defaultSelected: p.report ? "s0" : undefined,
-    topTools: h(Tools), bottomTools: h(Bottom), onSearchHere: function () {},
-    mobileTools: [{ icon: "ruler", label: "거리 재기" }, { icon: "square", label: "면적 재기" }, { icon: "circle", label: "반경 그리기" }, { icon: "add-circle", label: "커스텀" }], onLocate: function () {}, profile: h(D.MapTool, { icon: "user", label: "내 정보" }) }
-  );
+    items: ITEMS, reportFor: reportFor,
+    defaultSelected: p.report ? "s0" : undefined,
+    topTools: h(Tools, { tool: tool, setTool: setTool }), bottomTools: h(Bottom), onSearchHere: function () {},
+    notice: tool && tool !== "square" ? { icon: "map-pin-2", text: TOOL_HINT[tool], onClose: function () { setTool(null); } } : null,
+    mobileTools: [{ icon: "ruler", label: "거리 재기", active: tool === "ruler", onClick: function () { setTool("ruler"); } }, { icon: "square", label: "면적 재기", active: tool === "square", onClick: function () { setTool("square"); } }, { icon: "circle", label: "반경 그리기", active: tool === "circle", onClick: function () { setTool("circle"); } }, { icon: "add-circle", label: "커스텀", active: tool === "custom", onClick: function () { setTool("custom"); } }], onLocate: function () {}, profile: h(D.UserMenu, { trigger: "map", user: { name: "김지니", sub: "jini@zinidata.co.kr" } }) },
+    draw);
 }
 function App() {
   var s = React.useState("1280"), w = s[0], set = s[1];
   return h("div", { className: "ds-col", style: { gap: 20 } },
-    sect("폭 바꿔 보기 — 목록 줄이나 지도 핀을 누르면 그 매장 보고서가 열리고 핀이 고른 상태가 돼요. 목록 ↔ 핀은 마우스를 올리면 서로 강조, 보고서를 닫으면 핀도 해제", h("div", { className: "ds-col", style: { gap: 12 } },
+    sect("폭 바꿔 보기 — 오른쪽 위 '면적'을 누르면 영역 그리기(점 찍기 → ESC/우클릭 완료 → 영역 확정). 목록 줄이나 지도 핀을 누르면 그 매장 보고서가 열리고 핀이 고른 상태가 돼요. 목록 ↔ 핀은 마우스를 올리면 서로 강조, 보고서를 닫으면 핀도 해제", h("div", { className: "ds-col", style: { gap: 12 } },
       h(D.SegmentNeutral, { size: "sm", items: [{ value: "1280", label: "PC 1280" }, { value: "900", label: "태블릿 900" }, { value: "375", label: "모바일 375" }], value: w, onChange: set }),
       h("div", { style: { width: +w, maxWidth: "100%", overflow: "hidden" } }, h(Demo, { key: w, h: w === "375" ? 720 : 600 })))),
     sect("사이드 패널 → 보고서 펼친 상태", h("div", { style: { width: 1280, maxWidth: "100%" } }, h(Demo, { report: true, h: 560 }))),

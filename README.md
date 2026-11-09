@@ -57,9 +57,9 @@
 ## Consuming this system (Claude Design · 코드)
 
 - **namespace**: `DS` — 번들이 `window.DS`에 컴포넌트를 담는다(예: `DS.Button`, `DS.StatisticCard`, `DS.MapLayout`). React 18이 이미 있는 화면에서 쓴다(번들에 React 없음).
-- **불러오는 순서**: `source/tokens.css` → `components/bundle.css` → `components/bundle.js`.
+- **불러오는 순서**: `source/tokens.css` → `components/bundle.css` → `components/bundle.js`(같은 폴더에 `components/echarts.min.js` — 차트용, 직접 불러올 필요 없음).
 - **바탕 클래스**: 컴포넌트를 담는 맨 바깥 요소에 `class="ds-root"`(글꼴 · 기본 글자색 · 상자 크기 규칙). 프로젝트 색은 `<html data-project="default|orange|momstouch|at">`.
 - **글꼴**: `fonts/PretendardVariable.woff2`를 `@font-face { font-family: "Pretendard Variable"; }`로 등록한다(토큰 `--font-sans`가 이 이름을 먼저 쓴다).
 - **컴포넌트 설명**: `components/<이름>/README.md`(props · 규칙), 미리보기 `components/<이름>/preview.html`. 전체 목록 · 타입은 `components/index.d.ts`.
-- **차트**(BarChart · LineChart · DonutChart · ComboChart · HeatmapChart)는 처음 그릴 때 ECharts 5.5를 cdnjs에서 불러온다 — 외부 스크립트를 막는 화면(예: Design 캔버스)에서는 그려지지 않으니 표 · StatisticCard로 대신하거나 차트 자리를 비워 둔다.
+- **차트**(BarChart · LineChart · DonutChart · ComboChart · HeatmapChart)는 ECharts 5.5를 쓴다 — **`components/echarts.min.js`를 bundle.js와 같은 폴더에 함께 두면** 그 파일을 먼저 불러오고(외부 스크립트를 막는 Design 캔버스에서도 차트가 그려짐), 없을 때만 cdnjs에서 불러온다. Claude Design 캔버스에 설치할 때는 `echarts.min.js`도 함께 복사한다.
 - 토큰 원본: `tokens.json`(W3C 형식은 `tokens.w3c.json`).

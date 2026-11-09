@@ -2,7 +2,7 @@
 
 도넛 차트(ECharts) — `items`[{name,value,color}] · `centerValue`(없으면 합계) · `centerLabel` · `unit` · `height`(또는 `size`) · `legend`(오른쪽 목록 + %).
 - 가운데 글: 값(28) + 사이 4 + 설명(16) **묶음의 가운데가 고리 중심**. 설명(`centerLabel`)이 없으면 **값 하나가 고리 정중앙**.
-- 범례: `text-sm` 14 `text-body-main` + 비율 `text-body-subtle`, 네모 12, 줄 사이 10(아래 배치일 때 12).
+- 범례(피그마 Report/Chart 도넛의 `_base/tooltip` 목록과 같게, 2026-11-05): 색 칸 10 · 모서리 2(색은 `chart-series-1~` 순서), 이름 `text-sm` medium `text-heading-main` + 값 `text-sm` `text-body-main`(왼쪽 8), 줄 높이 36(사이 16), 목록 여백 8.
 - 크기(반응형): 옆 배치에서 자리가 모자라면 **먼저 도넛을 줄이고**(최소 반지름 64), 그래도 모자라면 위아래 배치로 바꾼 뒤 판 폭에 맞춰 다시 키운다(최대 = 높이의 42%).
 - 배치(반응형): 넓으면 도넛 왼쪽 고정 크기(지름 = 높이의 84%) + 범례 바로 오른쪽(사이 24). 판 폭이 **도넛 + 24 + 범례 폭보다 좁아지면 도넛 위 · 범례 아래**(가운데 정렬, 여러 줄로 줄바꿈)로 바뀌고 높이가 그만큼 늘어난다.
 - 두께: 고리 안쪽 72%, 조각 사이 틈 · 흰 테두리 2 · 모서리 4. 가운데 값 20 bold heading + 이름 `text-xs` body-subtle.

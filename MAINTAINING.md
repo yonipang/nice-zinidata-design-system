@@ -96,7 +96,7 @@ tools/                 (저장소에만)
 - 한글 줄바꿈은 **어절 단위**(`word-break: keep-all`), 문단은 `text-wrap: pretty`.
 
 ### 2-5. 예외 (토큰 대신 원래 색)
-- Category Badge 분류색, 소셜 로고(카카오 · 네이버 · 구글) 브랜드 색, 지도 자리 표시 바탕(`.ds-mapbg`)만.
+- Category Badge 분류색, 소셜 로고(카카오 · 네이버 · 구글) 브랜드 색 · 지하철 노선 고유 색(노선 배지, 예: 3호선 #EF7C1C), 지도 자리 표시 바탕(`.ds-mapbg`)만.
 - 차트 계열 색은 `chart-series-1~6`, Status Badge는 의미 토큰만(Primitive 금지).
 
 ### 2-6. 아이콘

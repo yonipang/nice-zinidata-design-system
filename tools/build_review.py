@@ -22,7 +22,7 @@ TABS=[('버튼',['Button','IconButton','TextButton','ToggleButton','SquareButton
 ('헤더',['PageHeader','SectionHeader','ContentsHeader']),('카드',['Card','StatisticCard','TextCard']),
 ('배지',['StatusBadge','CategoryBadge','ChangeBadge','SocialBadge']),('피드백 · 오버레이',['InlineAlert','ExpandedAlert','Toast','ConfirmModal','Modal','BottomSheet','ReportModal','Tooltip']),
 ('표',['Table','TableHeaderCell','TableTextCell','TableIndicatorCell','TableControlCell','TableDataCell','MinimalTable','MinimalTableCell']),('차트',['BarChart','LineChart','DonutChart','ComboChart','HeatmapChart']),
-('지도',['MapLayout','MapSearch','LocationSelector','MapMarkers','MapMenu','MapListItem'])]
+('레이아웃',['Layouts']),('블록',['BlocksHeader','BlocksText','BlocksNumber','BlocksList','BlocksChart','BlocksTable','BlocksInput']),('지도',['MapLayout','MapSearch','LocationSelector','MapMarkers','MapMenu','MapListItem','MapFilterPanel','MapAreaDraw'])]
 old=open(os.path.join(HERE,'review-shell.html'),encoding='utf-8').read()
 tokens=open(first(A+'/source/tokens.css',A+'/tokens/tokens.css'),encoding='utf-8').read(); bcss=open(A+'/components/bundle.css',encoding='utf-8').read(); bjs=open(A+'/components/bundle.js',encoding='utf-8').read()
 font=base64.b64encode(open(first(A+'/fonts/PretendardVariable.woff2',A+'/assets/fonts/PretendardVariable.woff2',A+'/assets/PretendardVariable.woff2'),'rb').read()).decode()

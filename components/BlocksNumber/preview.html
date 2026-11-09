@@ -1,0 +1,53 @@
+<!-- @dsCard group="Blocks" height=1300 subtitle="Block / Number — 숫자 · 어느 레이아웃에나 넣을 수 있음" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+
+var M5 = ["26년 05월", "26년 06월", "26년 07월", "26년 08월", "26년 09월"];
+var EX = {
+  header: [{ name: "경복궁역점", grade: { label: "B등급", color: "teal" }, address: "서울특별시 종로구 자하문로2길 4 경복빌딩", actions: [{ label: "영업 범위 수정" }, { label: "범위 삭제", negative: true }], select: { options: ["영업 범위", "반경 500m"], placeholder: "영업 범위" } },
+           { category: "호텔", name: "에듀시티에비앙", address: "서울특별시 영등포구 양평로 160", actions: [{ label: "건물 정보 수정" }, { label: "영역 수정" }] },
+           { name: "영통 카페 A", address: "경기 수원시 영통구 봉영로 1570", badges: ["카페", "테이크아웃"], onShare: function () {}, onClose: false }],
+  section: [{ title: "서교동 상권 개요", description: "상권이 어떤 물리적, 행정적, 기능적 특성을 갖는지 이해함으로써 업종 및 전략 판단의 기초가 될 수 있습니다." }],
+  summary: [{ title: "서교동은 주거상업 상권이에요", highlight: "주거상업 상권" }, { title: "점포수 변화", text: "서교동 **커피전문점** 점포 수는 [[348개]]이며, 전월 대비 [-1개 감소↓-], 3개월 전 대비 [+2개 증가↑+] 한 것으로 나타납니다." }],
+  callout: [{ title: "점포 밀집도는 경쟁 강도를 보여주는 지표입니다.", children: "매출과 수익률을 함께 봐야 진입 적정성을 판단할 수 있습니다." }],
+  memo: [{ body: "★업데이트날짜(8/12) ■ 임차조건(보증금/임대료/권리금/평수) 100,000 / 8,000 / - / 24평", meta: "임건형 · 2026.08.12 14:01 작성됨" }],
+  conclusion: [{ title: "한 줄 결론", text: "평일 점심(12~13시) 매출 비중이 가장 높아요." }, { variant: "alert", title: "참고", text: "베이커리는 점포 수 대비 객단가가 높아요." }],
+  stats: [{ items: [{ title: "월 평균 매출", value: "4,820", unit: "만원" }, { title: "점포 수", value: "86", unit: "개" }] }, { style: "soft", title: "지역 내 경제지표", description: "행정동 내 거주 인구의 평균 연소득, 평균 소비 여력입니다.", items: [{ label: "평균 연소득", value: "5,840 만원" }, { label: "평균 소비여력 (월)", value: "405 만원" }] }],
+  bigValue: [{ title: "예상 매출 (VAT 별도)", label: "후보 예상 매출", value: "8,164 만원" }],
+  summaryStrip: [{ items: [{ label: "매체분류", value: "타운보드" }, { label: "모니터크기", value: "25인치" }, { label: "가동수량", value: "4대" }] }],
+  top3: [{ items: [{ name: "입시학원", metrics: [{ label: "매출액", value: "94.2억" }, { label: "점포수", value: "171개" }, { label: "이용건수", value: "25,779건" }] }, { name: "편의점", metrics: [{ label: "매출액", value: "89.1억" }, { label: "점포수", value: "92개" }, { label: "이용건수", value: "1,343,481건" }] }] }],
+  ringCard: [{ title: "핵심 지표 (30대 이상)", caption: "2026년 3분기 기준", cardTitle: "소득 대비 소비율", text: "연소득 대비 연간 소비 비중이 [[56.1%]]입니다.", value: 56.1, valueLabel: "소비율" }],
+  keyValue: [{ icon: "building", title: "세대 수", rows: [{ label: "아파트", value: "143 세대", color: "var(--chart-series-3)" }, { label: "빌라", value: "2,290 세대", color: "var(--chart-series-1)" }], total: { label: "총 세대 수", value: "2,433 세대" } }, { rows: [{ label: "거점ID", value: "6089" }, { label: "구분", value: "호텔" }], note: { label: "비고 (광고 불가 항목)", text: "-" } }],
+  threeColumn: [{ title: "교육기관", rows: [["초등학교", "1개", "166명"], ["대학교", "1개", "2,872명"], ["학원", "28개", "-"]] }],
+  infoChip: [{ title: "인프라", label: "지하철", lines: [{ no: "3", color: "#EF7C1C", name: "경복궁" }], rows: [{ label: "버스정류장", value: "25 개" }] }],
+  placeList: [{ title: "주변 점포", items: [{ title: "영통 카페 A", avatar: true, addresses: ["경기 수원시 영통구 봉영로 1570"], labels: ["카페", "60㎡"] }, { title: "매탄 베이커리", avatar: true, addresses: ["경기 수원시 영통구 매탄로 22"], labels: ["베이커리"] }] }],
+  chart: [{ kind: "bar", unit: "개소", categories: M5, series: [{ name: "점포 수", data: [352, 346, 348, 349, 348] }], suffix: "개소" }, { kind: "line", title: "월별 매출 추이", table: false, categories: M5, series: [{ name: "상위 20%", data: [4760, 4487, 4814, 4687, 3996] }, { name: "평균", data: [1722, 1633, 1711, 1694, 1440] }] }, { kind: "combo", unit: "이용건수 (건) / 결제단가 (원)", categories: M5, bars: [{ name: "이용건수", data: [589375, 559298, 583300, 579820, 503250] }], lines: [{ name: "결제단가", data: [10375, 10166, 10272, 10314, 10135] }] }, { kind: "donut", title: "고객 구성", items: [{ name: "20대", value: 22 }, { name: "30대", value: 31 }, { name: "40대", value: 24 }, { name: "50대+", value: 23 }], centerValue: "31%", centerLabel: "30대" }],
+  donut: [{ centerValue: "63%", centerLabel: "주거상업", items: [{ name: "주거상업", value: 63 }, { name: "상업지역", value: 21 }, { name: "주거지역", value: 15 }, { name: "직장오피스가", value: 0 }] }],
+  ranking: [{ items: [{ name: "재활용품", value: 113.1 }, { name: "남성의류", value: 81.3 }, { name: "서예/미술학원", value: 75.6 }, { name: "아이스크림/빙수", value: 73.7 }, { name: "화장품", value: 63.1 }] }],
+  compare: [{ metric: "업종 비중", unit: "%", items: [{ name: "서교동", value: 8.8 }, { name: "전국 평균", value: 5.4 }], delta: { label: "전국 평균 대비 +3.4%p", type: "increase" } }],
+  tabbedChart: [{ tabs: ["이번달", "지난달", "작년 대비"], data: { "이번달": { categories: ["20대", "30대", "40대"], series: [{ name: "남성", data: [7, 17.1, 9.7] }, { name: "여성", data: [8.7, 21, 11.9] }] } } }],
+  hbarTable: [{ title: "가구 유형 비중", caption: "2026년 3분기 기준", headers: ["가구 유형", "비중"], items: [{ label: "1인가구", value: 33 }, { label: "키즈맘", value: 10 }, { label: "중년가구", value: 57 }] }],
+  chartMonthly: [{ title: "패스트푸드 업종 매출 (VAT 포함)", description: "행정동 내 패스트푸드점 총매출", headers: ["월", "지출액"], unit: "만원", items: [{ label: "26.07", value: 5087 }, { label: "26.08", value: 5342 }, { label: "26.09", value: 6951 }] }],
+  compareBars: [{ unit: "만원", items: [{ label: "평균 연소득", value: 5951 }, { label: "연간 소비 금액", value: 3339 }], note: "두 막대는 같은 축(만원) 기준입니다." }],
+  table: [{ title: "업종 순위", columns: [{ key: "k", label: "업종" }, { key: "a", label: "점포 수", numeric: true }, { key: "b", label: "월 매출(만원)", numeric: true }], rows: [{ k: "카페", a: 86, b: "4,820" }, { k: "한식", a: 72, b: "3,910" }, { k: "편의점", a: 41, b: "2,770" }] }],
+  calculator: [{ title: "예상 P&L (VAT 별도)", checkbox: "다점포 여부", summary: [{ label: "예상 매출 (월)", value: "8,164 만원" }, { label: "EBITDA", value: "-" }], inputs: [{ label: "임대료", unit: "만원" }, { label: "인건비", unit: "%" }] }],
+  datasetSwitch: [{ tabs: [{ value: "a", label: "카드매출", title: "TOP3 소분류 업종", caption: "26년 9월 기준", content: h("p", { style: { margin: 0, fontSize: 14, color: "var(--text-body-subtle)" } }, "← 탭을 고르면 이 자리의 블록이 바뀌어요") }, { value: "b", label: "금융데이터", content: h("p", { style: { margin: 0, fontSize: 14 } }, "금융데이터 블록 자리") }] }]
+};
+var DESC = { header: "머리 — 점포(등급 · 버튼 · 선택) · 건물(분류 글자) · 공유형(분류 배지 · 공유)", section: "섹션 제목 + 회색 설명", summary: "소제목 · 강조 문장", callout: "안내 박스", memo: "메모", conclusion: "한 줄 결론 — 카드 · 알림", stats: "숫자 카드 — card(StatisticCard) · soft(회색 판)", bigValue: "큰 값 한 줄", summaryStrip: "3칸 요약", top3: "TOP3 카드", ringCard: "링 지표 카드", keyValue: "값 목록 — 색 점 · 합계 · 비고", threeColumn: "3열 목록", infoChip: "정보 칩(지하철 노선 색 = 예외)", placeList: "장소 목록(Map List)", chart: "차트 — bar · line · combo · donut, 단위 · 데이터 표(table) 선택", donut: "도넛 + 범례표", ranking: "순위 막대(TOP 5)", compare: "비교 막대 + 표 + 차이", tabbedChart: "탭 + 누적 막대 + 표", hbarTable: "가로 막대 + 표", chartMonthly: "막대 + 월별 표", compareBars: "같은 축 비교 막대", table: "요약 표(MinimalTable)", calculator: "계산 입력", datasetSwitch: "데이터 묶음 전환" };
+function Block(t) { return h("div", { key: t, className: "ds-col", style: { gap: 8 } }, cap("type: \"" + t + "\" — " + DESC[t]), h("div", { className: "ds-col", style: { gap: 16 } }, EX[t].map(function (pr, i) { return h("div", { key: i, style: { padding: 20, border: "1px solid var(--border-neutral-main)", borderRadius: 12, background: "var(--surface-main)" } }, h(D.LayoutStack, { blocks: [Object.assign({ type: t }, pr)] })); }))); }
+function App() { return h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(390px, 1fr))", gap: 24, alignItems: "start" } }, ["stats", "bigValue", "summaryStrip", "top3", "ringCard"].map(Block)); }
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

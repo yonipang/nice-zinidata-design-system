@@ -1558,7 +1558,7 @@ html:has(.ds-root)::-webkit-scrollbar-thumb, html:has(.ds-root) body::-webkit-sc
 .ds-mlayout__top > * { pointer-events: auto; }
 .ds-mlayout__search { width: 375px; padding: 16px 20px 0; box-sizing: border-box; flex: none; }
 .ds-mlayout__filters { display: flex; gap: 12px; padding: 20px 24px; min-width: 0; overflow-x: auto; scrollbar-width: none; } .ds-mlayout__filters::-webkit-scrollbar { display: none; }
-.ds-mlayout__filters .ds-tgl, .ds-mlayout__filters .ds-tgl__layer { border-radius: var(--rounded-full); white-space: nowrap; flex: none; }
+.ds-mlayout__filters .ds-tgl { white-space: nowrap; flex: none; }
 .ds-mlayout__here { position: absolute; top: 76px; left: 50%; transform: translateX(-50%); } .ds-mlayout__here .ds-btn { box-shadow: var(--elevation-2); }
 .ds-mlayout__tools { position: absolute; z-index: 5; right: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; } .ds-mlayout__tools--top { top: 16px; } .ds-mlayout__tools--bottom { bottom: 16px; }
 .ds-mlayout__panel { position: absolute; z-index: 6; top: 0; bottom: 0; left: 0; width: var(--ml-panel); display: flex; flex-direction: column; background: var(--bg-main); border-right: var(--border-width-1) solid var(--border-neutral-main); transition: transform .24s cubic-bezier(.2,0,0,1); }
@@ -1579,8 +1579,8 @@ html:has(.ds-root)::-webkit-scrollbar-thumb, html:has(.ds-root) body::-webkit-sc
 .ds-mlayout.is-mobile .ds-mlayout__filters { width: 100%; padding: 4px 12px 10px; gap: 8px; box-sizing: border-box; }
 .ds-mlayout.is-mobile .ds-mlayout__tools--top { top: 124px; right: 12px; } .ds-mlayout.is-mobile .ds-mlayout__tools--bottom { bottom: calc(40% + 12px); right: 12px; }
 .ds-mlayout.is-mobile.is-expanded .ds-mlayout__tools--bottom { display: none; }
-.ds-mlayout.is-mobile .ds-mlayout__panel { top: auto; right: 0; width: auto; height: 40%; border-right: 0; border-radius: var(--rounded-surface-lg) var(--rounded-surface-lg) 0 0; box-shadow: var(--elevation-4); transition: height .24s cubic-bezier(.2,0,0,1); }
-.ds-mlayout.is-mobile.is-expanded .ds-mlayout__panel { height: 85%; } .ds-mlayout.is-mobile .ds-mlayout__panel-body { padding-top: 0; }
+.ds-mlayout.is-mobile .ds-mlayout__panel { top: auto; right: 0; width: auto; height: 40%; border-right: 0; border-radius: var(--rounded-surface-lg) var(--rounded-surface-lg) 0 0; box-shadow: var(--elevation-4); transition: height .24s cubic-bezier(.2,0,0,1), border-radius .24s cubic-bezier(.2,0,0,1), box-shadow .24s; }
+.ds-mlayout.is-mobile.is-expanded .ds-mlayout__panel { height: calc(100% - var(--ml-top, 112px)); border-radius: 0; box-shadow: none; border-top: var(--border-width-1) solid var(--divider-neutral-subtle); }  /* 다 펼치면 위 막대(검색 · 필터) 바로 아래까지 꽉 — 떠 있는 시트가 아니라 화면이 되므로 모서리 · 그림자 없음 */ .ds-mlayout.is-mobile .ds-mlayout__panel-body { padding-top: 0; }
 .ds-mlayout.is-mobile .ds-mlayout__report { inset: 0; left: 0; width: auto; border: 0; box-shadow: none; z-index: 9; } .ds-mlayout.is-mobile .ds-mlayout__report-head { padding: 0 8px; height: 56px; }
 .ds-mlayout__grab { display: flex; justify-content: center; padding: 8px 0 4px; border: 0; background: none; cursor: pointer; flex: none; } .ds-mlayout__grab i { width: 36px; height: 4px; border-radius: var(--rounded-full); background: var(--fill-neutral-subtle); }
 @media (prefers-reduced-motion: reduce) { .ds-mlayout__panel, .ds-mlayout__top { transition: none; } }
@@ -1658,6 +1658,175 @@ html:has(.ds-root)::-webkit-scrollbar-thumb, html:has(.ds-root) body::-webkit-sc
 .ds-mlayout.is-mobile .ds-mmarker__pin:hover { transform: none; }
 @media (prefers-reduced-motion: reduce) { .ds-mmarker__pin { transition: none; } }
 /* 연결 모드의 핀 좌표는 '보이는 지도 영역'(패널 · 보고서 오른쪽) 기준 — 고른 핀이 보고서에 가려지지 않게(실제 지도에서는 고른 위치로 지도를 옮겨 같은 효과를 낸다) */
-.ds-mlayout__overlay.is-linked { left: var(--ml-left); right: 72px; top: 72px; transition: left .24s cubic-bezier(.2,0,0,1); }
+.ds-mlayout__overlay.is-linked { left: var(--ml-mapleft); right: 72px; top: 72px; transition: left .24s cubic-bezier(.2,0,0,1); }
 .ds-mlayout.is-mobile .ds-mlayout__overlay.is-linked { left: 0; right: 56px; top: 112px; bottom: 40%; }
 @media (prefers-reduced-motion: reduce) { .ds-mlayout__overlay.is-linked { transition: none; } }
+.ds-mfpanel { position: relative; }  /* 따로 놓을 때는 흐름 안에 */
+
+/* Toggle Button 좌우 여백을 피그마와 같게(2026-11-05) — 글자 묶음 좌우 2 + 판 여백(테두리 1만큼 뺌: 피그마는 테두리가 안쪽이라 자리를 차지하지 않음)
+   글자 시작 위치 = rounded sm 8 · md 12 · lg 10 · xl 12 · 2xl 14 / pill sm 10 · md 12 · lg 14 · xl 16 · 2xl 18 */
+.ds-tgl__layer > span:not(.ds-icon) { padding: 0 2px; }
+.ds-tgl--sm .ds-tgl__layer { padding-left: calc(var(--spacing-1-5) - var(--border-width-1)); padding-right: calc(var(--spacing-1-5) - var(--border-width-1)); }
+.ds-tgl--md .ds-tgl__layer { padding-left: calc(var(--spacing-2-5) - var(--border-width-1)); padding-right: calc(var(--spacing-2-5) - var(--border-width-1)); }
+.ds-tgl--lg .ds-tgl__layer { padding-left: calc(var(--spacing-2) - var(--border-width-1)); padding-right: calc(var(--spacing-2) - var(--border-width-1)); }
+.ds-tgl--xl .ds-tgl__layer { padding-left: calc(var(--spacing-2-5) - var(--border-width-1)); padding-right: calc(var(--spacing-2-5) - var(--border-width-1)); }
+.ds-tgl--2xl .ds-tgl__layer { padding-left: calc(var(--spacing-3) - var(--border-width-1)); padding-right: calc(var(--spacing-3) - var(--border-width-1)); }
+.ds-tgl--pill, .ds-tgl--pill .ds-tgl__layer { border-radius: var(--rounded-full); }
+.ds-tgl--pill.ds-tgl--sm .ds-tgl__layer { padding-left: calc(var(--spacing-2) - var(--border-width-1)); padding-right: calc(var(--spacing-2) - var(--border-width-1)); }
+.ds-tgl--pill.ds-tgl--md .ds-tgl__layer { padding-left: calc(var(--spacing-2-5) - var(--border-width-1)); padding-right: calc(var(--spacing-2-5) - var(--border-width-1)); }
+.ds-tgl--pill.ds-tgl--lg .ds-tgl__layer { padding-left: calc(var(--spacing-3) - var(--border-width-1)); padding-right: calc(var(--spacing-3) - var(--border-width-1)); }
+.ds-tgl--pill.ds-tgl--xl .ds-tgl__layer { padding-left: calc(var(--spacing-3-5) - var(--border-width-1)); padding-right: calc(var(--spacing-3-5) - var(--border-width-1)); }
+.ds-tgl--pill.ds-tgl--2xl .ds-tgl__layer { padding-left: calc(var(--spacing-4) - var(--border-width-1)); padding-right: calc(var(--spacing-4) - var(--border-width-1)); }
+.ds-mfwrap { position: relative; display: inline-block; vertical-align: top; } .ds-mfpanel--float { position: absolute; left: calc(100% + 4px); z-index: 2; }  /* 하위 판: 판 오른쪽 4, 상위 줄 높이에 맞춤(판 위 여백 8만큼 올림) */
+
+/* 하위 판: 왼쪽 4px 틈을 투명한 다리로 메워 마우스가 틈을 지날 때 닫히지 않게 + 열릴 때 살짝 옆에서 나타남(0.12s), 줄 hover 색은 부드럽게 */
+.ds-mlayout__fpanel--sub::before { content: ""; position: absolute; top: 0; bottom: 0; right: 100%; width: 8px; }
+.ds-mlayout__fpanel { animation: ds-fpanel-in .12s ease-out; } .ds-mlayout__fpanel--sub { animation-name: ds-fpanel-sub-in; }
+@keyframes ds-fpanel-in { from { opacity: 0; transform: translateY(-4px); } }
+@keyframes ds-fpanel-sub-in { from { opacity: 0; transform: translateX(-4px); } }
+.ds-mlayout__fopt { transition: background-color .1s ease; }
+@media (prefers-reduced-motion: reduce) { .ds-mlayout__fpanel { animation: none; } .ds-mlayout__fopt { transition: none; } }
+
+/* 사이드 패널형: 검색은 왼쪽 위 고정(패널 폭 칸, 여백 16/20) — 패널 위에 떠 있고 패널을 접어도 그대로. 패널이 열려 있으면 테두리 입력, 접히면 지도 위에 떠 있는 입력(elevation-2) */
+.ds-mlayout__search--fixed { position: absolute; z-index: 8; top: 0; left: 0; width: var(--ml-panel); padding: 16px 20px 0; box-sizing: border-box; }
+.ds-mlayout__panel-search-space { height: 64px; flex: none; }
+.ds-mlayout.is-panel-open .ds-mlayout__search--fixed .ds-msearch__box--floating { box-shadow: none; border-color: var(--input-border); transition: box-shadow .24s, border-color .24s; }
+.ds-mlayout:not(.is-panel-open) .ds-mlayout__search--fixed .ds-msearch__box--floating { box-shadow: var(--elevation-2); border-color: transparent; transition: box-shadow .24s, border-color .24s; }
+.ds-mlayout__report { z-index: 9; }  /* 보고서는 검색 · 필터 위를 덮음 */
+
+/* 지도 위 내 정보(UserMenu trigger="map"): 도구 버튼 모양, 열리면 테두리 border-neutral-strong · 메뉴는 버튼 아래 오른쪽 맞춤(기존 UserMenu 판) */
+.ds-mtool.is-open { border-color: var(--border-neutral-strong); }
+.ds-mlayout__tools .ds-umenu, .ds-msearch__bar .ds-umenu { position: relative; }
+.ds-msearch__bar .ds-umenu > .ds-mtool { width: 40px; height: 40px; border: 0; box-shadow: none; background: none; }
+.ds-mlayout__tools .ds-umenu__panel, .ds-msearch__bar .ds-umenu__panel { z-index: 30; }
+/* 지도 위 내 정보 메뉴는 버튼 왼쪽에(사이 8, 위 맞춤) — 오른쪽 도구 줄을 가리지 않게 */
+.ds-umenu--left .ds-umenu__panel { top: 0; right: calc(100% + 8px); left: auto; margin-top: 0; }
+
+/* 지도 안내 막대(MapGuideBar): 보이는 지도 아래 가운데(아래 16) · surface-main · border-neutral-main · rounded-xl · elevation-2 · 여백 8/8/8/16, 핀 아이콘 16 + text-sm body-main + 종료하기(Neutral outline sm) */
+.ds-mguide { display: inline-flex; align-items: center; gap: var(--spacing-2); padding: 8px 8px 8px 16px; background: var(--surface-main); border: var(--border-width-1) solid var(--border-neutral-main); border-radius: var(--rounded-xl); box-shadow: var(--elevation-2); white-space: nowrap; animation: ds-fpanel-in .12s ease-out; }
+.ds-mguide > .ds-icon { width: 16px; height: 16px; color: var(--icon-body-subtle); flex: none; } .ds-mguide__text { font-size: 14px; line-height: 20px; color: var(--text-body-main); padding-right: var(--spacing-4); }
+.ds-mlayout__notice { position: absolute; z-index: 6; bottom: 16px; left: calc(var(--ml-mapleft) + (100% - var(--ml-mapleft)) / 2); transform: translateX(-50%); }
+.ds-mlayout.is-mobile .ds-mlayout__notice { bottom: calc(40% + 12px); left: 50%; }
+.ds-mlayout.is-mobile .ds-mguide { white-space: normal; max-width: calc(100vw - 32px); }
+@media (prefers-reduced-motion: reduce) { .ds-mguide { animation: none; } }
+.is-tool-on > .ds-mtool, .ds-mtool.is-active { border-color: var(--border-primary-accent); } .is-tool-on > .ds-mtool .ds-icon, .is-tool-on > .ds-mtool span { color: var(--text-primary-main); }  /* 켜진 낱개 도구 */
+
+/* 면적 그리기(MapAreaDraw): 점 = 흰 원 r5 + border-primary-accent 2 · 선 2 · 면 fill-primary 20% · 커서 옆 말풍선 · 영역 위 결과 카드 */
+.ds-marea { position: absolute; inset: 0; cursor: crosshair; } .ds-marea.is-done, .ds-marea.is-confirmed { cursor: default; }
+.ds-marea__svg { position: absolute; inset: 0; overflow: visible; }
+.ds-marea__poly { fill: color-mix(in srgb, var(--fill-primary-main) 20%, transparent); stroke: var(--border-primary-accent); stroke-width: 2; stroke-linejoin: round; }
+.ds-marea__line { fill: none; stroke: var(--border-primary-accent); stroke-width: 2; stroke-linecap: round; }
+.ds-marea__pt { fill: var(--surface-main); stroke: var(--border-primary-accent); stroke-width: 2; } .ds-marea.is-done .ds-marea__pt { cursor: grab; }
+.ds-marea__tip, .ds-marea__card { position: absolute; background: var(--surface-main); border: var(--border-width-1) solid var(--border-neutral-main); border-radius: var(--rounded-xl); box-shadow: var(--elevation-3); pointer-events: none; }
+.ds-marea__tip { padding: 12px; min-width: 180px; display: flex; flex-direction: column; gap: 8px; }
+.ds-marea__card { transform: translate(-50%, -100%); padding: 16px; min-width: 240px; display: flex; flex-direction: column; gap: 8px; pointer-events: auto; cursor: default; animation: ds-fpanel-in .12s ease-out; }
+.ds-marea__title { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--text-heading-main); white-space: nowrap; }
+.ds-marea__row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; font-size: 13px; line-height: 16px; color: var(--text-body-subtle); } .ds-marea__row b { font-size: 14px; line-height: 20px; font-weight: 700; color: var(--text-primary-main); }
+.ds-marea__hint { padding: 6px 8px; border-radius: var(--rounded-md); background: var(--surface-subtler); font-size: 12px; line-height: 16px; color: var(--text-body-subtle); text-align: center; white-space: nowrap; }
+.ds-marea__actions { display: flex; gap: var(--spacing-2); margin-top: var(--spacing-1); } .ds-marea__actions .ds-btn { flex: 1 0 auto; white-space: nowrap; }  /* 버튼 md 32 · 글자 폭만큼은 늘 확보(줄어들지 않음), 남는 폭은 나눠 채움 */
+.ds-marea__guide { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); cursor: default; }
+.ds-marea__card.is-below { transform: translate(-50%, 0); }  /* 영역 위에 자리가 없으면 아래에 */
+
+/* 측정 모드(focus): 거리 · 면적 · 반경을 고르는 동안 지도 · 그리기 · 안내 막대 · 확대/축소만 — 나머지 UI는 사라짐(0.15s) */
+.ds-mlayout.is-focus .ds-mlayout__panel, .ds-mlayout.is-focus .ds-mlayout__report, .ds-mlayout.is-focus .ds-mlayout__top, .ds-mlayout.is-focus .ds-mlayout__search--fixed,
+.ds-mlayout.is-focus .ds-mlayout__tools--top, .ds-mlayout.is-focus .ds-mlayout__tools--locate, .ds-mlayout.is-focus .ds-mlayout__toggle, .ds-mlayout.is-focus .ds-mlayout__fpanel { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s ease, visibility 0s .15s; }
+.ds-mlayout__panel, .ds-mlayout__report, .ds-mlayout__top, .ds-mlayout__search--fixed, .ds-mlayout__tools { transition: opacity .15s ease, transform .24s cubic-bezier(.2,0,0,1), left .24s cubic-bezier(.2,0,0,1); }
+.ds-mlayout.is-focus .ds-mlayout__overlay.is-linked { left: 0; right: 0; top: 0; }
+.ds-mlayout.is-mobile.is-focus .ds-mlayout__overlay.is-linked { top: 0; bottom: 0; right: 0; }
+.ds-mlayout.is-focus .ds-mlayout__notice { left: 50%; bottom: 16px; }
+.ds-mlayout.is-focus .ds-mlayout__tools--bottom .ds-mtool { display: none; }  /* 아래 도구 중 내 위치는 숨기고 확대 · 축소만 */
+.ds-mlayout.is-mobile.is-focus .ds-mlayout__tools--bottom { bottom: 16px; }
+@media (prefers-reduced-motion: reduce) { .ds-mlayout.is-focus * { transition: none !important; } }
+
+/* MinimalTable 줄 구분선(피그마 Report/Table, 2026-11-05): 머리 · 각 줄 아래 border-neutral-main 1, 마지막 줄은 없음 */
+.ds-mtable thead tr, .ds-mtable tbody tr { border-bottom: var(--border-width-1) solid var(--border-neutral-main); }
+.ds-mtable tbody tr:last-child { border-bottom: 0; }
+/* 도넛 범례 = 피그마 _base/tooltip 목록(2026-11-05): 목록 여백 8, 줄 높이 32 · 여백 8 · 사이 8, 색 칸 10 · 모서리 2, 이름 text-xs medium heading · 값 text-xs body-main(여백 왼쪽 8) */
+
+/* ───── 보고서 · 상세 패널 블록 (모듈) ─────
+   틀: ReportBody(블록 사이 24 · 섹션 사이 구분선 + 40) · DetailPanel(블록 = 흰 판 여백 20, 사이 회색 띠 8 = bg-subtler) — 블록은 폭 100%(FILL) */
+.ds-rbody { display: flex; flex-direction: column; gap: 40px; width: 100%; }
+.ds-rsection { display: flex; flex-direction: column; gap: var(--spacing-6); }
+.ds-rsection + .ds-rsection { border-top: var(--border-width-1) solid var(--divider-neutral-subtle); padding-top: 40px; }
+.ds-rbody > :not(.ds-rsection) + :not(.ds-rsection) { margin-top: -16px; }  /* 섹션 없이 블록만 넣으면 사이 24 */
+.ds-dpanel { display: flex; flex-direction: column; gap: var(--spacing-2); background: var(--bg-subtler); width: 100%; }
+.ds-dpanel__block { background: var(--surface-main); padding: var(--spacing-5); }
+.ds-rich { font-weight: 600; } .ds-rich.is-strong { color: var(--text-heading-main); } .ds-rich.is-primary, .ds-rich.is-primary-title { color: var(--text-primary-main); } .ds-rich.is-increase { color: var(--text-increase-main); } .ds-rich.is-decrease { color: var(--text-decrease-main); }
+.ds-rsummary { display: flex; flex-direction: column; gap: var(--spacing-2); }
+.ds-rsummary h4 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; color: var(--text-heading-main); }
+.ds-rsummary p { margin: 0; font-size: 14px; line-height: 22px; color: var(--text-body-main); word-break: keep-all; text-wrap: pretty; }
+.ds-rdonut-wrap { container-type: inline-size; } .ds-rdonut { display: flex; align-items: center; gap: 40px; padding: 24px 0; }
+.ds-rdonut__chart { flex: 0 0 220px; }
+@container (max-width: 440px) { .ds-rdonut { flex-direction: column; align-items: stretch; gap: 16px; padding: 8px 0; } .ds-rdonut__chart { flex: none; width: 200px; align-self: center; } }  /* 블록은 놓인 자리(틀) 폭을 기준으로 바뀜 — 화면 폭 아님 */
+.ds-rlegend { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ds-rlegend__row { display: flex; align-items: center; gap: var(--spacing-2); padding: 8px 0; font-size: 14px; line-height: 20px; }
+.ds-rlegend__row i, .ds-rtable th i, .ds-pkv__row i { width: 10px; height: 10px; border-radius: 2px; flex: none; display: inline-block; }
+.ds-pkv__row i { border-radius: 999px; }
+.ds-rlegend__row span { flex: 1; min-width: 0; color: var(--text-body-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .ds-rlegend__row b { font-weight: 500; color: var(--text-heading-main); }
+
+.ds-rrank { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.ds-rrank li { display: flex; align-items: center; gap: var(--spacing-3); padding: 6px 0; }
+.ds-rrank__name { width: 140px; flex: none; font-size: 14px; line-height: 20px; font-weight: 500; color: var(--text-heading-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ds-rrank__bar { height: 24px; border-radius: var(--rounded-sm); display: inline-flex; align-items: center; padding: 0 8px; background: var(--surface-primary-subtler); color: var(--text-primary-main); font-size: 14px; max-width: calc(100% - 172px); box-sizing: border-box; }
+.ds-rrank__bar b { font-weight: 600; }
+.ds-rrank__bar.is-first { background: var(--fill-primary-main); color: var(--text-inverse-heading-main); }
+.ds-rrank.is-c2 .ds-rrank__bar { background: var(--surface-primary-subtlest); } .ds-rrank.is-c2 .ds-rrank__bar.is-first { background: var(--chart-series-2); color: var(--text-inverse-heading-main); }
+.ds-rtable { overflow-x: auto; }
+.ds-rtable table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 20px; white-space: nowrap; }
+.ds-rtable th, .ds-rtable td { padding: 8px 12px; text-align: right; border-bottom: var(--border-width-1) solid var(--border-neutral-main); }
+.ds-rtable thead th { font-weight: 400; color: var(--text-body-subtle); background: var(--table-header-subtle, var(--surface-subtler)); }
+.ds-rtable tbody tr:last-child th, .ds-rtable tbody tr:last-child td { border-bottom: 0; }
+.ds-rtable th:first-child { text-align: left; position: sticky; left: 0; z-index: 1; background: var(--surface-main); }
+.ds-rtable thead th:first-child { background: var(--table-header-subtle, var(--surface-subtler)); }
+.ds-rtable tbody th { font-weight: 400; color: var(--text-body-main); } .ds-rtable tbody th i { margin-right: 8px; vertical-align: 0; }
+.ds-rtable td { color: var(--text-body-main); }
+.ds-rcompare, .ds-rchart, .ds-rtabbed, .ds-rblock { display: flex; flex-direction: column; gap: var(--spacing-3); }
+.ds-rcompare__delta { margin: 0; text-align: right; font-size: 14px; line-height: 20px; font-weight: 600; } .ds-rcompare__delta.is-increase { color: var(--text-increase-main); } .ds-rcompare__delta.is-decrease { color: var(--text-decrease-main); }
+.ds-rchart__unit { margin: 0; text-align: right; font-size: 12px; line-height: 16px; color: var(--text-body-subtle); }
+.ds-rstats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-3); }
+.ds-rlist > :last-child { border-bottom: 0; }
+/* 패널 */
+.ds-ptitle { display: flex; align-items: center; gap: var(--spacing-2); }
+.ds-ptitle > .ds-icon { width: 20px; height: 20px; color: var(--icon-body-main); flex: none; }
+.ds-ptitle > b { flex: 1; min-width: 0; font-size: 16px; line-height: 24px; font-weight: 600; color: var(--text-heading-main); }
+.ds-ptitle__right { font-size: 14px; line-height: 20px; color: var(--text-body-subtle); white-space: nowrap; }
+.ds-ptitle.is-stack { flex-direction: column; align-items: stretch; gap: 4px; } .ds-ptitle.is-stack > span { font-size: 14px; line-height: 20px; color: var(--text-body-subtle); }
+.ds-phead { display: flex; flex-direction: column; gap: var(--spacing-4); }
+.ds-phead__top { display: flex; align-items: flex-start; gap: var(--spacing-2); } .ds-phead__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.ds-phead__cat { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-primary-main); }
+.ds-phead__name { display: flex; align-items: center; gap: var(--spacing-2); } .ds-phead__name h3 { margin: 0; font-size: 18px; line-height: 28px; font-weight: 600; color: var(--text-heading-main); }
+.ds-phead__text > p { margin: 0; font-size: 14px; line-height: 20px; color: var(--text-body-subtle); }
+.ds-phead__badges { display: flex; gap: 4px; padding-top: 4px; }
+.ds-phead__actions { display: flex; align-items: center; gap: var(--spacing-2); flex-wrap: wrap; } .ds-phead__select { margin-left: auto; width: 120px; }
+.ds-pstrip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ds-pstrip > div { display: flex; flex-direction: column; gap: 4px; padding-left: 16px; border-left: var(--border-width-1) solid var(--divider-neutral-subtle); } .ds-pstrip > div:first-child { padding-left: 0; border-left: 0; }
+.ds-pstrip span { font-size: 12px; line-height: 16px; color: var(--text-body-subtle); } .ds-pstrip b { font-size: 14px; line-height: 20px; font-weight: 700; color: var(--text-heading-main); }
+.ds-pkv, .ds-pmemo, .ds-pcalc, .ds-pswitch, .ds-pbars, .ds-pring { display: flex; flex-direction: column; gap: var(--spacing-3); }
+.ds-pkv__row { display: flex; align-items: center; gap: var(--spacing-2); padding: 6px 0; font-size: 14px; line-height: 20px; }
+.ds-pkv__row > span { flex: 1; min-width: 0; color: var(--text-body-main); } .ds-pkv__row > b { font-weight: 500; color: var(--text-heading-main); }
+.ds-pkv__row.is-big > b { font-size: 18px; line-height: 28px; font-weight: 700; }
+.ds-pkv__total { border-top: var(--border-width-1) solid var(--divider-neutral-subtle); padding-top: 6px; }
+.ds-pkv__note { border-top: var(--border-width-1) solid var(--divider-neutral-subtle); padding-top: 12px; display: flex; flex-direction: column; gap: 4px; font-size: 14px; line-height: 20px; } .ds-pkv__note span { color: var(--text-body-subtle); } .ds-pkv__note p { margin: 0; color: var(--text-body-main); }
+.ds-pmemo > p { margin: 0; font-size: 14px; line-height: 22px; color: var(--text-body-main); word-break: keep-all; } .ds-pmemo__meta { font-size: 12px; line-height: 16px; color: var(--text-body-subtle); }
+.ds-pmemo__actions { display: flex; gap: 12px; } .ds-pmemo__actions button { border: 0; background: none; padding: 0; font: inherit; color: var(--text-body-subtle); cursor: pointer; } .ds-pmemo__actions button:hover { color: var(--text-body-main); }
+.ds-pcalc__sum { padding: 12px 16px; border-radius: var(--rounded-2xl); background: var(--surface-subtler); }
+.ds-pcalc__row { display: flex; align-items: center; gap: var(--spacing-2); font-size: 14px; line-height: 20px; } .ds-pcalc__row > span { flex: 1; color: var(--text-body-main); } .ds-pcalc__row > .ds-input { width: 130px; flex: none; } .ds-pcalc__row > b { width: 32px; font-weight: 500; color: var(--text-heading-main); }
+.ds-p3col { display: grid; grid-template-columns: minmax(0, 1fr) 60px 80px; gap: 8px; padding: 6px 0; font-size: 14px; line-height: 20px; } .ds-p3col span { color: var(--text-body-main); } .ds-p3col b { text-align: right; font-weight: 500; color: var(--text-heading-main); }
+.ds-pinfo__label { font-size: 14px; line-height: 20px; color: var(--text-body-subtle); }
+.ds-pinfo__chip { display: flex; align-items: center; gap: 8px; padding: 12px; border: var(--border-width-1) solid var(--border-neutral-main); border-radius: var(--rounded-xl); font-size: 14px; }
+.ds-pinfo__chip i { width: 20px; height: 20px; border-radius: 999px; color: #fff; font-style: normal; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; } .ds-pinfo__chip b { font-weight: 500; color: var(--text-heading-main); }
+.ds-pswitch__label { font-size: 14px; line-height: 20px; color: var(--text-body-subtle); } .ds-pswitch > .ds-ptitle { margin-top: 8px; }
+.ds-ptop3 { display: flex; flex-direction: column; gap: var(--spacing-3); }
+.ds-ptop3__card { padding: 16px 20px; border: var(--border-width-1) solid var(--border-neutral-main); border-radius: var(--rounded-2xl); display: flex; flex-direction: column; gap: 12px; }
+.ds-ptop3__name { display: flex; align-items: center; gap: 8px; } .ds-ptop3__name b { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--text-heading-main); }
+.ds-ptop3__metrics { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; padding-left: 28px; } .ds-ptop3__metrics div { display: flex; flex-direction: column; gap: 4px; } .ds-ptop3__metrics span { font-size: 14px; line-height: 20px; color: var(--text-body-subtle); } .ds-ptop3__metrics b { font-size: 16px; line-height: 24px; font-weight: 700; color: var(--text-heading-main); white-space: nowrap; }
+.ds-pring__card { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border: var(--border-width-1) solid var(--border-neutral-main); border-radius: var(--rounded-2xl); }
+.ds-pring__card > div:first-child { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; } .ds-pring__card b { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--text-heading-main); } .ds-pring__card p { margin: 0; font-size: 14px; line-height: 20px; color: var(--text-body-main); word-break: keep-all; }
+.ds-pring__chart { width: 104px; flex: none; }
+.ds-pbars { gap: 16px; } .ds-pbars__item { display: flex; flex-direction: column; gap: 8px; } .ds-pbars__item > span { font-size: 14px; line-height: 20px; color: var(--text-body-subtle); }
+.ds-pbars__value { display: flex; align-items: baseline; gap: 4px; } .ds-pbars__value b { font-size: 18px; line-height: 28px; font-weight: 700; color: var(--text-heading-main); } .ds-pbars__value small { font-size: 14px; color: var(--text-body-main); }
+.ds-pbars__track { height: 20px; border-radius: var(--rounded-sm); background: var(--surface-subtler); overflow: hidden; } .ds-pbars__track i { display: block; height: 100%; border-radius: var(--rounded-sm); background: var(--fill-primary-main); transition: width .3s ease; }
+.ds-pbars__note { margin: 0; font-size: 12px; line-height: 16px; color: var(--text-body-subtle); word-break: keep-all; }
+.ds-psimple__row { display: flex; justify-content: space-between; gap: 8px; padding: 8px 0; font-size: 14px; line-height: 20px; color: var(--text-body-main); } .ds-psimple__row.is-head { color: var(--text-body-subtle); }
+.ds-ppair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .ds-ppair > div { display: flex; flex-direction: column; gap: 24px; padding: 16px; border-radius: var(--rounded-xl); background: var(--surface-subtler); } .ds-ppair span { font-size: 14px; line-height: 20px; color: var(--text-body-main); } .ds-ppair b { text-align: right; font-size: 16px; line-height: 24px; font-weight: 700; color: var(--text-heading-main); }
+@media (prefers-reduced-motion: reduce) { .ds-pbars__track i { transition: none; } }

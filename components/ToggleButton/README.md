@@ -7,3 +7,4 @@
 - 켜짐: **outline은 solid 판**(`button-solid-*-bg`, 흰 글자), **base는 판 그대로 + 진한 테두리**(neutral `border-neutral-accent` · primary `border-primary-subtle`, 글자 `text-primary-main`).
 - 크기: sm 28 · md 32 · lg 36 · xl 40 · 2xl 48(다른 버튼과 같은 높이). 모서리는 높이 규칙(control-sm · md · lg).
 - disabled: 꺼짐은 `border-disabled` + `text-disabled`, 켜짐은 `fill-disabled`.
+- `shape` rounded(기본)|pill. 글자 시작 위치(판 끝 → 글자) = 피그마와 같음 — rounded sm 8 · md 12 · lg 10 · xl 12 · 2xl 14 / pill sm 10 · md 12 · lg 14 · xl 16 · 2xl 18(판 여백 + 글자 묶음 2).

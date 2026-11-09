@@ -6,3 +6,7 @@
 - 증감을 나타내는 차트 색은 increase(빨강) · decrease(파랑) 규칙과 같게.
 - 차트에 표를 붙일 때는 [표](09-tables.md)의 "차트 아래 표" 규칙.
 - 차트 카드 최소 높이: 작은 차트 240, 큰 차트 320.
+
+## 색 규칙 (2026-11-05)
+- 계열이 하나 → `fill-primary-main`(프로젝트 primary). 둘 이상 → `chart-series-1~6` 순서.
+- 증감은 `text-increase` · `text-decrease`, 범례 색 칸은 계열 색과 같게.

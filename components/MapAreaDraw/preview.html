@@ -1,0 +1,32 @@
+<!-- @dsCard group="Map" height=1420 subtitle="면적 선택 — 첫 점 안내 → 점 · 선 · 면 + 총 면적 → ESC/우클릭 완료 → 꼭짓점 고치기 + 다시 그리기 · 영역 확정하기 → 확정" -->
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>preview</title>
+<style>body{margin:0;background:var(--bg-main)} .pv{padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-4)} .pv-cap{font-size:12px;line-height:14px;color:var(--text-body-subtle);margin:0 0 var(--spacing-2)}</style>
+</head>
+<body>
+<div id="root" class="ds-root pv"></div>
+<script>
+var D = window.DS, h = React.createElement;
+function cap(t) { return h("p", { className: "pv-cap" }, t); }
+function row() { return h.apply(null, ["div", { className: "ds-row", style: { alignItems: "flex-start" } }].concat([].slice.call(arguments))); }
+function sect(t) { return h.apply(null, ["div", null, cap(t)].concat([].slice.call(arguments, 1))); }
+var SIZES = ["sm", "md", "lg", "xl", "2xl"];
+function Frame(props) { return h("div", { style: { position: "relative", height: props.h || 420, borderRadius: 12, overflow: "hidden", background: "#eef0eb" } }, h("div", { className: "ds-mapbg" }), props.children); }
+var PTS = [[150, 180], [290, 185], [370, 250], [250, 320], [130, 260]];
+var NAME = function () { return "마포구 서교동 주변 상권"; };
+function App() {
+  return h("div", { className: "ds-col", style: { gap: 20 } },
+    sect("직접 그려 보기 — 지도를 눌러 점을 찍고, 3개 이상이면 ESC · 마우스 우클릭으로 완료 → 꼭짓점을 끌어 고치기 → 영역 확정하기", h(Frame, { h: 460 }, h(D.MapAreaDraw, { metersPerPixel: 0.35, nameFor: NAME, onExit: function () {} }))),
+    sect("단계 모습", h("div", { style: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 } },
+      h(Frame, null, h(D.MapAreaDraw, { metersPerPixel: 0.35, nameFor: NAME, onExit: function () {} })),
+      h(Frame, null, h(D.MapAreaDraw, { metersPerPixel: 0.35, nameFor: NAME, defaultPoints: PTS.slice(0, 3), defaultCursor: [300, 300], onExit: function () {} })),
+      h(Frame, null, h(D.MapAreaDraw, { metersPerPixel: 0.35, nameFor: NAME, defaultPoints: PTS, defaultStage: "done", onExit: function () {} })),
+      h(Frame, null, h(D.MapAreaDraw, { metersPerPixel: 0.35, nameFor: NAME, defaultPoints: PTS, defaultStage: "confirmed", onExit: function () {} })))),
+    sect("MapGuideBar — 지도 아래 가운데 안내 막대", h("div", { className: "ds-col", style: { gap: 8, alignItems: "flex-start", background: "#eef0eb", padding: 16, borderRadius: 12 } },
+      h(D.MapGuideBar, { onExit: function () {} }, "지도에서 두 점을 눌러 거리를 재요"), h(D.MapGuideBar, { onExit: function () {} }, "영역 확정하기 버튼을 눌러 분석 영역을 확정해주세요"))));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>
