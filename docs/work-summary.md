@@ -58,7 +58,7 @@ Component   전용        button/solid/primary/bg …
 - `rounded`: none 0 · xs 4 · sm 6 · md 8 · lg 10 · xl 12 · 2xl 14 · 3xl 16 · 4xl 20 · 5xl 24 · 6xl 32 · 7xl 40 · full 9999
 - `spacing`: 0, px, 0-5, 0-75, 1, 1-5 … 96 (n × 4px)
 - `size`: px 표기 이름, 코드는 같은 값의 spacing 클래스(`size-4.5`), 없을 때만 `size-[Npx]`
-- `max-w`: Tailwind `max-w-*` 값(none · 3xs 256 ~ 7xl 1280) — 예전 이름 `container`에서 바뀜(2026-11-09 확인)
+- `max-w`: Tailwind `max-w-*` 값(none · 3xs 256 ~ 7xl 1280) + 콘텐츠 폭 `content` 1180 · `content-wide` 1440(2026-11-09 추가, 코드 `max-w-content` · `max-w-content-wide`) — 예전 이름 `container`에서 바뀜(2026-11-09 확인)
 
 ### Tailwind v3 설정 대응
 
@@ -423,7 +423,7 @@ scrollbar/
 5. **블록 세부 대조** — 피그마 Block 25종 ↔ 코드 Block* 값 대조(여백 · 글자 · 색)
 6. **피그마 게시** — 변경 후 Component v2.3 · Templates v2.1 · Table v1.0 다시 게시(사용자)
 
-### 이전부터 남은 일 (2026-11-09 정리 — 끝난 5개 뺌: 버튼 새 구조 · AI 규칙 등록 · disabled 공통 세트 · Control Button · Table/Charts 게시 후 Templates 업데이트)
+### 이전부터 남은 일 (2026-11-09 정리 — 끝난 6개 뺌: 버튼 새 구조 · AI 규칙 등록 · disabled 공통 세트 · Control Button · Table/Charts 게시 후 Templates 업데이트 · 콘텐츠 폭 토큰)
 1. border 투명도 값 점검 — 역할마다 단계 간격이 다름 (neutral main 10% · stronger 60%, primary main 80%, negative main 60%)
 2. `state layers/on soft` 사용처 확인 후 정리 (on brand와 값이 같음)
 3. `fill/hint` (면 색으로 쓰는 구분 막대) 이름 정리
@@ -431,15 +431,14 @@ scrollbar/
 5. Select Negative=true placeholder 색 결정
 6. 글자의 예전 font 변수 정리
 7. 코드 확인: borderRadius 최신 값, fontSize xs=13, `zinc: colors.gray`, maxWidth 3xs · 2xs
-8. 콘텐츠 폭 토큰 — Primitive Layout `max-w`에 1180 · 1440 **없음(11-09 확인)**. 코드는 `--content-default` 1180 · `--content-wide` 1440(tokens.css · tokens.json · tailwind `max-w-content` · `max-w-content-wide`)에 있고 tokens.w3c.json만 빠짐. 피그마에 추가할 이름 결정 필요
-9. 입력창 Shape 속성 — pill 프로젝트가 생기면 Input · Password · Input Quantity · DatePicker Input에 `Shape=rounded/pill` 추가 (Text Area는 rounded 고정). 그전까지 pill 프로젝트는 지원하지 않음
-10. Report Modal section 헤더(브랜드 색 배경)의 흰 글자 대비를 project mode별로 확인
-11. Templates 베리에이션 추가 (범위 확인 필요)
-12. Templates 3단계 — 새 레이아웃 규칙(콘텐츠 폭 · 간격 · 카드 Size · 모바일) 적용 (페이지별)
-13. Templates — 차트 표 값: 나머지 45개를 막대 길이 기준으로 계산할지 결정, 선 차트(12 · 13개월) 축 라벨 · 도넛/파이 항목 라벨 기준 결정
-14. Templates — 개인/법인 비율 셀 한 줄/두 줄 결정, 보고서 Report Modal 긴 내용 표시 방식 결정
-15. Table v1.0 — Table Text 오른쪽 정렬 variant가 52px로 커지는 원인 수정(지금은 Templates에서 36px 고정으로 우회만 함), Minimal Metric에 Align=center 추가 검토
-16. (필요할 때) Foundation 시각 문서 — 변수 · 스타일에서 자동 생성 (온보딩 · 개발 전달용)
+8. 입력창 Shape 속성 — pill 프로젝트가 생기면 Input · Password · Input Quantity · DatePicker Input에 `Shape=rounded/pill` 추가 (Text Area는 rounded 고정). 그전까지 pill 프로젝트는 지원하지 않음
+9. Report Modal section 헤더(브랜드 색 배경)의 흰 글자 대비를 project mode별로 확인
+10. Templates 베리에이션 추가 (범위 확인 필요)
+11. Templates 3단계 — 새 레이아웃 규칙(콘텐츠 폭 · 간격 · 카드 Size · 모바일) 적용 (페이지별)
+12. Templates — 차트 표 값: 나머지 45개를 막대 길이 기준으로 계산할지 결정, 선 차트(12 · 13개월) 축 라벨 · 도넛/파이 항목 라벨 기준 결정
+13. Templates — 개인/법인 비율 셀 한 줄/두 줄 결정, 보고서 Report Modal 긴 내용 표시 방식 결정
+14. Table v1.0 — Table Text 오른쪽 정렬 variant가 52px로 커지는 원인 수정(지금은 Templates에서 36px 고정으로 우회만 함), Minimal Metric에 Align=center 추가 검토
+15. (필요할 때) Foundation 시각 문서 — 변수 · 스타일에서 자동 생성 (온보딩 · 개발 전달용)
 ---
 
 ## 변경 이력

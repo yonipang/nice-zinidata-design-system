@@ -1221,6 +1221,18 @@
           "$value": "4px"
         }
       }
+    },
+    "layout": {
+      "max-w": {
+        "content": {
+          "$type": "dimension",
+          "$value": "1180px"
+        },
+        "content-wide": {
+          "$type": "dimension",
+          "$value": "1440px"
+        }
+      }
     }
   },
   "project": {

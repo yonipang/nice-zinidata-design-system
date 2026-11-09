@@ -216,6 +216,7 @@
   | wide | 1440 (가운데) | 차트가 많은 대시보드 · 넓은 표 · 리포트 | wide(1440px) |
   | full | 화면 전체, 좌우 48 | 지도 화면 | fill |
 - 기본은 default. 표 · 차트를 4칸 이상 나란히 둬야 하면 wide, 지도는 full
+- 토큰: 피그마 `max-w/content`(1180) · `max-w/content-wide`(1440), 코드 `max-w-content` · `max-w-content-wide`(CSS `--content-default` · `--content-wide`)
 - 화면이 콘텐츠 폭보다 좁으면 좌우 최소 여백 48(`spacing/12`)을 지키며 줄어든다
 - 카드 그리드는 폭과 상관없이 4칸 (default 1칸 283, wide 1칸 348)
 

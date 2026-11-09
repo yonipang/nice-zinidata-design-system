@@ -22,19 +22,19 @@
 4. charts v1.0 ↔ ECharts 대조 + 라이브러리 원본 색을 계열 규칙으로(파일 링크 필요)
 5. 피그마 Block 25종 ↔ 코드 Block* 세부 대조
 6. 피그마 게시(사용자): 변경 후 Component v2.3 · Templates v2.1 · Table v1.0
-- 오래된 정리 항목 16개 → `docs/work-summary.md` 11장 "이전부터 남은 일"(11-09 정리)
+- 오래된 정리 항목 15개 → `docs/work-summary.md` 11장 "이전부터 남은 일"(11-09 정리)
 
 ## 최근 결정 (새것부터 10개)
-1. 11-09 · 문서 — 새 대화는 `docs/status.md`만 먼저 읽기, 변경 이력은 CHANGELOG로 일원화(작업요약은 본문만)
-2. 11-06 · 레이아웃 ↔ 블록 — Layout/…(틀) · Block/<분류>/<이름>(내용) 분리, 블록에 흰 판 · 바깥 여백 없음, Header · Chart · Stats 합침, 예전 이름은 별칭
-3. 11-06 · 블록은 어느 레이아웃에나 — 놓인 자리 폭 기준으로 모양이 바뀜(도넛 440 미만 위아래), 300 미만 자리는 비권장
-4. 11-06 · 토큰 — text/increase-main rose/600 · text/decrease-main blue/600
-5. 11-06 · 예외 색에 지하철 노선 색 추가
-6. 11-05 · 차트 색 — 계열 하나 = primary(fill/primary-main), 둘 이상 = chart/series-1~6 / 피그마 차트는 charts v1.0 부품으로 조립
-7. 11-05 · 차트 엔진 내장 — components/echarts.min.js(5.5.0)를 먼저, 없으면 cdnjs → Design 캔버스에서도 차트 동작
-8. 11-05 · 지도 — 측정(거리 · 면적 · 반경) 중엔 지도 · 그리기 · 안내 막대 · 확대/축소만, 면적 선택 흐름(MapAreaDraw), 안내는 아래 가운데 막대(MapGuideBar)
-9. 11-05 · 지도 — 검색은 왼쪽 위 고정 · 패널만 움직임, 모바일 시트 다 펼치면 모서리 없음, 내 정보 메뉴는 버튼 왼쪽
-10. 11-04 · 지도 — 목록에 선택 상태 없음, 목록 ↔ 핀 ↔ 보고서 연결(items · reportFor)
+1. 11-09 · 토큰 — 콘텐츠 폭 Primitive `max-w/content` 1180 · `max-w/content-wide` 1440(피그마 Layout · tokens.w3c.json, 코드 클래스 `max-w-content` · `max-w-content-wide`)
+2. 11-09 · 문서 — 새 대화는 `docs/status.md`만 먼저 읽기, 변경 이력은 CHANGELOG로 일원화(작업요약은 본문만)
+3. 11-06 · 레이아웃 ↔ 블록 — Layout/…(틀) · Block/<분류>/<이름>(내용) 분리, 블록에 흰 판 · 바깥 여백 없음, Header · Chart · Stats 합침, 예전 이름은 별칭
+4. 11-06 · 블록은 어느 레이아웃에나 — 놓인 자리 폭 기준으로 모양이 바뀜(도넛 440 미만 위아래), 300 미만 자리는 비권장
+5. 11-06 · 토큰 — text/increase-main rose/600 · text/decrease-main blue/600
+6. 11-06 · 예외 색에 지하철 노선 색 추가
+7. 11-05 · 차트 색 — 계열 하나 = primary(fill/primary-main), 둘 이상 = chart/series-1~6 / 피그마 차트는 charts v1.0 부품으로 조립
+8. 11-05 · 차트 엔진 내장 — components/echarts.min.js(5.5.0)를 먼저, 없으면 cdnjs → Design 캔버스에서도 차트 동작
+9. 11-05 · 지도 — 측정(거리 · 면적 · 반경) 중엔 지도 · 그리기 · 안내 막대 · 확대/축소만, 면적 선택 흐름(MapAreaDraw), 안내는 아래 가운데 막대(MapGuideBar)
+10. 11-05 · 지도 — 검색은 왼쪽 위 고정 · 패널만 움직임, 모바일 시트 다 펼치면 모서리 없음, 내 정보 메뉴는 버튼 왼쪽
 
 ## GitHub
 - 토큰은 프로젝트 지침에 있음(Contents 쓰기). 작업 끝에 반영 여부를 묻고, 올린 뒤 다시 받아 같은지 확인한다.
