@@ -4,6 +4,6 @@ Thumbs.db
 node_modules/
 .idea/
 .vscode/
-     shots/
-     review/
-     __pycache__/
+shots/
+review/
+__pycache__/
