@@ -1,6 +1,7 @@
 # 지금 상태 (status)
 
-> **새 대화는 이 파일만 먼저 읽는다.** 필요할 때만 더 읽기: 규칙 `docs/rules.md` · 컴포넌트 대응 `docs/component-guide.md` · 구조/토큰 본문 `docs/work-summary.md` · 수정 방법 `MAINTAINING.md` · 이력 `CHANGELOG.md` · 컴포넌트 props `components/<이름>/README.md`.
+> **새 대화는 이 파일만 먼저 읽는다.** 읽는 방법: Artifact read · url=https://claude.ai/artifact/EG1hS5zhH81z9nPW54LzoZ · path="project/docs/status.md" — 경로 앞 `project/` 필수, **경로 없이 읽으면 파일 300개를 모두 받아 느려지니 하지 않는다.** 프로젝트 파일(사본)은 읽지 않는다. 다른 문서도 같은 방법으로 한 파일씩(path="project/…").
+> 필요할 때만 더 읽기: 규칙 `docs/rules.md` · 컴포넌트 대응 `docs/component-guide.md` · 구조/토큰 본문 `docs/work-summary.md` · 수정 방법 `MAINTAINING.md` · 이력 `CHANGELOG.md` · 컴포넌트 props `components/<이름>/README.md`.
 > 갱신: 작업이 끝날 때 "남은 일"과 "최근 결정"을 고친다(최근 결정은 10개까지, 오래된 건 지운다 — 기록은 CHANGELOG에 남아 있음).
 
 기준일: 2026-11-09
