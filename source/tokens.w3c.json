@@ -1255,8 +1255,9 @@
       },
       "max-w": {
         "none": {
-          "$type": "dimension",
-          "$value": "0px"
+          "$type": "string",
+          "$value": "none",
+          "$description": "Tailwind max-w-none(폭 제한 없음). 피그마 변수는 숫자만 받아 0으로 둠"
         },
         "3xs": {
           "$type": "dimension",

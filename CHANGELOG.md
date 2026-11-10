@@ -5,6 +5,7 @@
 > 형식: `날짜 · 대상 — 변경 내용`
 
 ### 2026-11-04 ~ 11-09 (지도 연결 · 면적 선택 · 차트 내장 · 보고서 블록 · 레이아웃 ↔ 블록)
+- **2026-11-09 · tokens.w3c.json — `max-w/none` 값을 Tailwind에 맞춤 (사용자 결정)** — `0px`(피그마 값) → `none`(Tailwind `max-w-none` = 폭 제한 없음, $type string). 피그마 변수는 숫자만 받아 0 그대로. Component v2.3도 Primitive 라이브러리 업데이트함(사용자)
 - **2026-11-09 · tokens.w3c.json — Primitive Layout 전체 옮김** — 피그마 Layout 23개를 모두 `primitive.layout`에 넣음: `breakpoint` 2xs 360 · xs 480 · sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1536, `max-w` none 0 · 3xs 256 · 2xs 288 · xs 320 · sm 384 · md 448 · lg 512 · xl 576 · 2xl 672 · 3xl 768 · 4xl 896 · 5xl 1024 · 6xl 1152 · 7xl 1280 · content 1180 · content-wide 1440(피그마 값 그대로, px). Primitive 라이브러리 다시 게시함(사용자)
 - **2026-11-09 · Primitive Layout · tokens.w3c.json — 콘텐츠 폭 토큰 추가** — 피그마 Primitive(`xYRDXu2Q0mD1G9vYcAxtew`) Layout 컬렉션 `max-w`에 `max-w/content` 1180 · `max-w/content-wide` 1440 추가(FLOAT, 범위 Width · Height, 설명에 쓰는 화면). Layout 21 → 23개. 코드 tokens.w3c.json에 `primitive.layout.max-w.content` 1180px · `content-wide` 1440px 추가(tokens.css `--content-default` · `--content-wide`, tokens.json, tailwind `max-w-content` · `max-w-content-wide`는 이미 같은 값). 이전부터 남은 일 8번 끝(16 → 15개)
 - **문서 — Primitive 파일 키 · Layout 이름 바로잡음 (2026-11-09)** — Primitive 라이브러리 = 한 파일(`xYRDXu2Q0mD1G9vYcAxtew`, 컬렉션 Color 201 · Typography 55 · Spacing 92 · Layout 21 · Effect 41)을 MAINTAINING · status에 추가. Layout 그룹 이름은 이미 `container` → `max-w`(none · 3xs~7xl)로 바뀌어 있어 작업요약 3장을 고침. 1180 · 1440은 피그마에 없음 확인(남은 일 8번에 반영)
